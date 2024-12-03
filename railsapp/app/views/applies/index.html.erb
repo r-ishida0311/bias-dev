@@ -2,6 +2,20 @@
 
 <h1>申請一覧</h1>
 <%= link_to "新規申請", new_apply_path %>
+
+<%= search_form_for @search do |f| %>
+
+<%# `カラム名_cont`とすることで、カラムに対してLIKEを使った曖昧一致検索ができる %>
+
+<%= f.label :apply_kind_eq, "申請種別" %>
+<%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
+<%= f.submit %>
+
+<%# 検索結果と検索フォームをクリアする %>
+<%= link_to "クリア", cats_path %>
+<% end %>
+
+
 <table>
   <thead>
     <tr>
