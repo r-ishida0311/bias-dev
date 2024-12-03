@@ -72,20 +72,20 @@
             <dt class="col-sm-4">原局確認者3:</dt>
             <dd class="col-sm-8">
               <%= @apply_data_tab.boss_check_4_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_4) %>)
-              <small class="text-muted d-block"><%= @apply_data_tab.boss_update_date %></small>
+              <small class="text-muted d-block"><%= @apply_data_tab.boss_update_date.strftime("%Y/%m/%d %H:%M:%S")  %></small>
             </dd>
 
             <dt class="col-sm-4">作成日時:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.create_date %></dd>
+            <dd class="col-sm-8"><%= @apply_data_tab.create_date.strftime("%Y/%m/%d %H:%M:%S")  %></dd>
 
             <dt class="col-sm-4">更新日時:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.update_date %></dd>
+            <dd class="col-sm-8"><%= @apply_data_tab.update_date.strftime("%Y/%m/%d %H:%M:%S")  %></dd>
 
             <dt class="col-sm-4">申請ステータス更新日時:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.apply_update_date %></dd>
+            <dd class="col-sm-8"><%= @apply_data_tab.apply_update_date.strftime("%Y/%m/%d %H:%M:%S")  %></dd>
 
             <dt class="col-sm-4">承認ステータス更新日時:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.approve_update_date %></dd>
+            <dd class="col-sm-8"><%= @apply_data_tab.approve_update_date.strftime("%Y/%m/%d %H:%M:%S")  %></dd>
           </dl>
         </div>
       </div>
