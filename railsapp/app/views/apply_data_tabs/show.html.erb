@@ -1,274 +1,263 @@
 <%= turbo_frame_tag "apply_index_page" do %>
-
-<div class="container-fluid">
+<h2 class="mb-4">申請詳細</h2>
+<div class="container my-5">
   <div class="row">
-    <div class="col-md-4 sidebar">
-      <!-- サイドバー -->
-      <dl class="row">
-        <dt class="col-sm-4">整理番号:</dt>
-        <dd class="col-sm-8"><%= @apply_data_tab.reference_no %></dd>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">整理番号: <%= @apply_data_tab.reference_no %></h5>
+        </div>
+        <div class="card-body">
+          <dl class="row mb-0">
+            <dt class="col-sm-4">申請ステータス:</dt>
+            <dd class="col-sm-8">
+              <% if @apply_data_tab.apply_status == 0 %>
+              作業中
+              <% elsif @apply_data_tab.apply_status == 1 %>
+              作業完了
+              <% elsif @apply_data_tab.apply_status == 2 %>
+              申請
+              <% else %>
+              <%= @apply_data_tab.apply_status %>
+              <% end %>
+            </dd>
 
-        <dt class="col-sm-4">申請ステータス:</dt>
-        <dd class="col-sm-8">
-          <% if @apply_data_tab.apply_status == 0 %>
-          作業中
-          <% elsif @apply_data_tab.apply_status == 1 %>
-          作業完了
-          <% elsif @apply_data_tab.apply_status == 2 %>
-          申請
-          <% else %>
-          <%= @apply_data_tab.apply_status %>
-          <% end %>
-        </dd>
+            <dt class="col-sm-4">技術計画推進部確認:</dt>
+            <dd class="col-sm-8">
+              <% if @apply_data_tab.tech_status == 0 %>
+              未確認
+              <% elsif @apply_data_tab.tech_status == 1 %>
+              確認
+              <% else %>
+              <%= @apply_data_tab.tech_status %>
+              <% end %>
+            </dd>
 
-        <dt class="col-sm-4">技術計画推進部確認:</dt>
-        <dd class="col-sm-8">
-          <% if @apply_data_tab.tech_status == 0 %>
-          未確認
-          <% elsif @apply_data_tab.tech_status == 1 %>
-          確認
-          <% else %>
-          <%= @apply_data_tab.tech_status %>
-          <% end %>
-        </dd>
+            <dt class="col-sm-4">技術計画推進部確認者:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.tech_check_name %>
+              <small class="text-muted d-block"><%= @apply_data_tab.tech_update_date %></small>
+            </dd>
 
-        <dt class="col-sm-4">技術計画推進部確認者:</dt>
-        <dd class="col-sm-8">
-          <%= @apply_data_tab.tech_check_name %>
-          <small class="text-muted d-block"><%= @apply_data_tab.tech_update_date %></small>
-        </dd>
+            <dt class="col-sm-4">判定結果:</dt>
+            <dd class="col-sm-8">
+              <% if @apply_data_tab.approve_status == 0 %>
+              未承認
+              <% elsif @apply_data_tab.approve_status == 1 %>
+              A案件
+              <% elsif @apply_data_tab.approve_status == 2 %>
+              B案件
+              <% elsif @apply_data_tab.approve_status == 9 %>
+              否認
+              <% else %>
+              <%= @apply_data_tab.approve_status %>
+              <% end %>
+            </dd>
 
-        <dt class="col-sm-4">判定結果:</dt>
-        <dd class="col-sm-8">
-          <% if @apply_data_tab.approve_status == 0 %>
-          未承認
-          <% elsif @apply_data_tab.approve_status == 1 %>
-          A案件
-          <% elsif @apply_data_tab.approve_status == 2 %>
-          B案件
-          <% elsif @apply_data_tab.approve_status == 9 %>
-          否認
-          <% else %>
-          <%= @apply_data_tab.approve_status %>
-          <% end %>
-        </dd>
+            <dt class="col-sm-4">局長:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.boss_check_1_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_1) %>)
+            </dd>
 
-        <dt class="col-sm-4">局長:</dt>
-        <dd class="col-sm-8">
-          <%= @apply_data_tab.boss_check_1_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_1) %>)
-        </dd>
+            <dt class="col-sm-4">原局確認者1:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.boss_check_2_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_2) %>)
+            </dd>
 
-        <dt class="col-sm-4">原局確認者1:</dt>
-        <dd class="col-sm-8">
-          <%= @apply_data_tab.boss_check_2_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_2) %>)
+            <dt class="col-sm-4">原局確認者2:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.boss_check_3_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_3) %>)
+            </dd>
 
-        </dd>
+            <dt class="col-sm-4">原局確認者3:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.boss_check_4_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_4) %>)
+              <small class="text-muted d-block"><%= @apply_data_tab.boss_update_date %></small>
+            </dd>
 
-        <dt class="col-sm-4">原局確認者2:</dt>
-        <dd class="col-sm-8">
-          <%= @apply_data_tab.boss_check_3_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_3) %>)
+            <dt class="col-sm-4">作成日時:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.create_date %></dd>
 
-        </dd>
+            <dt class="col-sm-4">更新日時:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.update_date %></dd>
 
-        <dt class="col-sm-4">原局確認者3:</dt>
-        <dd class="col-sm-8">
-          <%= @apply_data_tab.boss_check_4_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_4) %>)
+            <dt class="col-sm-4">申請ステータス更新日時:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.apply_update_date %></dd>
 
-          <small class="text-muted d-block"><%= @apply_data_tab.boss_update_date %></small>
-        </dd>
-
-        <dt class="col-sm-4">作成日時:</dt>
-        <dd class="col-sm-8"><%= @apply_data_tab.create_date %></dd>
-
-        <dt class="col-sm-4">更新日時:</dt>
-        <dd class="col-sm-8"><%= @apply_data_tab.update_date %></dd>
-
-        <dt class="col-sm-4">申請ステータス更新日時:</dt>
-        <dd class="col-sm-8"><%= @apply_data_tab.apply_update_date %></dd>
-
-        <dt class="col-sm-4">承認ステータス更新日時:</dt>
-        <dd class="col-sm-8"><%= @apply_data_tab.approve_update_date %></dd>
-      </dl>
-
-      <dt class="col-sm-8">添付ファイルステータス:<% if @apply_data_tab.append_file_status == 0 %>
-        添付無し
-        <% elsif @apply_data_tab.append_file_status == 1 %>
-        作業中
-        <% elsif @apply_data_tab.append_file_status == 2 %>
-        完了
-        <% else %>
-        <%= @apply_data_tab.apply_status %>
-        <% end %></dt>
-
-
-      <!-- Add a row to hold the list-group -->
-      <div class="col-md-8">
-        <% if @files.present? %>
-        <ul class="list-group">
-          <% @files.each do |file| %>
-          <li class="list-group-item">
-            <%= link_to file.file_title, file.file_path %>
-          </li>
-          <% end %>
-        </ul>
-        <% else %>
-        <p>添付ファイルはありません。</p>
-        <% end %>
+            <dt class="col-sm-4">承認ステータス更新日時:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.approve_update_date %></dd>
+          </dl>
+        </div>
       </div>
 
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">添付ファイル</h5>
+        </div>
+        <div class="card-body">
+          <dt class="col-sm-8">添付ファイルステータス:
+            <% if @apply_data_tab.append_file_status == 0 %>
+            添付無し
+            <% elsif @apply_data_tab.append_file_status == 1 %>
+            作業中
+            <% elsif @apply_data_tab.append_file_status == 2 %>
+            完了
+            <% else %>
+            <%= @apply_data_tab.apply_status %>
+            <% end %>
+          </dt>
 
-
+          <% if @files.present? %>
+          <ul class="list-group">
+            <% @files.each do |file| %>
+            <li class="list-group-item">
+              <%= link_to file.file_title, file.file_path %>
+            </li>
+            <% end %>
+          </ul>
+          <% else %>
+          <p>添付ファイルはありません。</p>
+          <% end %>
+        </div>
+      </div>
     </div>
+
     <div class="col-md-8">
-      <div class="container">
-        <% if notice.present? %>
-        <div class="alert alert-success" role="alert">
-          <%= notice %>
-        </div>
-        <% end %>
-
-        <h2 class="mb-4">申請詳細</h2>
-
-        <div class="row">
-          <div class="col-md-6">
-            <dl class="row">
-              <dt class="col-sm-4">社員番号:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_no %></dd>
-
-              <dt class="col-sm-4">申請者氏名（社員番号）:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_name %></dd>
-
-              <dt class="col-sm-4">部署:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_dep %></dd>
-
-              <dt class="col-sm-4">品名:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.item_name %></dd>
-
-              <dt class="col-sm-4">型式:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.equipment_name %></dd>
-
-              <dt class="col-sm-4">製造者名:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.manufacturer_name %></dd>
-
-              <dt class="col-sm-4">取扱業者:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.supplier_name %></dd>
-
-              <dt class="col-sm-4">数量:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.quantity %></dd>
-
-              <dt class="col-sm-4">予定価格:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.estimated_cost %>（千円）</dd>
-
-              <dt class="col-sm-4">承認金額:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.sk_approve_cost %>（千円）</dd>
-
-              <dt class="col-sm-4">設置場所:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.location %></dd>
-
-              <dt class="col-sm-4">希望納期:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.desired_delivery %></dd>
-
-              <dt class="col-sm-4">申請理由:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.reason %></dd>
-
-              <dt class="col-sm-4">具体的内容:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.specific_contents %></dd>
-
-              <dt class="col-sm-4">旧品資産番号:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.old_asset_no %></dd>
-
-              <dt class="col-sm-4">旧品資産リストあり:</dt>
-              <dd class="col-sm-8">
-                <% if @apply_data_tab.old_asset_multi == 0 %>
-                なし
-                <% elsif @apply_data_tab.old_asset_multi == 1 %>
-                あり
-                <% else %>
-                <%= @apply_data_tab.old_asset_multi %>
-                <% end %>
-              </dd>
-
-              <dt class="col-sm-4">旧品取得年月:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.old_asset_YM %></dd>
-
-              <dt class="col-sm-4">旧品取得価格:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.old_asset_cost %>（千円）</dd>
-
-              <dt class="col-sm-4">旧品処理方法:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.old_asset_handling %></dd>
-            </dl>
-          </div>
-
-          <div class="col-md-6">
-            <dl class="row">
-              <dt class="col-sm-4">申請種別:</dt>
-              <dd class="col-sm-8">
-                <% if @apply_data_tab.apply_kind == 1 %>
-                一般
-                <% elsif @apply_data_tab.apply_kind == 2 %>
-                放送
-                <% else %>
-                <%= @apply_data_tab.apply_kind %>
-                <% end %>
-              </dd>
-
-              <dt class="col-sm-4">区分:</dt>
-              <dd class="col-sm-8">
-                <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
-                <% case div %>
-                <% when 'new' %>
-                新規
-                <% when 'replace' %>
-                代替
-                <% when 'repair' %>
-                修理
-                <% end %>
-                <% end %>
-                <%= divisions.join(', ') %>
-              </dd>
-
-              <dt class="col-sm-4">技術計画推進コメント:</dt>
-              <dd class="col-sm-8">
-                <%= @apply_data_tab.wg_comment %>
-                <% if @apply_data_tab.wg_comment_status == 0 %>
-                未完了
-                <% elsif @apply_data_tab.wg_comment_status == 1 %>
-                完了
-                <% else %>
-                <%= @apply_data_tab.wg_comment_status %>
-                <% end %>
-                <small class="text-muted d-block"><%= @apply_data_tab.wg_comment_update_date %></small>
-              </dd>
-
-              <dt class="col-sm-4">回答コメント:</dt>
-              <dd class="col-sm-8">
-                <%= @apply_data_tab.wg_reply_comment %>
-                <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
-              </dd>
-
-              <dt class="col-sm-4">設備計画作業部会コメント:</dt>
-              <dd class="col-sm-8"><%= @apply_data_tab.sk_comment %></dd>
+      <% if notice.present? %>
+      <div class="alert alert-success" role="alert">
+        <%= notice %>
+      </div>
+      <% end %>
 
 
-            </dl>
-          </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-4">社員番号:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_no %></dd>
+
+            <dt class="col-sm-4">申請者氏名（社員番号）:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_name %></dd>
+
+            <dt class="col-sm-4">部署:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_dep %></dd>
+
+            <dt class="col-sm-4">品名:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.item_name %></dd>
+
+            <dt class="col-sm-4">型式:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.equipment_name %></dd>
+
+            <dt class="col-sm-4">製造者名:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.manufacturer_name %></dd>
+
+            <dt class="col-sm-4">取扱業者:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.supplier_name %></dd>
+
+            <dt class="col-sm-4">数量:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.quantity %></dd>
+
+            <dt class="col-sm-4">予定価格:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.estimated_cost %>（千円）</dd>
+
+            <dt class="col-sm-4">承認金額:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.sk_approve_cost %>（千円）</dd>
+
+            <dt class="col-sm-4">設置場所:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.location %></dd>
+
+            <dt class="col-sm-4">希望納期:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.desired_delivery %></dd>
+
+            <dt class="col-sm-4">申請理由:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.reason %></dd>
+
+            <dt class="col-sm-4">具体的内容:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.specific_contents %></dd>
+
+            <dt class="col-sm-4">旧品資産番号:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.old_asset_no %></dd>
+
+            <dt class="col-sm-4">旧品資産リストあり:</dt>
+            <dd class="col-sm-8">
+              <% if @apply_data_tab.old_asset_multi == 0 %>
+              なし
+              <% elsif @apply_data_tab.old_asset_multi == 1 %>
+              あり
+              <% else %>
+              <%= @apply_data_tab.old_asset_multi %>
+              <% end %>
+            </dd>
+
+            <dt class="col-sm-4">旧品取得年月:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.old_asset_YM %></dd>
+
+            <dt class="col-sm-4">旧品取得価格:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.old_asset_cost %>（千円）</dd>
+
+            <dt class="col-sm-4">旧品処理方法:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.old_asset_handling %></dd>
+          </dl>
         </div>
 
+        <div class="col-md-6">
+          <dl class="row">
+            <dt class="col-sm-4">申請種別:</dt>
+            <dd class="col-sm-8">
+              <% if @apply_data_tab.apply_kind == 1 %>
+              一般
+              <% elsif @apply_data_tab.apply_kind == 2 %>
+              放送
+              <% else %>
+              <%= @apply_data_tab.apply_kind %>
+              <% end %>
+            </dd>
 
+            <dt class="col-sm-4">区分:</dt>
+            <dd class="col-sm-8">
+              <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
+              <% case div %>
+              <% when 'new' %>
+              新規
+              <% when 'replace' %>
+              代替
+              <% when 'repair' %>
+              修理
+              <% end %>
+              <% end %>
+              <%= divisions.join(', ') %>
+            </dd>
 
-        <div class="mt-4">
-          <%= link_to "Back to apply data tabs", apply_data_tabs_path, class: "btn btn-secondary" %>
+            <dt class="col-sm-4">技術計画推進コメント:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.wg_comment %>
+              <% if @apply_data_tab.wg_comment_status == 0 %>
+              未完了
+              <% elsif @apply_data_tab.wg_comment_status == 1 %>
+              完了
+              <% else %>
+              <%= @apply_data_tab.wg_comment_status %>
+              <% end %>
+              <small class="text-muted d-block"><%= @apply_data_tab.wg_comment_update_date %></small>
+            </dd>
+
+            <dt class="col-sm-4">回答コメント:</dt>
+            <dd class="col-sm-8">
+              <%= @apply_data_tab.wg_reply_comment %>
+              <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
+            </dd>
+
+            <dt class="col-sm-4">設備計画作業部会コメント:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.sk_comment %></dd>
+          </dl>
         </div>
+      </div>
+
+      <div class="mt-4">
+        <%= link_to "Back to apply data tabs", apply_data_tabs_path, class: "btn btn-secondary" %>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
 <% end %>

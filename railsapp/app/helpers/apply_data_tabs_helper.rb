@@ -1,4 +1,29 @@
 module ApplyDataTabsHelper
+
+
+  def translate_apply_kind(apply_kind)
+    case apply_kind
+    when "kind1"
+      "申請種別1"
+    when "kind2"
+      "申請種別2"
+    else
+      "その他の申請種別"
+    end
+  end
+
+
+  def translate_divisions(division)
+    case division
+    when "division1"
+      "区分1"
+    when "division2"
+      "区分2"
+    else
+      "その他の区分"
+    end
+  end
+
   def translate_append_file_status(status)
     case status.to_i
       when 0 then "添付無し"
