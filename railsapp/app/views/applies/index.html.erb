@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>申請一覧</h1>
-
+<%= link_to "新規申請", new_apply_path %>
 <table>
   <thead>
     <tr>
@@ -32,4 +32,4 @@
   </tbody>
 </table>
 
-<%= link_to "New apply", new_apply_path %>
+<%= paginate @applies %>

@@ -4,6 +4,7 @@ class AppliesController < ApplicationController
   # GET /applies or /applies.json
   def index
     @applies = Apply.includes(:department).all 
+    @applies = Apply.page(params[:page])
   end
 
   # GET /applies/1 or /applies/1.json
