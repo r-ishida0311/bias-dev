@@ -1,5 +1,9 @@
 <td><%= apply_data_tab.apply_kind == 1 ? '一般' : (apply_data_tab.apply_kind == 2 ? '放送' : '不明') %></td>
+<%
+=begin%>
 <td><%= apply_data_tab.apply_data_id %></td>
+<%
+=end%>
 <td><%= apply_data_tab.reference_no %></td>
 <td>
   <% if apply_data_tab.division.present? && apply_data_tab.division.include?("repair") && !apply_data_tab.division.include?("replace") && !apply_data_tab.division.include?("new") %>
@@ -12,30 +16,24 @@
 <td><%= apply_data_tab.estimated_cost %></td>
 <td><%= apply_data_tab.apply_emp_dep %></td>
 <td><%= apply_data_tab.apply_emp_name %>, <%= apply_data_tab.apply_emp_no %></td>
-<% append_file_status_display = case apply_data_tab.append_file_status
-  when 0 then "添付無し"
-  when 1 then "作業中"
-  when 2 then "完了"
-  else "不明"
-end %>
-<td><%= append_file_status_display %></td>
-<% boss_check_statuses = [] %>
-<% [1, 2, 3, 4].each do |i| %>
-<% name = apply_data_tab["boss_check_#{i}_name"] || "確認者無し" %> <%# Handle NULL values %>
-<% check_status = case apply_data_tab["boss_check_#{i}"] %>
-<% when 0 then "未" %>
-<% when 1 then "済" %>
-<% when 9 then "無" %>
-<% else "不明" %>
-<% end %>
-<% boss_check_statuses << "#{name}, #{check_status}" %>
-<% end %>
+<td><%= translate_append_file_status(apply_data_tab.append_file_status) %></td>
 
-<td><%= boss_check_statuses.join(' / ') %></td>
+<%
+=begin%>
+<td><%= format_boss_check_statuses(apply_data_tab) %></td>
+<%
+=end%>
 
 
-<td><%= apply_data_tab.apply_status %></td>
-<td><%= apply_data_tab.tech_status %></td>
+
+<td><%= translate_apply_status(apply_data_tab.apply_status) %></td>
+
+<td><%= translate_tech_status(apply_data_tab.tech_status) %></td>
+
+<%
+=begin%>
 <td><%= apply_data_tab.update_date %></td>
+<%
+=end%>
 
 <td><%= link_to "詳細", apply_data_tab, data: {turbo_frame: "apply_index_page"} %></td>
