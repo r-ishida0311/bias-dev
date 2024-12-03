@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_26_121954) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -220,6 +220,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_121954) do
     t.integer "boss1_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
     t.index ["apply_id"], name: "index_boss1s_on_apply_id"
   end
 
@@ -230,6 +231,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_121954) do
     t.integer "boss2_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
     t.index ["apply_id"], name: "index_boss2s_on_apply_id"
   end
 
@@ -240,6 +242,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_121954) do
     t.integer "boss3_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
     t.index ["apply_id"], name: "index_boss3s_on_apply_id"
   end
 
@@ -262,7 +265,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_26_121954) do
   end
 
   create_table "divisions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "new"
+    t.integer "new_pur"
     t.integer "replace"
     t.integer "repair"
     t.integer "oh"

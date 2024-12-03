@@ -49,7 +49,24 @@
   </div>
 </div>
 
+<div class="field">
+  <%= form.label :区分 %>
+  <%= form.fields_for :division, @apply.division || @apply.build_division do |division_form| %>
+  <div class="form-check form-check-inline">
+    <%= division_form.check_box :new_pur %>
+    <%= division_form.label :new_pur, "新規" %>
+  </div>
+  <div class="form-check form-check-inline">
+    <%= division_form.check_box :replace %>
+    <%= division_form.label :replace, "更新" %>
+  </div>
+  <div class="form-check form-check-inline">
+    <%= division_form.check_box :repair %>
+    <%= division_form.label :repair, "修理" %>
+  </div>
 
+  <% end %>
+</div>
 
 <div>
   <%= form.label :品名, style: "display: block;" %>
@@ -112,24 +129,7 @@
 
 
 
-<div class="field">
-  <%= form.label :division %>
-  <%= form.fields_for :division, @apply.division || @apply.build_division do |division_form| %>
-  <div>
-    <%= division_form.check_box :new_pur %>
-    <%= division_form.label :new_pur, "新規" %>
-  </div>
-  <div>
-    <%= division_form.check_box :replace %>
-    <%= division_form.label :replace, "更新" %>
-  </div>
-  <div>
-    <%= division_form.check_box :repair %>
-    <%= division_form.label :repair, "修理" %>
-  </div>
 
-  <% end %>
-</div>
 
 
 
@@ -177,6 +177,26 @@
     </div>
   </div>
 </div>
+
+
+
+
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <%= form.label :, '承認者1 社員番号', class: "form-label" %>
+    <%= form.number_field :, class: "form-control" %>
+  </div>
+  <div class="col-md-4 mb-3 align-self-end">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+  <div class="col-md-4 mb-3 align-self-end">
+    <%= turbo_frame_tag "boss1" do %>
+    置換元
+    <% end %>
+  </div>
+</div>
+
+
 
 
 
