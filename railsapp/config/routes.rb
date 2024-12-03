@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :applies
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
+  resources :boss1s
+
   resources :apply_data_tabs
 
   

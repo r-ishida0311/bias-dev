@@ -180,14 +180,18 @@
 
 
 
-
+<%= form_with(model: @boss1, local: true) do |form| %>
 <div class="row">
   <div class="col-md-4 mb-3">
-    <%= form.label :, '承認者1 社員番号', class: "form-label" %>
-    <%= form.number_field :, class: "form-control" %>
+    <%= form.label :boss1_no, "パラメータを入力", class: "form-label" %>
+    <%= form.text_field :boss1_no, class: "form-control", id: "boss-param-input" %>
   </div>
   <div class="col-md-4 mb-3 align-self-end">
-    <%= form.submit class: "btn btn-primary" %>
+    <%
+=begin%>
+    <%= link_to "承認者1", applies_boss_path(@boss1), data: { turbo_frame: "boss1" } %>
+    <%
+=end%>
   </div>
   <div class="col-md-4 mb-3 align-self-end">
     <%= turbo_frame_tag "boss1" do %>
@@ -195,7 +199,7 @@
     <% end %>
   </div>
 </div>
-
+<% end %>
 
 
 
