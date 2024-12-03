@@ -1,0 +1,62 @@
+<%= turbo_frame_tag "apply_index_page" do %>
+<h1>申請一覧（～2025）</h1>
+
+<%# ransackを利用した検索フォームでは、form_withの代わりにsearch_form_forを使う %>
+<%= search_form_for @search, data: {turbo_frame: "apply_index"} do |f| %>
+
+<%# `カラム名_cont`とすることで、カラムに対してLIKEを使った曖昧一致検索ができる %>
+<%# `カラム名_eq`とすることで、カラムに対して完全一致検索ができる %>
+
+<!-- railsapp/app/views/apply_data_tabs/index.html.erb (10-22) -->
+<div data-controller="select">
+  <%= f.label :year_eq, "対象年度" %>
+  <%= f.select :year_eq, @years, { include_blank: true }, { data: { action: "change->select#yearEqChange" } } %>
+
+  <%= f.label :apply_emp_dep_eq, "部署" %>
+  <%= f.select :apply_emp_dep_eq, [], { include_blank: "年度を選択してください" }, { data: { select_target: "department" } } %>
+
+  <%= f.label :apply_kind_eq, "申請種別" %>
+  <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
+  <%= f.submit %>
+</div>
+<%# 検索結果と検索フォームをクリアする %>
+<%= link_to "クリア", apply_data_tabs_path %>
+<% end %>
+
+<%= turbo_frame_tag "apply_index" do %>
+<table>
+  <thead>
+    <tr>
+      <th>申請種別</th>
+      <th>申請番号</th>
+      <th>整理番号</th>
+      <th>OH</th>
+      <th>品名</th>
+      <th>予定価格（千円）</th>
+      <th>申請部署</th>
+      <th>申請者氏名（社員番号）</th>
+      <th>添付ファイルステータス（数）</th>
+      <th>原局確認ステータス</th>
+      <th>申請ステータス</th>
+      <th>技術計画推進ステータス</th>
+      <th>最終更新日</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @apply_data_tabs.each do |apply_data_tab| %>
+    <tr>
+      <%= render partial: 'apply_data_tab', locals: { apply_data_tab: apply_data_tab } %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @apply_data_tabs %>
+
+
+<% end %>
+
+
+<% end %>

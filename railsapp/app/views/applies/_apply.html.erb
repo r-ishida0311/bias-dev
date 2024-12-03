@@ -1,0 +1,17 @@
+<tr>
+  <td><%= apply_kind_label(apply.apply_kind) %></td>
+  <td><%= apply.reference_no %></td>
+  <td><%= apply.id %></td>
+  <td><%= display_oh(apply.division&.oh) %></td>
+  <td><%= apply.item_name %></td>
+  <td><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
+  <td><%= apply.department.dep_name rescue "N/A" %></td>
+  <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
+  <td></td>
+  <td></td>
+  <td><%= apply_status_label(apply.apply_status) %></td>
+  <td><%= tech_status_label(apply.tech_status) %></td>
+  <td><%= approve_status_label(apply.approve_status) %></td>
+  <td><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+  <td><%= link_to 'Show', apply %></td>
+</tr>

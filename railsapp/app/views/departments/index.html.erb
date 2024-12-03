@@ -1,0 +1,17 @@
+<h1>部署マスター</h1>
+<%= form_tag import_departments_path, multipart: true do %>
+<%= file_field_tag :file %>
+<%= submit_tag "インポート" %>
+<% end %>
+<%= form_with(url: departments_path, method: :get, local: true) do |form| %>
+<%= form.label :year, "年度を選択:" %>
+<%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year) %>
+<%= form.submit "表示" %>
+<% end %>
+
+<% if @selected_year %>
+<% @departments = Department.where(year_id: Year.find_by(year: @selected_year).id).all %>
+<% @departments.each do |department| %>
+<li><%= department.dep_name %></li>
+<% end %>
+<% end %>

@@ -1,0 +1,35 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>申請一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>申請種別</th>
+      <th>申請番号</th>
+      <th>整理番号</th>
+      <th>OH</th>
+      <th>品名</th>
+      <th>予定価格（千円）</th>
+      <th>申請部署</th>
+      <th>申請者氏名（社員番号）</th>
+      <th>添付ファイルステータス（数）</th>
+      <th>原局確認ステータス</th>
+      <th>申請ステータス</th>
+      <th>技術計画推進ステータス</th>
+      <th>判定結果</th>
+      <th>最終更新日</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @applies.each do |apply| %>
+    <tr>
+      <%= render partial: 'apply', locals: { apply: apply } %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New apply", new_apply_path %>

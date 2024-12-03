@@ -1,0 +1,2 @@
+class AddDep < ApplicationRecord
+end
