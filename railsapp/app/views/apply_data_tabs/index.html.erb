@@ -17,10 +17,18 @@
 
   <%= f.label :apply_kind_eq, "申請種別" %>
   <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
+
+  <%= f.label :item_name_cont, "品名" %>
+  <%= f.search_field :item_name_cont %>
+
+  <%= f.label :specific_contents_cont, "具体的内容" %>
+  <%= f.search_field :specific_contents_cont %>
+
   <%= f.submit %>
+  <%= link_to "クリア", apply_data_tabs_path %>
 </div>
 <%# 検索結果と検索フォームをクリアする %>
-<%= link_to "クリア", apply_data_tabs_path %>
+
 <% end %>
 
 <%= turbo_frame_tag "apply_index" do %>
