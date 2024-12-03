@@ -12,19 +12,23 @@
 <% end %>
 
 
-<div>
-  <%= form.label :社員番号, style: "display: block;" %>
-  <%= form.hidden_field :apply_emp_no, value: @employee_number %> <%= @employee_number %>
-</div>
+<div class="row">
+  <!-- Added row class for horizontal layout -->
+  <div class="col-md-4">
+    <!-- Each div gets a column class -->
+    <%= form.label :社員番号, style: "display: block;" %>
+    <%= form.hidden_field :apply_emp_no, value: @employee_number %> <%= @employee_number %>
+  </div>
+  <div class="col-md-4">
+    <%= form.label :申請者氏名, style: "display: block;" %>
+    <%= form.hidden_field :apply_emp_name, value: @employee_user %> <%= @employee_user %>
+  </div>
+  <div class="col-md-4">
+    <%= form.label :部署, style: "display: block;" %>
+    <%= form.collection_select :department_id, Department.all, :id, :dep_name, {prompt: "Select Department", selected: @preselected_department&.id}, {class: "form-control"} %>
+  </div>
+</div> <!-- End of row -->
 
-<div>
-  <%= form.label :申請者氏名, style: "display: block;" %>
-  <%= form.hidden_field :apply_emp_name, value: @employee_user %> <%= @employee_user %>
-</div>
-<div>
-  <%= form.label :部署, style: "display: block;" %>
-  <%= form.collection_select :department_id, Department.all, :id, :dep_name, {prompt: "Select Department", selected: @preselected_department&.id}, {class: "form-control"} %>
-</div>
 
 
 <div class="row" data-controller="apply">
@@ -180,10 +184,10 @@
 
 
 
-<%= form_with(model: @boss1, local: true) do |form| %>
+
 <div class="row">
   <div class="col-md-4 mb-3">
-    <%= form.label :boss1_no, "パラメータを入力", class: "form-label" %>
+    <%= form.label :boss1_no, "承認者の社員番号を入力してください", class: "form-label" %>
     <%= form.text_field :boss1_no, class: "form-control", id: "boss-param-input" %>
   </div>
   <div class="col-md-4 mb-3 align-self-end">
@@ -199,12 +203,16 @@
     <% end %>
   </div>
 </div>
-<% end %>
 
 
 
 
 
+
+
+
+
+<% unless apply.new_record? %>
 
 <div>
   <%= form.label :設備計画作業部会コメント, style: "display: block;" %>
@@ -222,8 +230,6 @@
   <%= form.label :回答コメント, style: "display: block;" %>
   <%= form.text_area :wg_reply_comment, class: "form-control" %>
 </div>
-
-<% unless apply.new_record? %>
 
 <div>
   <%= form.label :技術計画推進コメント状態, style: "display: block;" %>
@@ -244,15 +250,6 @@
   <%= form.label :判定結果, style: "display: block;" %>
   <%= form.number_field :approve_status, class: "form-control" %>
 </div>
-
-
-<% else %>
-<%= form.hidden_field :apply_status, value: 0 %>
-<%= form.hidden_field :tech_status, value: 0 %>
-<%= form.hidden_field :approve_status, value: 0 %>
-<%= form.hidden_field :wg_comment_status, value: 0 %>
-<% end %>
-
 <div>
   <%= form.label :技術確認者, style: "display: block;" %>
   <%= form.text_field :tech_check_name, class: "form-control" %>
@@ -265,6 +262,15 @@
   <%= form.label :sk_approve_cost, '設備計画作業部会承認金額（千円）', style: "display: block;" %>
   <%= form.number_field :sk_approve_cost, class: "form-control" %>
 </div>
+
+<% else %>
+<%= form.hidden_field :apply_status, value: 0 %>
+<%= form.hidden_field :tech_status, value: 0 %>
+<%= form.hidden_field :approve_status, value: 0 %>
+<%= form.hidden_field :wg_comment_status, value: 0 %>
+<% end %>
+
+
 
 
 
