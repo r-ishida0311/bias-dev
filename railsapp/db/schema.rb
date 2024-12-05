@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_05_021156) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -142,6 +142,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
     t.datetime "wg_comment_update_date"
     t.datetime "wg_reply_comment_update_date"
     t.integer "old_asset_cost"
+    t.integer "boss1_id"
+    t.integer "boss2_id"
+    t.integer "boss3_id"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
     t.index ["department_id"], name: "index_applies_on_department_id"
     t.index ["division_id"], name: "fk_rails_0d9501c942"
@@ -213,7 +216,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
     t.index ["apply_id"], name: "index_attached_files_on_apply_id"
   end
 
-  create_table "boss1s", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "bosses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "apply_id", null: false
     t.integer "boss1_no"
     t.string "boss1_name"
@@ -221,29 +224,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
-    t.index ["apply_id"], name: "index_boss1s_on_apply_id"
-  end
-
-  create_table "boss2s", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "apply_id", null: false
-    t.integer "boss2_no"
-    t.string "boss2_name"
-    t.integer "boss2_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "email"
-    t.index ["apply_id"], name: "index_boss2s_on_apply_id"
-  end
-
-  create_table "boss3s", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "apply_id", null: false
-    t.integer "boss3_no"
-    t.string "boss3_name"
-    t.integer "boss3_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "email"
-    t.index ["apply_id"], name: "index_boss3s_on_apply_id"
+    t.index ["apply_id"], name: "index_bosses_on_apply_id"
   end
 
   create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -252,16 +233,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["year_id"], name: "index_departments_on_year_id"
-  end
-
-  create_table "directors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "apply_id", null: false
-    t.integer "director_no"
-    t.string "director_name"
-    t.integer "director_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["apply_id"], name: "index_directors_on_apply_id"
   end
 
   create_table "divisions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -292,6 +263,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
     t.string "login_user"
     t.string "login_department"
     t.integer "login_ref_no"
+    t.text "groups"
     t.index ["login"], name: "index_users_on_login", unique: true
   end
 
@@ -307,9 +279,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_053527) do
   add_foreign_key "applies", "departments"
   add_foreign_key "applies", "divisions"
   add_foreign_key "attached_files", "applies"
-  add_foreign_key "boss1s", "applies"
-  add_foreign_key "boss2s", "applies"
-  add_foreign_key "boss3s", "applies"
+  add_foreign_key "bosses", "applies"
+  add_foreign_key "bosses", "applies"
   add_foreign_key "departments", "years"
-  add_foreign_key "directors", "applies"
 end

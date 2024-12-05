@@ -25,6 +25,7 @@ def ldap_get_name_and_department
   self.login_user = ldap_entry.respond_to?(:displayname) && ldap_entry.displayname.present? ? ldap_entry.displayname.first.force_encoding('UTF-8') : ''
   self.login_department = ldap_entry.respond_to?(:department) && ldap_entry.department.present? ? ldap_entry.department.first.force_encoding('UTF-8') : ''
   self.login_ref_no = ldap_entry.respond_to?(:telephonenumber) && ldap_entry.telephonenumber.present? ? ldap_entry.telephonenumber.first.force_encoding('UTF-8') : ''
+  self.groups = ldap_entry.memberof.map { |group| group.force_encoding('UTF-8') }
   self.save
 end
 
