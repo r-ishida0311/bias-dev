@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_05_021156) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_05_022056) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -146,6 +146,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_05_021156) do
     t.integer "boss2_id"
     t.integer "boss3_id"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
+    t.index ["boss1_id"], name: "fk_rails_2b516931c6"
+    t.index ["boss2_id"], name: "fk_rails_b10070b0f4"
+    t.index ["boss3_id"], name: "fk_rails_3345f8da14"
     t.index ["department_id"], name: "index_applies_on_department_id"
     t.index ["division_id"], name: "fk_rails_0d9501c942"
   end
@@ -216,7 +219,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_05_021156) do
     t.index ["apply_id"], name: "index_attached_files_on_apply_id"
   end
 
-  create_table "bosses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "bosses", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "apply_id", null: false
     t.integer "boss1_no"
     t.string "boss1_name"
@@ -276,10 +279,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_05_021156) do
 
   add_foreign_key "add_deps", "years"
   add_foreign_key "applies", "add_deps"
+  add_foreign_key "applies", "bosses", column: "boss1_id", on_delete: :nullify
+  add_foreign_key "applies", "bosses", column: "boss2_id", on_delete: :nullify
+  add_foreign_key "applies", "bosses", column: "boss3_id", on_delete: :nullify
   add_foreign_key "applies", "departments"
   add_foreign_key "applies", "divisions"
   add_foreign_key "attached_files", "applies"
-  add_foreign_key "bosses", "applies"
-  add_foreign_key "bosses", "applies"
   add_foreign_key "departments", "years"
 end
