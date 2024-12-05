@@ -7,6 +7,34 @@ class ApplicationController < ActionController::Base
   
   rescue_from Net::LDAP::Error, with: :ldap_connection_error
 
+
+
+def search
+  phone_number = params[:phone_number]
+  @search_results = []
+
+  if phone_number.present?
+    begin
+      Rails.logger.info "Starting LDAP search for phone number: #{phone_number}"
+      filter = Net::LDAP::Filter.construct("(|(telephoneNumber=#{phone_number})(mobile=#{phone_number}))")
+      @search_results = Devise.ldap_search(phone_number, filter: filter)
+      Rails.logger.info "LDAP search completed. Results: #{@search_results.inspect}"
+    rescue Net::LDAP::Error => e
+      Rails.logger.error "LDAP Error: #{e.message}"
+      flash[:alert] = "LDAP Error: #{e.message}"
+    rescue StandardError => e
+      Rails.logger.error "Error: #{e.message}"
+      flash[:alert] = "Error: #{e.message}"
+    end
+  end
+  render template: 'tests/index'
+end
+
+
+
+
+
+
   private
 
   def ldap_connection_error(exception)

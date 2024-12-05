@@ -1,14 +1,26 @@
-<p style="color: green"><%= notice %></p>
+<h1>Active Directory アカウント検索</h1>
 
-<h1>Tests</h1>
+<%= form_with(url: '/search', method: :get, local: true) do |form| %>
+<%= form.label :phone_number, '電話番号:' %>
+<%= form.text_field :phone_number %>
+<%= form.submit '検索' %>
+<% end %>
 
-<div id="tests">
-  <% @tests.each do |test| %>
-    <%= render test %>
-    <p>
-      <%= link_to "Show this test", test %>
-    </p>
+<% if @search_results %>
+<h2>検索結果</h2>
+<ul>
+  <% @search_results.each do |result| %>
+  <li>
+    <strong>DN:</strong> <%= result.dn %>
+    <br>
+    <strong>sAMAccountName:</strong> <%= result['sAMAccountName'] %>
+    <br>
+    <strong>displayName:</strong> <%= result['displayName'] %>
+    <br>
+    <strong>telephoneNumber:</strong> <%= result['telephoneNumber'] %>
+    <br>
+    <%# その他必要な属性を追加 %>
+  </li>
   <% end %>
-</div>
-
-<%= link_to "New test", new_test_path %>
+</ul>
+<% end %>
