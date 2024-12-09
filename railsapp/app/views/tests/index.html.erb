@@ -1,7 +1,7 @@
 <h1>Active Directory アカウント検索</h1>
 
 <%= form_with(url: '/search', method: :get, local: true) do |form| %>
-<%= form.label :phone_number, '電話番号:' %>
+<%= form.label :phone_number, '社員番号:' %>
 <%= form.text_field :phone_number %>
 <%= form.submit '検索' %>
 <% end %>
@@ -11,13 +11,13 @@
 <ul>
   <% @search_results.each do |result| %>
   <li>
-    <strong>DN:</strong> <%= result.dn %>
+    <strong>社員番号:</strong> <%= result['telephoneNumber'] %>
     <br>
-    <strong>sAMAccountName:</strong> <%= result['sAMAccountName'] %>
+    <strong>氏名:</strong> <%= result['displayName'] %>
     <br>
-    <strong>displayName:</strong> <%= result['displayName'] %>
+    <strong>部署:</strong> <%= result['department'] %>
     <br>
-    <strong>telephoneNumber:</strong> <%= result['telephoneNumber'] %>
+    <strong>メールアドレス:</strong> <%= result['mail'] %>
     <br>
     <%# その他必要な属性を追加 %>
   </li>
