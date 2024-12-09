@@ -32,7 +32,7 @@ development:
   port: 389
   attribute: sAMAccountName
   base: dc=ad,dc=mbs,dc=co,dc=jp
-  admin_user: MBS_OSAKA\ldap_reader
+  admin_user: <%= ENV.fetch("LDAPADMIN") %>
   admin_password: <%= ENV.fetch("LDAPPASS") %>
   ssl: false
   # host: ad-osaka12.ad.mbs.co.jp

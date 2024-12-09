@@ -17,7 +17,20 @@ def search
     begin
       Rails.logger.info "Starting LDAP search for phone number: #{phone_number}"
       filter = Net::LDAP::Filter.construct("(|(telephoneNumber=#{phone_number})(mobile=#{phone_number}))")
-      @search_results = Devise.ldap_search(phone_number, filter: filter)
+
+      ldap_config = Devise.ldap_config
+      ldap = Net::LDAP.new(
+        host: ENV.fetch("LDAPHOST"),
+        port: 389,
+        base: "dc=ad,dc=mbs,dc=co,dc=jp",
+        auth: {
+          method: :simple,
+          username: ENV.fetch("LDAPADMIN"),
+          password: ENV.fetch("LDAPPASS")
+        }
+      )
+      
+      @search_results = ldap.search(filter: filter)
       Rails.logger.info "LDAP search completed. Results: #{@search_results.inspect}"
     rescue Net::LDAP::Error => e
       Rails.logger.error "LDAP Error: #{e.message}"
