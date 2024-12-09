@@ -3,7 +3,9 @@ class Apply < ApplicationRecord
   # belongs_to :add_dep
   belongs_to :division, optional: true 
   accepts_nested_attributes_for :division
-  
+  has_one :boss1
+  accepts_nested_attributes_for :boss1
+
   validates :apply_kind, inclusion: { in: [1, 2], message: "は1(一般設備)または2(放送設備)を指定してください。" }
   validates :tech_status, inclusion: { in: [0, 1], message: "は0(未確認)または1(確認済)を指定してください。" }
   validates :approve_status, inclusion: { in: [0, 1, 2, 9], message: "は0(未承認), 1(A案件), 2(B案件), または9(否認)を指定してください。" }

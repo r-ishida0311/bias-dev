@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_09_112853) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_09_123617) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -144,6 +144,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_112853) do
     t.integer "old_asset_cost"
     t.integer "boss1_id"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
+    t.index ["boss1_id"], name: "fk_rails_2b516931c6"
     t.index ["department_id"], name: "index_applies_on_department_id"
     t.index ["division_id"], name: "fk_rails_0d9501c942"
   end
@@ -214,7 +215,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_112853) do
     t.index ["apply_id"], name: "index_attached_files_on_apply_id"
   end
 
-  create_table "boss1", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "boss1s", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "boss_no"
     t.string "boss_name"
     t.integer "boss_status"
@@ -222,6 +223,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_112853) do
     t.datetime "updated_at", null: false
     t.string "boss_email"
     t.string "boss_depart"
+    t.integer "apply_id"
   end
 
   create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -273,6 +275,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_112853) do
 
   add_foreign_key "add_deps", "years"
   add_foreign_key "applies", "add_deps"
+  add_foreign_key "applies", "boss1s", on_delete: :nullify
   add_foreign_key "applies", "departments"
   add_foreign_key "applies", "divisions"
   add_foreign_key "attached_files", "applies"

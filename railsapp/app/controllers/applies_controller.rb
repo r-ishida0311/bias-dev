@@ -71,7 +71,12 @@ class AppliesController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def apply_params
-      params.require(:apply).permit(:department_id, :add_dep_id, :apply_kind, :reference_no, :item_name, :apply_emp_no, :apply_emp_name, :apply_status, :tech_status, :tech_check_name, :approve_status, :equipment_name, :manufacturer_name, :supplier_name, :quantity, :estimated_cost, :location, :desired_delivery, :category, :reason, :specific_contents, :old_asset_no, :old_asset_multi, :old_asset_YM, :old_asset_handling, :wg_comment, :wg_comment_status, :wg_reply_comment, :sk_approve_cost, :sk_comment, division_attributes: [:id, :new_pur, :replace, :repair, :oh])
-    end
+def apply_params
+  params.require(:apply).permit(:apply_emp_no, :apply_emp_name, :apply_kind, :department_id, :reference_no, :item_name, :equipment_name, 
+                                :manufacturer_name, :supplier_name, :quantity, :estimated_cost, :desired_delivery, :location, :reason, 
+                                :specific_contents, :old_asset_multi, :old_asset_no, :old_asset_YM, :old_asset_cost, :old_asset_handling,
+                                :apply_status, :tech_status, :approve_status, :wg_comment_status, 
+                                boss1_attributes: [:boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],  # 修正
+                                division_attributes: [:id, :new_pur, :replace, :repair, :_destroy])   
+end
 end
