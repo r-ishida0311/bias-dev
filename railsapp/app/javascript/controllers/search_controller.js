@@ -27,11 +27,18 @@ export default class extends Controller {
   }
 
   populateBossFields(result) {
-    const bossNameField = this.element.querySelector('#boss_name'); // Select by ID
-    const bossEmailField = this.element.querySelector('#boss_email'); // Select by ID
-    const bossDepartField = this.element.querySelector('#boss_depart'); // Select by ID
+    const bossNameField = this.element.querySelector(
+      '[data-search-target="results"] #boss_name'
+    ); // Updated selector. Check if you need the parent selector
+    const bossEmailField = this.element.querySelector(
+      '[data-search-target="results"] #boss_email'
+    ); // Updated selector. Check if you need the parent selector
+    const bossDepartField = this.element.querySelector(
+      '[data-search-target="results"] #boss_depart'
+    ); // Updated selector. Check if you need the parent selector
 
     if (bossNameField) bossNameField.value = result.displayName;
+    console.log(bossNameField.value);
     if (bossEmailField) bossEmailField.value = result.mail;
     if (bossDepartField) bossDepartField.value = result.department;
 
