@@ -1,7 +1,10 @@
 <% if @search_results.present? %>
 <ul>
   <% @search_results.each do |result| %>
-  <li><%= result.cn.first %> (<%= result.telephoneNumber.first %>)</li>
+  <p><strong>社員番号:</strong> <%= result['telephoneNumber'] %></p>
+  <p><strong>氏名:</strong> <%= result['displayName'] %></p>
+  <p><strong>部署:</strong> <%= result['department'] %></p>
+  <p><strong>メールアドレス:</strong> <%= result['mail'] %></p>
   <% end %>
 </ul>
 <% else %>

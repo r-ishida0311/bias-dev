@@ -191,36 +191,6 @@
 
 
 
-<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
-<div class="row mb-3">
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_no, '上司番号', class: "form-label" %>
-    <%= boss1_form.number_field :boss_no, class: "form-control" %>
-  </div>
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_name, '上司名', class: "form-label" %>
-    <%= boss1_form.text_field :boss_name, class: "form-control" %>
-  </div>
-</div>
-
-<div class="row mb-3">
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_status, '上司ステータス', class: "form-label" %>
-    <%= boss1_form.number_field :boss_status, class: "form-control" %>
-  </div>
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_email, '上司メールアドレス', class: "form-label" %>
-    <%= boss1_form.email_field :boss_email, class: "form-control" %>
-  </div>
-</div>
-
-<div class="row mb-3">
-  <div class="col-md-12">
-    <%= boss1_form.label :boss_depart, '上司部署', class: "form-label" %>
-    <%= boss1_form.text_field :boss_depart, class: "form-control" %>
-  </div>
-</div>
-<% end %>
 
 
 
