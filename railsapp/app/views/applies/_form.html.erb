@@ -189,22 +189,37 @@
 <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
 <div data-controller="search">
   <div class="col-md-6">
-    <%= boss1_form.label :boss_no, '上司番号', class: "form-label" %>
-    <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field" %>
-    <button data-action="click->search#search" class="btn btn-primary">Search</button>
+    <div class="input-group">
+      <%= boss1_form.label :boss_no, '原局確認者社員番号', class: "input-group-text" %>
+      <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field" %>
+      <button data-action="click->search#search" class="btn btn-primary">Search</button>
+    </div>
   </div>
 
-  <div data-search-target="results">
-    <%= boss1_form.text_field :boss_name, class: "form-control", id: "boss_name" %> <%#Added id for easier selection %>
-    <%= boss1_form.email_field :boss_email, class: "form-control", id: "boss_email" %> <%#Added id for easier selection %>
-    <%= boss1_form.text_field :boss_depart, class: "form-control", id: "boss_depart" %> <%#Added id for easier selection %>
+  <div data-search-target="results" class="row">
+    <div class="col-md-4">
+      <%= boss1_form.label :boss_name, '原局確認者名', class: "form-label" %>
+      <%= boss1_form.text_field :boss_name, class: "form-control", id: "boss_name", readonly: true, placeholder: "原局確認者の社員番号入力で自動記入されます" %>
+    </div>
+    <div class="col-md-4">
+      <%= boss1_form.label :boss_email, '原局確認者メールアドレス', class: "form-label" %>
+      <%= boss1_form.email_field :boss_email, class: "form-control", id: "boss_email", readonly: true, placeholder: "原局確認者の社員番号入力で自動記入されます" %>
+    </div>
+    <div class="col-md-4">
+      <%= boss1_form.label :boss_depart, '原局', class: "form-label" %>
+      <%= boss1_form.text_field :boss_depart, class: "form-control", id: "boss_depart", readonly: true, placeholder: "原局確認者の社員番号入力で自動記入されます" %>
+    </div>
   </div>
 </div>
 
+<% unless apply.new_record? %>
 <div class="col-md-6">
   <%= boss1_form.label :boss_status, '上司ステータス', class: "form-label" %>
   <%= boss1_form.number_field :boss_status, class: "form-control" %>
 </div>
+<% else %>
+<%= form.hidden_field :boss_status, value: 0 %>
+<% end %>
 
 
 <% end %>
