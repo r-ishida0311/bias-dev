@@ -27,21 +27,21 @@ export default class extends Controller {
   }
 
   populateBossFields(result) {
-    const bossNameField = this.element.querySelector(
-      '[data-search-target="results"] #boss_name'
-    ); // Updated selector. Check if you need the parent selector
-    const bossEmailField = this.element.querySelector(
-      '[data-search-target="results"] #boss_email'
-    ); // Updated selector. Check if you need the parent selector
-    const bossDepartField = this.element.querySelector(
-      '[data-search-target="results"] #boss_depart'
-    ); // Updated selector. Check if you need the parent selector
+    const parentElement = this.element.querySelector(
+      '[data-search-target="results"]'
+    );
+    const bossNameField = parentElement.querySelector('#boss_name');
+    const bossEmailField = parentElement.querySelector('#boss_email');
+    const bossDepartField = parentElement.querySelector('#boss_depart');
 
     if (bossNameField) bossNameField.value = result.displayName;
-    console.log(bossNameField.value);
     if (bossEmailField) bossEmailField.value = result.mail;
     if (bossDepartField) bossDepartField.value = result.department;
 
-    this.resultsTarget.innerHTML = '';
+    console.log(bossNameField.value);
+    console.log(bossEmailField.value);
+    console.log(bossDepartField.value);
+
+    console.log(this.resultsTarget.innerHTML);
   }
 }
