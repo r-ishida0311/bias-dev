@@ -16,7 +16,9 @@ def search
   if phone_number.present?
     begin
       Rails.logger.info "Starting LDAP search for phone number: #{phone_number}"
+      # Specify the attributes you want to retrieve.  Adjust these to your LDAP schema.
       filter = Net::LDAP::Filter.construct("(|(telephoneNumber=#{phone_number})(mobile=#{phone_number}))")
+      attributes = ["displayName", "department", "mail", "telephoneNumber"] #Add telephoneNumber for employeeID
       ldap_config = Devise.ldap_config
       ldap = Net::LDAP.new(
         host: ENV.fetch("LDAPHOST"),
@@ -28,18 +30,35 @@ def search
           password: ENV.fetch("LDAPPASS")
         }
       )
-      @search_results = ldap.search(filter: filter)
+      entries = ldap.search(filter: filter, attributes: attributes)
+
+      #Process the search results into a more usable format
+      @search_results = entries.map do |entry|
+        {
+          telephoneNumber: entry["telephoneNumber"].first,
+          displayName: entry["displayName"].first,
+          department: entry["department"].first,
+          mail: entry["mail"].first
+        }
+      end
       Rails.logger.info "LDAP search completed. Results: #{@search_results.inspect}"
     rescue Net::LDAP::Error => e
       Rails.logger.error "LDAP Error: #{e.message}"
       flash[:alert] = "LDAP Error: #{e.message}"
+      render json: [], status: :internal_server_error #Return JSON for error handling
+      return
     rescue StandardError => e
       Rails.logger.error "Error: #{e.message}"
       flash[:alert] = "Error: #{e.message}"
+      render json: [], status: :internal_server_error #Return JSON for error handling
+      return
     end
   end
-  render partial: 'applies/search_results', formats: [:html]
+
+  # Return JSON response for better AJAX handling.  Updated in javascript as well
+  render json: @search_results
 end
+
 
 
 

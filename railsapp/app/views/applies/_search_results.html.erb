@@ -1,47 +1,12 @@
 <% if @search_results.present? %>
-<ul>
-  <% @search_results.each do |result| %>
-  <p><strong>社員番号:</strong> <%= result['telephoneNumber'] %></p>
-  <p><strong>氏名:</strong> <%= result['displayName'] %></p>
-  <p><strong>部署:</strong> <%= result['department'] %></p>
-  <p><strong>メールアドレス:</strong> <%= result['mail'] %></p>
-  <% end %>
-</ul>
 
-<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
-<div class="row mb-3">
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_no, '原局確認者社員番号', class: "form-label" %>
-    <%= boss1_form.number_field :boss_no, class: "form-control" %>
-  </div>
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_name, '原局確認者名', class: "form-label" %>
-    <%= boss1_form.text_field :boss_name, class: "form-control" %>
-  </div>
-</div>
+<% @search_results.each do |result| %>
+
+rrr
+
+<% end %>
 
 
-<div class="row mb-3">
-  <div class="col-md-12">
-    <%= boss1_form.label :boss_depart, '原局部署', class: "form-label" %>
-    <%= boss1_form.text_field :boss_depart, class: "form-control" %>
-  </div>
-</div>
-<div class="col-md-6">
-  <%= boss1_form.label :boss_email, '原局確認者メールアドレス', class: "form-label" %>
-  <%= boss1_form.email_field :boss_email, class: "form-control" %>
-</div>
-</div>
-
-<div class="row mb-3">
-  <div class="col-md-6">
-    <%= boss1_form.label :boss_status, '原局確認ステータス', class: "form-label" %>
-    <%= boss1_form.number_field :boss_status, class: "form-control" %>
-  </div>
-
-  <% end %>
-
-
-  <% else %>
-  <p>検索結果がありません。</p>
-  <% end %>
+<% else %>
+<p>検索結果がありません。</p>
+<% end %>
