@@ -4,9 +4,7 @@ export default class extends Controller {
   static targets = ['phoneNumber', 'results'];
 
   search(event) {
-    // Add event parameter
-    event.preventDefault(); // Prevent default form submission
-
+    event.preventDefault();
     const phoneNumber = this.element.querySelector('#boss-no-field').value;
 
     fetch(`/search?phone_number=${phoneNumber}`, {
@@ -17,12 +15,13 @@ export default class extends Controller {
         if (data && data.length > 0) {
           this.populateBossFields(data[0]);
         } else {
-          this.resultsTarget.innerHTML = '<p>No results found</p>';
+          alert('検索結果がありません。'); // Alert if no results
+          return; // Stop further processing
         }
       })
       .catch((error) => {
         console.error('Error fetching search results:', error);
-        this.resultsTarget.innerHTML = `<p>Error: ${error.message}</p>`;
+        alert(`エラーが発生しました: ${error.message}`); // Alert on error
       });
   }
 
@@ -41,7 +40,6 @@ export default class extends Controller {
     console.log(bossNameField.value);
     console.log(bossEmailField.value);
     console.log(bossDepartField.value);
-
     console.log(this.resultsTarget.innerHTML);
   }
 }
