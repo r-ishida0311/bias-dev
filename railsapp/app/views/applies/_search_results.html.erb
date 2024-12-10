@@ -1,0 +1,9 @@
+<% if @search_results.present? %>
+<ul>
+  <% @search_results.each do |result| %>
+  <li><%= result.cn.first %> (<%= result.telephoneNumber.first %>)</li>
+  <% end %>
+</ul>
+<% else %>
+<p>検索結果がありません。</p>
+<% end %>

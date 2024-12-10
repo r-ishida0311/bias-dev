@@ -183,6 +183,12 @@
 </div>
 
 
+<div data-controller="search">
+  <label for="phone_number">社員番号:</label>
+  <input type="text" id="phone_number" data-search-target="phoneNumber" data-action="keyup->search#search">
+  <div data-search-target="results"></div>
+</div>
+
 
 
 <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
@@ -292,5 +298,3 @@
   <%= form.submit %>
 </div>
 <% end %>
-
-<%= render 'search_form' %>

@@ -38,7 +38,7 @@ def search
       flash[:alert] = "Error: #{e.message}"
     end
   end
-  render template: 'applies/search'
+  render partial: 'applies/search_results', formats: [:html]
 end
 
 
