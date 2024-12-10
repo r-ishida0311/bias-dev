@@ -212,6 +212,17 @@
   </div>
 </div>
 
+
+
+
+<% end %>
+
+
+
+
+
+
+<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
 <% unless apply.new_record? %>
 <div class="col-md-6">
   <%= boss1_form.label :boss_status, '上司ステータス', class: "form-label" %>
@@ -226,14 +237,8 @@
 
 
 
-
-
-
-
-
-
-
 <% unless apply.new_record? %>
+
 
 <div>
   <%= form.label :設備計画作業部会コメント, style: "display: block;" %>
