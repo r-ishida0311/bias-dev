@@ -2,7 +2,6 @@
 <% if apply.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(apply.errors.count, "error") %> prohibited this apply from being saved:</h2>
-
   <ul>
     <% apply.errors.full_messages.each do |message| %>
     <li><%= message %></li>
@@ -11,11 +10,8 @@
 </div>
 <% end %>
 
-
 <div class="row">
-  <!-- Added row class for horizontal layout -->
   <div class="col-md-4">
-    <!-- Each div gets a column class -->
     <%= form.label :社員番号, style: "display: block;" %>
     <%= form.hidden_field :apply_emp_no, value: @employee_number %> <%= @employee_number %>
   </div>
@@ -25,13 +21,11 @@
   </div>
   <div class="col-md-4">
     <%= form.label :部署, style: "display: block;" %>
-    <%= form.collection_select :department_id, Department.all, :id, :dep_name, {prompt: "Select Department", selected: @preselected_department&.id}, {class: "form-control"} %>
+    <%= form.collection_select :department_id, Department.all, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
   </div>
-</div> <!-- End of row -->
+</div>
 
-
-
-<div class="row" data-controller="apply">
+<div class="row">
   <div class="col-md-6">
     <div class="form-group">
       <%= form.label :申請種別, class: "d-block" %>
@@ -46,7 +40,7 @@
     </div>
   </div>
   <div class="col-md-6">
-    <div data-apply-target="refNo" class="form-group">
+    <div class="form-group">
       <%= form.label :整理番号, class: "d-block" %>
       <%= form.text_field :reference_no, class: "form-control" %>
     </div>
@@ -68,7 +62,6 @@
     <%= division_form.check_box :repair %>
     <%= division_form.label :repair, "修理" %>
   </div>
-
   <% end %>
 </div>
 
@@ -76,8 +69,6 @@
   <%= form.label :品名, style: "display: block;" %>
   <%= form.text_field :item_name, class: "form-control" %>
 </div>
-
-
 
 <div class="row">
   <div class="col-md-6">
@@ -108,7 +99,6 @@
   </div>
 </div>
 
-
 <div class="row">
   <div class="col-md-4">
     <div class="form-group">
@@ -130,16 +120,9 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
 <div>
   <%= form.label :申請理由, style: "display: block;" %>
-  <%= form.text_field :reason, class: "form-control" %>
+  <%= form.text_area :reason, class: "form-control" %>
 </div>
 
 <div>
@@ -147,32 +130,23 @@
   <%= form.text_area :specific_contents, class: "form-control" %>
 </div>
 
-
-
 <div data-controller="check">
-  <div class="form-group form-check">旧品資産フラグ
+  <div class="form-group form-check">
     <%= form.check_box :old_asset_multi, class: "form-check-input", label: '旧品資産フラグ', checked: apply.old_asset_multi?, data: { action: "change->check#updateOldAssetFields" } %>
   </div>
-
   <div data-check-target="oldAssetFields" style="display: none;">
     <div class="row">
       <div class="col-md-4">
-        <div class="form-group">
-          <%= form.label :old_asset_no, '旧品資産番号', class: "d-block" %>
-          <%= form.text_field :old_asset_no, class: "form-control" %>
-        </div>
+        <%= form.label :old_asset_no, '旧品資産番号', class: "d-block" %>
+        <%= form.text_field :old_asset_no, class: "form-control" %>
       </div>
       <div class="col-md-4">
-        <div class="form-group">
-          <%= form.label :old_asset_YM, '旧品取得年月', class: "d-block" %>
-          <%= form.date_select :old_asset_YM, discard_day: true, include_blank: true, selected: apply.old_asset_YM, start_year: Date.today.year - 25, end_year: Date.today.year - 1, class: "form-control" %>
-        </div>
+        <%= form.label :old_asset_YM, '旧品取得年月', class: "d-block" %>
+        <%= form.date_select :old_asset_YM, discard_day: true, include_blank: true, selected: apply.old_asset_YM, start_year: Date.today.year - 25, end_year: Date.today.year - 1, class: "form-control" %>
       </div>
       <div class="col-md-4">
-        <div class="form-group">
-          <%= form.label :old_asset_cost, '旧品予定価格（千円）', class: "d-block" %>
-          <%= form.number_field :old_asset_cost, class: "form-control" %>
-        </div>
+        <%= form.label :old_asset_cost, '旧品予定価格（千円）', class: "d-block" %>
+        <%= form.number_field :old_asset_cost, class: "form-control" %>
       </div>
       <div>
         <%= form.label :旧品処理方法, style: "display: block;" %>
@@ -181,10 +155,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 
 <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
 <div data-controller="search">
@@ -195,7 +165,6 @@
       <button data-action="click->search#search" class="btn btn-primary">Search</button>
     </div>
   </div>
-
   <div data-search-target="results" class="row">
     <div class="col-md-4">
       <%= boss1_form.label :boss_name, '原局確認者名', class: "form-label" %>
@@ -211,10 +180,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 <% end %>
 
 
@@ -254,48 +219,45 @@
 
 <div>
   <%= form.label :技術計画推進コメント状態, style: "display: block;" %>
-  <%= form.number_field :wg_comment_status, class: "form-control" %>
+  <span><%= tech_status_label(apply.wg_comment_status) %></span>
+  <%= form.hidden_field :wg_comment_status %>
 </div>
 
 <div>
   <%= form.label :申請ステータス, style: "display: block;" %>
-  <%= form.number_field :apply_status, class: "form-control" %>
+  <span><%= apply_status_label(apply.apply_status) %></span>
+  <%= form.hidden_field :apply_status %>
 </div>
 
 <div>
   <%= form.label :技術確認ステータス, style: "display: block;" %>
-  <%= form.number_field :tech_status, class: "form-control" %>
+  <span><%= tech_status_label(apply.tech_status) %></span>
+  <%= form.hidden_field :tech_status %>
 </div>
 
-<div>
-  <%= form.label :判定結果, style: "display: block;" %>
-  <%= form.number_field :approve_status, class: "form-control" %>
-</div>
 <div>
   <%= form.label :技術確認者, style: "display: block;" %>
   <%= form.text_field :tech_check_name, class: "form-control" %>
 </div>
 
+<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
+<div class="col-md-6">
+  <%= boss1_form.label :原局確認ステータス, style: "display: block;" %>
+  <span><%= boss_status_label(boss1_form.object.boss_status) %></span>
+</div>
+<%= boss1_form.hidden_field :boss_status %> <%# hidden field for submission %>
+<% end %>
 
-
+<div>
+  <%= form.label :判定結果, style: "display: block;" %>
+  <span><%= approve_status_label(apply.approve_status) %></span>
+  <%= form.hidden_field :approve_status %>
+</div>
 
 <div>
   <%= form.label :sk_approve_cost, '設備計画作業部会承認金額（千円）', style: "display: block;" %>
   <%= form.number_field :sk_approve_cost, class: "form-control" %>
 </div>
-
-<% else %>
-<%= form.hidden_field :apply_status, value: 0 %>
-<%= form.hidden_field :tech_status, value: 0 %>
-<%= form.hidden_field :approve_status, value: 0 %>
-<%= form.hidden_field :wg_comment_status, value: 0 %>
-<% end %>
-
-
-
-
-
-
 
 <div>
   <%= form.submit %>
