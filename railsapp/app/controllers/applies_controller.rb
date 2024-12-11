@@ -32,7 +32,7 @@ class AppliesController < ApplicationController
 
     respond_to do |format|
       if @apply.save
-        format.html { redirect_to @apply, notice: "Apply was successfully created." }
+        format.html { redirect_to applies_path, notice: "Apply was successfully created." }
         format.json { render :show, status: :created, location: @apply }
       else
         format.html { render :new, status: :unprocessable_entity }

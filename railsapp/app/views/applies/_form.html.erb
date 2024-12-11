@@ -138,12 +138,11 @@
           </div>
         </div>
 
-        <div class="row">
-          <div>
-            <%= form.label :品名, style: "display: block;" %>
-            <%= form.text_field :item_name, class: "form-control" %>
-          </div>
+        <div class="row, col-md-11">
+          <%= form.label :品名, style: "display: block;" %>
+          <%= form.text_field :item_name, class: "form-control" %>
         </div>
+
 
 
         <div class="row">
@@ -195,12 +194,12 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row, col-md-11">
           <%= form.label :申請理由, style: "display: block;" %>
           <%= form.text_field :reason, class: "form-control" %>
         </div>
 
-        <div class="row">
+        <div class="row, col-md-11">
           <%= form.label :具体的内容, style: "display: block;" %>
           <%= form.text_area :specific_contents, class: "form-control" %>
         </div>
@@ -237,7 +236,7 @@
                 </div>
               </div>
 
-              <div>
+              <div class="row, col-md-11">
                 <%= form.label :旧品処理方法, style: "display: block;" %>
                 <%= form.text_field :old_asset_handling, class: "form-control" %>
               </div>
