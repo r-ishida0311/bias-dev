@@ -136,52 +136,52 @@
       <div class="row">
         <div class="col-md-15">
           <dl class="row">
-            <dt class="col-sm-4">社員番号:</dt>
+            <dt class="col-sm-8">社員番号:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_no %></dd>
 
-            <dt class="col-sm-4">申請者氏名（社員番号）:</dt>
+            <dt class="col-sm-8">申請者氏名（社員番号）:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_name %></dd>
 
-            <dt class="col-sm-4">部署:</dt>
+            <dt class="col-sm-8">部署:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_dep %></dd>
 
-            <dt class="col-sm-4">品名:</dt>
+            <dt class="col-sm-8">品名:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.item_name %></dd>
 
-            <dt class="col-sm-4">型式:</dt>
+            <dt class="col-sm-8">型式:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.equipment_name %></dd>
 
-            <dt class="col-sm-4">製造者名:</dt>
+            <dt class="col-sm-8">製造者名:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.manufacturer_name %></dd>
 
-            <dt class="col-sm-4">取扱業者:</dt>
+            <dt class="col-sm-8">取扱業者:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.supplier_name %></dd>
 
-            <dt class="col-sm-4">数量:</dt>
+            <dt class="col-sm-8">数量:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.quantity %></dd>
 
-            <dt class="col-sm-4">予定価格:</dt>
+            <dt class="col-sm-8">予定価格:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.estimated_cost %>（千円）</dd>
 
-            <dt class="col-sm-4">承認金額:</dt>
+            <dt class="col-sm-8">承認金額:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.sk_approve_cost %>（千円）</dd>
 
-            <dt class="col-sm-4">設置場所:</dt>
+            <dt class="col-sm-8">設置場所:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.location %></dd>
 
-            <dt class="col-sm-4">希望納期:</dt>
+            <dt class="col-sm-8">希望納期:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.desired_delivery %></dd>
 
-            <dt class="col-sm-4">申請理由:</dt>
+            <dt class="col-sm-8">申請理由:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.reason %></dd>
 
-            <dt class="col-sm-4">具体的内容:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.specific_contents %></dd>
+            <dt class="col-sm-8">具体的内容:</dt>
+            <dd class="col-sm-10"><%= @apply_data_tab.specific_contents %></dd>
 
-            <dt class="col-sm-4">旧品資産番号:</dt>
+            <dt class="col-sm-8">旧品資産番号:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.old_asset_no %></dd>
 
-            <dt class="col-sm-4">旧品資産リストあり:</dt>
+            <dt class="col-sm-8">旧品資産リストあり:</dt>
             <dd class="col-sm-8">
               <% if @apply_data_tab.old_asset_multi == 0 %>
               なし
@@ -192,13 +192,13 @@
               <% end %>
             </dd>
 
-            <dt class="col-sm-4">旧品取得年月:</dt>
+            <dt class="col-sm-8">旧品取得年月:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.old_asset_YM %></dd>
 
-            <dt class="col-sm-4">旧品取得価格:</dt>
+            <dt class="col-sm-8">旧品取得価格:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.old_asset_cost %>（千円）</dd>
 
-            <dt class="col-sm-4">旧品処理方法:</dt>
+            <dt class="col-sm-8">旧品処理方法:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.old_asset_handling %></dd>
           </dl>
 
@@ -229,7 +229,7 @@
           </dd>
 
           <dt class="col-sm-4">技術計画推進コメント:</dt>
-          <dd class="col-sm-8">
+          <dd class="col-sm-10">
             <%= @apply_data_tab.wg_comment %>
             <% if @apply_data_tab.wg_comment_status == 0 %>
             未完了
@@ -242,13 +242,13 @@
           </dd>
 
           <dt class="col-sm-4">回答コメント:</dt>
-          <dd class="col-sm-8">
+          <dd class="col-sm-10">
             <%= @apply_data_tab.wg_reply_comment %>
             <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
           </dd>
 
           <dt class="col-sm-4">設備計画作業部会コメント:</dt>
-          <dd class="col-sm-8"><%= @apply_data_tab.sk_comment %></dd>
+          <dd class="col-sm-10"><%= @apply_data_tab.sk_comment %></dd>
 
         </div>
 
