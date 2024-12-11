@@ -225,7 +225,7 @@
 <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
 <% unless apply.new_record? %>
 <div class="col-md-6">
-  <%= boss1_form.label 原局確認ステータス, style: "display: block;"  %>
+  <%= boss1_form.label :原局確認ステータス, style: "display: block;"  %>
   <%= boss1_form.number_field :boss_status, class: "form-control" %>
 </div>
 <% else %>
