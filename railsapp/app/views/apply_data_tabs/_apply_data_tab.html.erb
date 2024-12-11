@@ -5,13 +5,7 @@
 <%
 =end%>
 <td><%= apply_data_tab.reference_no %></td>
-<td>
-  <% if apply_data_tab.division.present? && apply_data_tab.division.include?("repair") && !apply_data_tab.division.include?("replace") && !apply_data_tab.division.include?("new") %>
-  OH
-  <% else %>
-  <!-- その他の場合の処理 -->
-  <% end %>
-</td>
+
 <td><%= apply_data_tab.item_name %></td>
 <td><%= apply_data_tab.estimated_cost %></td>
 <td><%= apply_data_tab.apply_emp_dep %></td>

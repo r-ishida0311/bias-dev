@@ -23,6 +23,9 @@
   <%= f.label :specific_contents_cont, "具体的内容" %>
   <%= f.search_field :specific_contents_cont %>
 
+  <%= f.label :apply_emp_name_cont, "申請者" %>
+  <%= f.search_field :apply_emp_name_cont %>
+
   <%= f.submit %>
   <%= link_to "クリア", apply_data_tabs_path %>
 </div>
@@ -41,7 +44,7 @@
       <%
 =end%>
       <th>整理番号</th>
-      <th>OH</th>
+
       <th>品名</th>
       <th>予定価格（千円）</th>
       <th>申請部署</th>
