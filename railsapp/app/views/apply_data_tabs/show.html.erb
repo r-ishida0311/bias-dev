@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "apply_index_page" do %>
 <h2 class="mb-4">申請詳細</h2>
-<div class="container my-5">
+<div class="container-fluid my-5">
   <div class="row">
     <div class="col-md-4">
       <div class="card">
@@ -120,6 +120,9 @@
           <% end %>
         </div>
       </div>
+      <div class="mt-4">
+        <%= link_to "Back to apply data tabs", apply_data_tabs_path, class: "btn btn-secondary" %>
+      </div>
     </div>
 
     <div class="col-md-8">
@@ -132,7 +135,7 @@
 
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md">
           <dl class="row">
             <dt class="col-sm-4">社員番号:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.apply_emp_no %></dd>
@@ -199,63 +202,58 @@
             <dt class="col-sm-4">旧品処理方法:</dt>
             <dd class="col-sm-8"><%= @apply_data_tab.old_asset_handling %></dd>
           </dl>
+
+          <dt class="col-sm-4">申請種別:</dt>
+          <dd class="col-sm-8">
+            <% if @apply_data_tab.apply_kind == 1 %>
+            一般
+            <% elsif @apply_data_tab.apply_kind == 2 %>
+            放送
+            <% else %>
+            <%= @apply_data_tab.apply_kind %>
+            <% end %>
+          </dd>
+
+          <dt class="col-sm-4">区分:</dt>
+          <dd class="col-sm-8">
+            <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
+            <% case div %>
+            <% when 'new' %>
+            新規
+            <% when 'replace' %>
+            代替
+            <% when 'repair' %>
+            修理
+            <% end %>
+            <% end %>
+            <%= divisions.join(', ') %>
+          </dd>
+
+          <dt class="col-sm-4">技術計画推進コメント:</dt>
+          <dd class="col-sm-8">
+            <%= @apply_data_tab.wg_comment %>
+            <% if @apply_data_tab.wg_comment_status == 0 %>
+            未完了
+            <% elsif @apply_data_tab.wg_comment_status == 1 %>
+            完了
+            <% else %>
+            <%= @apply_data_tab.wg_comment_status %>
+            <% end %>
+            <small class="text-muted d-block"><%= @apply_data_tab.wg_comment_update_date %></small>
+          </dd>
+
+          <dt class="col-sm-4">回答コメント:</dt>
+          <dd class="col-sm-8">
+            <%= @apply_data_tab.wg_reply_comment %>
+            <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
+          </dd>
+
+          <dt class="col-sm-4">設備計画作業部会コメント:</dt>
+          <dd class="col-sm-8"><%= @apply_data_tab.sk_comment %></dd>
+
         </div>
 
-        <div class="col-md-6">
-          <dl class="row">
-            <dt class="col-sm-4">申請種別:</dt>
-            <dd class="col-sm-8">
-              <% if @apply_data_tab.apply_kind == 1 %>
-              一般
-              <% elsif @apply_data_tab.apply_kind == 2 %>
-              放送
-              <% else %>
-              <%= @apply_data_tab.apply_kind %>
-              <% end %>
-            </dd>
 
-            <dt class="col-sm-4">区分:</dt>
-            <dd class="col-sm-8">
-              <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
-              <% case div %>
-              <% when 'new' %>
-              新規
-              <% when 'replace' %>
-              代替
-              <% when 'repair' %>
-              修理
-              <% end %>
-              <% end %>
-              <%= divisions.join(', ') %>
-            </dd>
-
-            <dt class="col-sm-4">技術計画推進コメント:</dt>
-            <dd class="col-sm-8">
-              <%= @apply_data_tab.wg_comment %>
-              <% if @apply_data_tab.wg_comment_status == 0 %>
-              未完了
-              <% elsif @apply_data_tab.wg_comment_status == 1 %>
-              完了
-              <% else %>
-              <%= @apply_data_tab.wg_comment_status %>
-              <% end %>
-              <small class="text-muted d-block"><%= @apply_data_tab.wg_comment_update_date %></small>
-            </dd>
-
-            <dt class="col-sm-4">回答コメント:</dt>
-            <dd class="col-sm-8">
-              <%= @apply_data_tab.wg_reply_comment %>
-              <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
-            </dd>
-
-            <dt class="col-sm-4">設備計画作業部会コメント:</dt>
-            <dd class="col-sm-8"><%= @apply_data_tab.sk_comment %></dd>
-          </dl>
-        </div>
-      </div>
-
-      <div class="mt-4">
-        <%= link_to "Back to apply data tabs", apply_data_tabs_path, class: "btn btn-secondary" %>
       </div>
     </div>
   </div>
