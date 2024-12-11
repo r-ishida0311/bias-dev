@@ -4,6 +4,8 @@
 <%= link_to "新規申請", new_apply_path %>
 
 <%= search_form_for @search do |f| %>
+<%= f.label :apply_kind_eq, "申請種別" %>
+<%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
 
 <%= f.label :item_name_cont, "品名" %>
 <%= f.search_field :item_name_cont %>
@@ -11,6 +13,9 @@
 
 <%= f.label :specific_contents_cont, "具体的内容" %>
 <%= f.search_field :specific_contents_cont %>
+
+<%= f.label :apply_emp_name_cont, "申請者" %>
+<%= f.search_field :apply_emp_name_cont %>
 
 <%= f.submit %>
 
