@@ -222,17 +222,7 @@
 
 
 
-<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
-<% unless apply.new_record? %>
-<div class="col-md-6">
-  <%= boss1_form.label :原局確認ステータス, style: "display: block;"  %>
-  <%= boss1_form.number_field :boss_status, class: "form-control" %>
-</div>
-<% else %>
-<%= boss1_form.hidden_field :boss_status, value: 0 %>
 
-<% end %>
-<% end %>
 
 
 
@@ -254,22 +244,38 @@
 
 <div>
   <%= form.label :技術計画推進コメント状態, style: "display: block;" %>
-  <%= form.number_field :wg_comment_status, class: "form-control" %>
+  <span><%= tech_status_label(apply.wg_comment_status) %></span>
+  <%= form.hidden_field :wg_comment_status %>
 </div>
 
 <div>
   <%= form.label :申請ステータス, style: "display: block;" %>
-  <%= form.number_field :apply_status, class: "form-control" %>
+  <span><%= apply_status_label(apply.apply_status) %></span>
+  <%= form.hidden_field :apply_status %>
 </div>
 
 <div>
   <%= form.label :技術確認ステータス, style: "display: block;" %>
-  <%= form.number_field :tech_status, class: "form-control" %>
+  <span><%= tech_status_label(apply.tech_status) %></span>
+  <%= form.hidden_field :tech_status %>
 </div>
+<%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
+<% unless apply.new_record? %>
 
+<%= boss1_form.label :原局確認ステータス, style: "display: block;"  %>
+
+<span><%= boss_status_label(apply.boss1.boss_status) %></span>
+<%= form.hidden_field :boss_status %>
+
+<% else %>
+<%= boss1_form.hidden_field :boss_status, value: 0 %>
+
+<% end %>
+<% end %>
 <div>
   <%= form.label :判定結果, style: "display: block;" %>
-  <%= form.number_field :approve_status, class: "form-control" %>
+  <span><%= approve_status_label(apply.approve_status) %></span>
+  <%= form.hidden_field :approve_status %>
 </div>
 <div>
   <%= form.label :技術確認者, style: "display: block;" %>
