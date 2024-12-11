@@ -11,6 +11,8 @@ class AppliesController < ApplicationController
 
   # GET /applies/1 or /applies/1.json
   def show
+    @apply = Apply.find(params[:id])
+    @readonly = true # Add this line
   end
 
   # GET /applies/new
