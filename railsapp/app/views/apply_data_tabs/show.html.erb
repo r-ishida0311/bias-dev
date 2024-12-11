@@ -4,7 +4,7 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <h5 class="mb-0">申請番号: <%= @apply_data_tab.reference_no %></h5>
+          <h5 class="mb-0">申請番号: <%= @apply_data_tab.apply_data_id %></h5>
         </div>
         <div class="card-body">
           <dl class="row mb-0">
@@ -133,48 +133,54 @@
       <div class="row">
         <div class="col-md-15">
 
-          <div class="row">
-            <div class="col-md-1">
-              <dt>申請種別:</dt>
-              <dd>
-                <% if @apply_data_tab.apply_kind == 1 %>
-                一般
-                <% elsif @apply_data_tab.apply_kind == 2 %>
-                放送
-                <% else %>
-                <%= @apply_data_tab.apply_kind %>
-                <% end %>
-              </dd>
-            </div>
-            <div class="col-md-1">
-              <dt>区分:</dt>
-              <dd>
-                <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
-                <% case div %>
-                <% when 'new' %>
-                新規
-                <% when 'replace' %>
-                代替
-                <% when 'repair' %>
-                修理
-                <% end %>
-                <% end %>
-              </dd>
-            </div>
-          </div>
+
 
           <dl class="row">
-            <div class="col-md-2">
+            <div class="col-md-1">
               <dt>社員番号:</dt>
               <dd><%= @apply_data_tab.apply_emp_no %></dd>
             </div>
-            <div class="col-md-2">
-              <dt>申請者氏名（社員番号）:</dt>
+            <div class="col-md-1">
+              <dt>申請者氏名:</dt>
               <dd><%= @apply_data_tab.apply_emp_name %></dd>
             </div>
             <div class="col-md-4">
               <dt>部署:</dt>
               <dd><%= @apply_data_tab.apply_emp_dep %></dd>
+            </div>
+
+            <div class="row">
+              <div class="col-md-1">
+                <dt>申請種別:</dt>
+                <dd>
+                  <% if @apply_data_tab.apply_kind == 1 %>
+                  一般
+                  <% elsif @apply_data_tab.apply_kind == 2 %>
+                  放送
+                  <% else %>
+                  <%= @apply_data_tab.apply_kind %>
+                  <% end %>
+                </dd>
+              </div>
+              <div class="col-md-1">
+                <dt>区分:</dt>
+                <dd>
+                  <% divisions = JSON.parse(@apply_data_tab.division).map do |div| %>
+                  <% case div %>
+                  <% when 'new' %>
+                  新規
+                  <% when 'replace' %>
+                  代替
+                  <% when 'repair' %>
+                  修理
+                  <% end %>
+                  <% end %>
+                </dd>
+              </div>
+              <div class="col-md-2">
+                <dt>整理番号:</dt>
+                <dd><%= @apply_data_tab.reference_no %></dd>
+              </div>
             </div>
 
             <div class="row">
