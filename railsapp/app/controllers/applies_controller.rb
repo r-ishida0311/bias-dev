@@ -1,6 +1,6 @@
 class AppliesController < ApplicationController
   before_action :set_apply, only: %i[ show edit update destroy ]
-
+  before_action :set_employee_data, only: [:edit, :update]
   # GET /applies or /applies.json
   def index
     @applies = Apply.includes(:department).all 
@@ -68,6 +68,12 @@ class AppliesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_apply
       @apply = Apply.find(params[:id])
+    end
+
+    def set_employee_data #Add this method
+      @employee_number = @apply.apply_emp_no # Or fetch it appropriately from your model
+      @employee_user = @apply.apply_emp_name # Or fetch it appropriately from your model
+      @preselected_department = @apply.department # Assuming you have a department association
     end
 
     # Only allow a list of trusted parameters through.
