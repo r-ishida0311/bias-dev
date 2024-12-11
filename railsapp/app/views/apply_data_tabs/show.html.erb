@@ -107,7 +107,7 @@
           <ul class="list-group">
             <% @files.each do |file| %>
             <li class="list-group-item">
-              <%= link_to file.file_title, file.file_path %>
+              <%= link_to file.file_title, root_path + file.file_path %>
             </li>
             <% end %>
           </ul>
