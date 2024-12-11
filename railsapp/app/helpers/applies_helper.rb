@@ -24,6 +24,17 @@ module AppliesHelper
       "不明" # statusが0,1以外の値の場合の処理も追加
     end
   end
+  
+  def boss_status_label(status)
+    case status
+    when 0
+      "未確認"
+    when 1
+      "確認済み"
+    else
+      "不明" # statusが0,1以外の値の場合の処理も追加
+    end
+  end
 
   def approve_status_label(status)
     case status
