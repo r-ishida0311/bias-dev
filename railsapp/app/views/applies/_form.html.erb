@@ -100,6 +100,10 @@
 
           <div class="row" data-controller="apply">
             <div class="col-md-3">
+              <%= form.label :対象年度, style: "display: block;" %>
+              <%= form.hidden_field :year, value: @preselected_year %><%= @preselected_year %>
+            </div>
+            <div class="col-md-3">
               <%= form.label :区分 %>
               <%= form.fields_for :division, @apply.division || @apply.build_division do |division_form| %>
               <div class="col-md-8">
@@ -290,7 +294,6 @@
 
 
 
-        <%= form.hidden_field :year, value: @preselected_year %>
 
         <div>
           <%= form.submit %>

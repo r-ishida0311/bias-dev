@@ -25,6 +25,7 @@ class AppliesController < ApplicationController
 
   # GET /applies/1/edit
   def edit
+    @preselected_year = Year.find_by(target_year: 1)&.year
   end
 
   # POST /applies or /applies.json

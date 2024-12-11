@@ -1,7 +1,9 @@
 <tr>
+  <td><%= apply.year %></td>
   <td><%= apply_kind_label(apply.apply_kind) %></td>
   <td><%= apply.reference_no %></td>
   <td><%= apply.id %></td>
+
   <td><%= display_oh(apply.division&.oh) %></td>
   <td><%= apply.item_name %></td>
   <td><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
