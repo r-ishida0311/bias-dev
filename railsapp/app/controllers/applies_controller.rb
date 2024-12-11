@@ -20,6 +20,7 @@ class AppliesController < ApplicationController
     @employee_number = current_user.login_ref_no
     @preselected_department = Department.find_by(dep_name: current_user.login_department)
     @apply.build_division 
+    @preselected_year = Year.find_by(target_year: 1)&.year
   end
 
   # GET /applies/1/edit
@@ -81,7 +82,7 @@ def apply_params
   params.require(:apply).permit(:apply_emp_no, :apply_emp_name, :apply_kind, :department_id, :reference_no, :item_name, :equipment_name, 
                                 :manufacturer_name, :supplier_name, :quantity, :estimated_cost, :desired_delivery, :location, :reason, 
                                 :specific_contents, :old_asset_multi, :old_asset_no, :old_asset_YM, :old_asset_cost, :old_asset_handling,
-                                :apply_status, :tech_status, :approve_status, :wg_comment_status, 
+                                :apply_status, :tech_status, :approve_status, :wg_comment_status, :year, 
                                 boss1_attributes: [:boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],  # 修正
                                 division_attributes: [:id, :new_pur, :replace, :repair, :_destroy])   
 end

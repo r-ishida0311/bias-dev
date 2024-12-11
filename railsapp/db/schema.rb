@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_09_123617) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_11_142329) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -143,6 +143,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_123617) do
     t.datetime "wg_reply_comment_update_date"
     t.integer "old_asset_cost"
     t.integer "boss1_id"
+    t.integer "year"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
     t.index ["boss1_id"], name: "fk_rails_2b516931c6"
     t.index ["department_id"], name: "index_applies_on_department_id"
