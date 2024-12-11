@@ -3,10 +3,9 @@ class ApplyDataTabsController < ApplicationController
 
   # GET /apply_data_tabs or /apply_data_tabs.json
   def index
-    # @apply_data_tabs = ApplyDataTab.all
-    # @apply_data_tabs = ApplyDataTab.page(params[:page])
+
     @search = ApplyDataTab.ransack(params[:q])
-    @apply_data_tabs = @search.result.page(params[:page])
+    @apply_data_tabs = @search.result.where.not(apply_status: 9).page(params[:page])
     @years = ApplyDataTab.select(:year).distinct.pluck(:year).map { |year| [year, year] }
   end
 
