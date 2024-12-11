@@ -226,7 +226,7 @@
             <dd class="col-sm-8"><%= @apply_data_tab.reason %></dd>
 
             <dt class="col-sm-8">具体的内容:</dt>
-            <dd class="col-sm-10"><%= @apply_data_tab.specific_contents %></dd>
+            <dd class="col-sm-10"> <%= simple_format(@apply_data_tab.specific_contents) %></dd>
 
             <div class="row">
               <div class="col-md-2">
@@ -263,16 +263,16 @@
 
 
 
-          <dt class="col-sm-4">技術計画推進コメント:</dt>
-          <dd class="col-sm-10">
-            <%= @apply_data_tab.wg_comment %>
-            <% if @apply_data_tab.wg_comment_status == 0 %>
+          <dt class="col-sm-4">技術計画推進コメント: <% if @apply_data_tab.wg_comment_status == 0 %>
             未完了
-            <% elsif @apply_data_tab.wg_comment_status == 1 %>
+            <% elsif @apply_data_tab.wg_comment_status == 2 %>
             完了
             <% else %>
             <%= @apply_data_tab.wg_comment_status %>
-            <% end %>
+            <% end %></dt>
+          <dd class="col-sm-10">
+            <%= simple_format(@apply_data_tab.wg_comment) %>
+
             <%
 =begin%>
             <small class="text-muted d-block"><%= @apply_data_tab.wg_comment_update_date %></small>
@@ -282,7 +282,7 @@
 
           <dt class="col-sm-4">回答コメント:</dt>
           <dd class="col-sm-10">
-            <%= @apply_data_tab.wg_reply_comment %>
+            <%= simple_format(@apply_data_tab.wg_reply_comment) %>
             <%
 =begin%>
             <small class="text-muted d-block"><%= @apply_data_tab.wg_reply_comment_update_date %></small>
