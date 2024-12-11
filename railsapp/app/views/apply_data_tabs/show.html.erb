@@ -4,7 +4,7 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <h5 class="mb-0">整理番号: <%= @apply_data_tab.reference_no %></h5>
+          <h5 class="mb-0">申請番号: <%= @apply_data_tab.reference_no %></h5>
         </div>
         <div class="card-body">
           <dl class="row mb-0">
@@ -21,26 +21,9 @@
               <% end %>
             </dd>
 
-            <dt class="col-sm-4">技術計画推進部確認:</dt>
-            <dd class="col-sm-8">
-              <% if @apply_data_tab.tech_status == 0 %>
-              未確認
-              <% elsif @apply_data_tab.tech_status == 1 %>
-              確認
-              <% else %>
-              <%= @apply_data_tab.tech_status %>
-              <% end %>
-            </dd>
 
-            <dt class="col-sm-4">技術計画推進部確認者:</dt>
-            <dd class="col-sm-8">
-              <%= @apply_data_tab.tech_check_name %>
-              <%
-=begin%>
-              <small class="text-muted d-block"><%= @apply_data_tab.tech_update_date %></small>
-              <%
-=end%>
-            </dd>
+
+
 
             <dt class="col-sm-4">判定結果:</dt>
             <dd class="col-sm-8">
@@ -75,7 +58,17 @@
             <dt class="col-sm-4">原局確認者3:</dt>
             <dd class="col-sm-8">
               <%= @apply_data_tab.boss_check_4_name %>(<%= translate_boss_check(@apply_data_tab.boss_check_4) %>)
-              <small class="text-muted d-block"><%= @apply_data_tab.boss_update_date.strftime("%Y/%m/%d %H:%M:%S")  %></small>
+            </dd>
+
+            <dt class="col-sm-4">技術計画推進部確認:</dt>
+            <dd class="col-sm-8"><%= @apply_data_tab.tech_check_name %>(<% if @apply_data_tab.tech_status == 0 %>
+              未確認
+              <% elsif @apply_data_tab.tech_status == 1 %>
+              確認
+              <% else %>
+              <%= @apply_data_tab.tech_status %>
+              <% end %>)
+
             </dd>
 
             <dt class="col-sm-4">作成日時:</dt>
@@ -193,15 +186,15 @@
 
             <div class="row">
 
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>型式:</dt>
                 <dd><%= @apply_data_tab.equipment_name %></dd>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>製造者名:</dt>
                 <dd><%= @apply_data_tab.manufacturer_name %></dd>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>取扱業者:</dt>
                 <dd><%= @apply_data_tab.supplier_name %></dd>
               </div>
@@ -212,15 +205,15 @@
             </div>
 
             <div class="row">
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>予定価格:</dt>
                 <dd><%= @apply_data_tab.estimated_cost %>（千円）</dd>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>承認金額:</dt>
                 <dd><%= @apply_data_tab.sk_approve_cost %>（千円）</dd>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-2">
                 <dt>設置場所:</dt>
                 <dd><%= @apply_data_tab.location %></dd>
               </div>
