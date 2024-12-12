@@ -1,7 +1,7 @@
 class DepartmentsController < ApplicationController
   def index
     @years = Year.all
-    @selected_year = params[:year] || Year.last&.year #default to the latest year if none selected
+    @selected_year = params[:year]#default to the latest year if none selected
 
     if @selected_year.present?
       @departments = Department.where(year_id: Year.find_by(year: @selected_year)&.id).all
@@ -20,7 +20,7 @@ class DepartmentsController < ApplicationController
         redirect_to departments_path and return
       end
 
-
+      Department.where(year_id: selected_year_id).destroy_all
       CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
         departments = Department.new(convert_csv_to_hash(row).merge(year_id: selected_year_id))
         if !departments.save
