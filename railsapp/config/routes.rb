@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get    'data_upload'          => 'departments#index'
   post   'data_upload'          => 'departments#create'
+  get 'departments/:year/export_csv', to: 'departments#export_csv', as: 'export_csv_departments'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

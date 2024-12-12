@@ -6,7 +6,8 @@
     <div class="col-md-3">
       <%= form_with(url: departments_path, method: :get, local: true) do |form| %>
       <div class="mb-3">
-        <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), class: "selectpicker" %>
+        <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), class: "form-select" %>
+
       </div>
       <div class="mb-3">
         <%= form.submit "表示", class: "btn btn-primary" %>
@@ -34,6 +35,7 @@
             <li class="list-group-item"><%= department.dep_name %></li>
             <% end %>
           </ul>
+          <%= link_to "CSVで出力", export_csv_departments_path(@selected_year), class: "btn btn-success mt-2" %> <%# Add the export link %>
         </div>
       </div>
       <% else %>

@@ -34,9 +34,38 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def export_csv
+    @selected_year = params[:year]
+    if @selected_year.present?
+      @departments = Department.where(year_id: Year.find_by(year: @selected_year)&.id).all
+      if @departments.any?
+        response.headers['Content-Type'] = 'text/csv; charset=shift_jis'
+        response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year}年度部署一覧.csv"
+        self.response_body = generate_csv(@departments) # ストリーミングレスポンス
+      else
+        flash[:alert] = "選択された年度の部署データはありません。"
+        redirect_to departments_path
+      end
+    else
+      flash[:alert] = "年度を選択してください。"
+      redirect_to departments_path
+    end
+  end
+
+
   private
 
   def convert_csv_to_hash(row)
     { dep_name: row['部署名'] } #Add other attributes as needed
   end
+
+  def generate_csv(departments)
+    Enumerator.new do |yielder|
+      yielder << CSV.generate_line(["部署名"], force_quotes: true, encoding: 'SJIS') # ヘッダー
+      departments.find_each do |department|
+        yielder << CSV.generate_line([department.dep_name], force_quotes: true, encoding: 'SJIS')
+      end
+    end
+  end
+
 end
