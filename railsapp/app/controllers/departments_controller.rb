@@ -1,45 +1,42 @@
 class DepartmentsController < ApplicationController
   def index
     @years = Year.all
-    @selected_year = params[:year] 
+    @selected_year = params[:year] || Year.last&.year #default to the latest year if none selected
 
-
-# get => data_upload
-    upload_file = params[:upload_file]
-  end
-
-  def create
-    if params[:upload_file].present?
-      upload_file = params[:upload_file].tempfile
-
-      # ファイルの内容によってはEncodingErrorが出ますので適宜調整してください
-      CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
-        
-        # recruiting_idがあった場合はレコードを呼び出す、ない場合は新しく作成
-        departments = Department.new
-        departments.attributes = convert_csv_to_hash(row)
-        departments.save
-      end
-      redirect_to root_path
+    if @selected_year.present?
+      @departments = Department.where(year_id: Year.find_by(year: @selected_year)&.id).all
+    else
+      @departments = [] # Or handle the case where no year is selected appropriately.
     end
   end
 
+  def create
+    if params[:upload_file].present? && params[:year].present?
+      upload_file = params[:upload_file].tempfile
+      selected_year_id = Year.find_by(year: params[:year])&.id
 
-  def import
-    # fileはtmpに自動で一時保存される
-    Department.import(params[:file])
-    redirect_to departments_url
+      if selected_year_id.nil?
+        flash[:alert] = "Invalid year selected." # Handle the case where the year is not found
+        redirect_to departments_path and return
+      end
+
+
+      CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
+        departments = Department.new(convert_csv_to_hash(row).merge(year_id: selected_year_id))
+        if !departments.save
+            flash[:alert] = "Error saving department: #{departments.errors.full_messages.join(', ')}" #Add error handling
+        end
+      end
+      redirect_to departments_path, notice: "Departments imported successfully!"
+    else
+      flash[:alert] = "Please select a year and upload a file."
+      redirect_to departments_path
+    end
   end
 
   private
 
-  # csvの欲しいデータがある列とDBのカラムを指定してデータを入れます。
   def convert_csv_to_hash(row)
-    params = {
-      dep_name: row['部署名'],
-      year_id: row['対象年度'],
-    }
-    return params
+    { dep_name: row['部署名'] } #Add other attributes as needed
   end
-
 end
