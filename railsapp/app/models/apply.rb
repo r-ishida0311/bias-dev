@@ -7,7 +7,7 @@ class Apply < ApplicationRecord
   accepts_nested_attributes_for :boss1
 
   validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
-
+  validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "は半角数字と_のみを許可します。" }
   # validates :desired_delivery, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
   # validates :old_asset_YM, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
   # validates :old_asset_cost, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "は0以上の整数で入力してください" }
