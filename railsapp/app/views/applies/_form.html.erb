@@ -107,13 +107,13 @@
               <%= form.label :区分 %>
               <%= form.fields_for :division, @apply.division || @apply.build_division do |division_form| %>
               <div class="col-md-8">
-                <%= division_form.check_box :new_pur %>
+                <%= division_form.check_box :new_pur , include_hidden: false%>
                 <%= division_form.label :new_pur, "新規" %>
 
-                <%= division_form.check_box :replace %>
+                <%= division_form.check_box :replace , include_hidden: false%>
                 <%= division_form.label :replace, "更新" %>
 
-                <%= division_form.check_box :repair %>
+                <%= division_form.check_box :repair , include_hidden: false%>
                 <%= division_form.label :repair, "修理" %>
               </div>
 
@@ -214,7 +214,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group form-check">旧品資産フラグ
-                <%= form.check_box :old_asset_multi, class: "form-check-input", label: '旧品資産フラグ', checked: apply.old_asset_multi?, data: { action: "change->check#updateOldAssetFields" } %>
+                <%= form.check_box :old_asset_multi, include_hidden: false, data: { action: "change->check#updateOldAssetFields" } %>
               </div>
             </div>
 
