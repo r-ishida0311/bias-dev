@@ -1,5 +1,6 @@
 class Apply < ApplicationRecord
   before_save :clear_old_asset_fields
+  
   belongs_to :department
   # belongs_to :add_dep
   belongs_to :division, optional: true 
@@ -9,6 +10,7 @@ class Apply < ApplicationRecord
   before_validation :clear_reference_no_if_apply_kind_not_2
   validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
   validate :validate_old_asset_no
+  
   # validates :desired_delivery, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
   # validates :old_asset_YM, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
   # validates :old_asset_cost, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "は0以上の整数で入力してください" }
@@ -35,5 +37,7 @@ class Apply < ApplicationRecord
       self.old_asset_cost = nil
     end
   end
+
+
 
 end
