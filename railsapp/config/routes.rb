@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :applies
+  resources :applies do
+    resources :files, only: [:destroy], controller: 'apply_files'
+  end
+  
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
   resources :bosses

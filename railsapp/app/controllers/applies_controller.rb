@@ -111,7 +111,7 @@ def apply_params
 :year, 
 :sk_approve_cost,
 :sk_comment,
-:file,
+files: [], 
 boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart], 
 division_attributes: [:id, :new_pur, :replace, :repair, :_destroy])
 end
