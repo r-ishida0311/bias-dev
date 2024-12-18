@@ -1,6 +1,6 @@
 class Apply < ApplicationRecord
   before_save :clear_old_asset_fields
-  
+  has_many_attached :file
   belongs_to :department
   # belongs_to :add_dep
   belongs_to :division, optional: true 

@@ -13,6 +13,14 @@
   </div>
   <% end %>
 
+  <% apply.file.each do |file| %>
+  <div>
+    <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
+  </div>
+  <% end %>
+
+  <%= form.file_field :file %>
+
 
 
   <div class="row">
