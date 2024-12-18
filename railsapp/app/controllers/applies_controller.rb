@@ -17,7 +17,7 @@ class AppliesController < ApplicationController
 
   # GET /applies/new
   def new
-    @apply = Apply.new
+    @apply = Apply.new(apply_kind: 1) 
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
     @preselected_department = Department.find_by(dep_name: current_user.login_department)
