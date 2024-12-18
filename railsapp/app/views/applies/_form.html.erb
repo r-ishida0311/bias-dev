@@ -13,21 +13,7 @@
   </div>
   <% end %>
 
-  <%= form.file_field :files, multiple: true %> # 複数ファイルアップロード対応
 
-  <% if apply.files.attached? %>
-  <div>
-    <h3>アップロード済みファイル</h3>
-    <ul>
-      <% apply.files.each do |file| %>
-      <li>
-        <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
-        <%= link_to '削除', apply_file_path(apply, file), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-      </li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
 
 
 
@@ -90,8 +76,32 @@
         </div>
 
       </div>
-    </div>
 
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">添付ファイル</h5>
+        </div>
+        <div class="card-body">
+          <dt class="col-sm-8">
+            <%= form.file_field :files, multiple: true %> # 複数ファイルアップロード対応
+
+            <% if apply.files.attached? %>
+            <div>
+              <h3>アップロード済みファイル</h3>
+              <ul>
+                <% apply.files.each do |file| %>
+                <li>
+                  <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
+                  <%= link_to '削除', apply_file_path(apply, file), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+          </dt>
+        </div>
+      </div>
+    </div>
 
 
     <div class="col-md-8">
