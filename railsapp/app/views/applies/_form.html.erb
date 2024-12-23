@@ -83,6 +83,7 @@
         </div>
         <div class="card-body">
           <dt class="col-sm-8">
+            <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <%= form.file_field :files, multiple: true %> # 複数ファイルアップロード対応
 
             <% if apply.files.attached? %>
@@ -97,6 +98,11 @@
                 <% end %>
               </ul>
             </div>
+            <% end %>
+
+            <% else %>
+            <p>ファイルの添付は新規申請後、編集画面で可能になります。</p>
+
             <% end %>
           </dt>
         </div>
