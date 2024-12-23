@@ -10,6 +10,9 @@ application.register("apply", ApplyController)
 import CheckController from "./check_controller"
 application.register("check", CheckController)
 
+import FilesController from "./files_controller"
+application.register("files", FilesController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 

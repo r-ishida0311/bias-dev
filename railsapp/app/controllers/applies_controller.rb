@@ -87,6 +87,25 @@ class AppliesController < ApplicationController
       @preselected_department = @apply.department # Assuming you have a department association
     end
 
+    # 選択状態の画像をパラメータにマージ（Postモデルとの紐付け）
+    def post_params
+      params.require(:apply).permit(:title).merge(files: uploaded_files)
+    end
+  
+    # アップロード済み画像の検索
+    def uploaded_files
+      params[:apply][:files].drop(1).map{|id| ActiveStorage::Blob.find(id)} if params[:apply][:files]
+    end
+  
+    # blobデータの作成
+    def create_blob(file)
+      ActiveStorage::Blob.create_and_upload!(
+        io: file.open,
+        filename: file.original_filename,
+        content_type: file.content_type
+      )
+    end
+
     # Only allow a list of trusted parameters through.
 def apply_params
   params.require(:apply).permit(:apply_emp_no, 

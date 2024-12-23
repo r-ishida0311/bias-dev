@@ -85,6 +85,20 @@
           <dt class="col-sm-8">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <%= form.file_field :files, multiple: true %> # 複数ファイルアップロード対応
+            <div data-files-target="preview">
+              <% if @apply.files.attached? %>
+              <% @apply.files.each do |file| %>
+              <div class="file-box inline-flex mx-1 mb-5" data-controller="files" data-files-target="file_box">
+                <div class="text-center">
+
+                  <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
+                  <%= form.hidden_field :files, name: "apply[files][]", style: "display: none", value: "#{file.blob.id}" %>
+                </div>
+              </div>
+              <% end %>
+              <% end %>
+            </div>
+
 
             <% if apply.files.attached? %>
             <div>
