@@ -33,7 +33,10 @@ class AppliesController < ApplicationController
   # POST /applies or /applies.json
   def create
     @apply = Apply.new(apply_params)
-
+    @employee_user = current_user.login_user
+    @employee_number = current_user.login_ref_no
+    @preselected_department = Department.find_by(dep_name: current_user.login_department)
+    @preselected_year = Year.find_by(target_year: 1)&.year
     respond_to do |format|
       if @apply.save
         format.html { redirect_to applies_path, notice: "Apply was successfully created." }
@@ -47,6 +50,10 @@ class AppliesController < ApplicationController
 
   # PATCH/PUT /applies/1 or /applies/1.json
   def update
+    @employee_user = current_user.login_user
+    @employee_number = current_user.login_ref_no
+    @preselected_department = @apply.department
+    @preselected_year = Year.find_by(target_year: 1)&.year
     respond_to do |format|
       if @apply.update(apply_params)
         format.html { redirect_to @apply, notice: "Apply was successfully updated." }
