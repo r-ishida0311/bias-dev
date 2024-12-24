@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   resources :applies do
     resources :files, controller: 'apply_files'
-    post "applies/upload_file", to: "applies#upload_file"
   end
   
+  post "applies/upload_file", to: "applies#upload_file"
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
   resources :bosses

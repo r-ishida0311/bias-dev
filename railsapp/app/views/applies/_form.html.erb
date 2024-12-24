@@ -82,32 +82,22 @@
           <h5 class="mb-0">添付ファイル</h5>
         </div>
         <div class="card-body">
-          <dt class="col-sm-8">
+          <dt class="col-sm-8" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
-            <%= form.file_field :files, multiple: true, data: { files_target: "select", action: "change->files#selectFiles" } %>
+            <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select" } %>
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
               <div class="file-box inline-flex mx-1 mb-5" data-controller="files" data-files-target="file_box">
                 <%= link_to file.filename, url_for(file), target: :_blank %>
-
-                <%# Display the filename here %>
-                <div class="text-center">
-
-                  <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
-                  <%= form.hidden_field :files, name: "apply[files][]", style: "display: none", value: "#{file.blob.id}" %>
-                </div>
+                <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
+                <%= form.hidden_field :files, name: "apply[files][]", style: "display: none", value: "#{file.blob.id}" %>
               </div>
               <% end %>
               <% end %>
             </div>
-
-
-
-
             <% else %>
             <p>ファイルの添付は新規申請後、編集画面で可能になります。</p>
-
             <% end %>
           </dt>
         </div>
