@@ -84,11 +84,14 @@
         <div class="card-body">
           <dt class="col-sm-8">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
-            <%= form.file_field :files, multiple: true %> # 複数ファイルアップロード対応
+            <%= form.file_field :files, multiple: true, data: { files_target: "select", action: "change->files#selectFiles" } %>
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
               <div class="file-box inline-flex mx-1 mb-5" data-controller="files" data-files-target="file_box">
+                <%= link_to file.filename, url_for(file), target: :_blank %>
+
+                <%# Display the filename here %>
                 <div class="text-center">
 
                   <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
@@ -100,19 +103,7 @@
             </div>
 
 
-            <% if apply.files.attached? %>
-            <div>
-              <h3>アップロード済みファイル</h3>
-              <ul>
-                <% apply.files.each do |file| %>
-                <li>
-                  <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
-                  <%= link_to '削除', apply_file_path(apply, file), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-                </li>
-                <% end %>
-              </ul>
-            </div>
-            <% end %>
+
 
             <% else %>
             <p>ファイルの添付は新規申請後、編集画面で可能になります。</p>
