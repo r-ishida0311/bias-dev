@@ -1,5 +1,5 @@
 class AppliesController < ApplicationController
-  before_action :set_apply, only: %i[ show edit update destroy ]
+  before_action :set_apply, only: [ :show, :edit, :update, :destroy ]
   before_action :set_employee_data, only: [:edit, :update]
   # GET /applies or /applies.json
   def index

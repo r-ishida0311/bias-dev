@@ -10,5 +10,11 @@ export default class extends Controller {
   }
   selectFiles() {
     console.log('file selected');
+    const files = this.selectTargets[0].files; // file_fieldで取得した画像ファイル
+    for (const file of files) {
+      console.log(file.name);
+      this.uploadImage(file); // 選択した画像ファイルのアップロード
+    }
+    this.selectTarget.value = ''; // 選択ファイルのリセット
   }
 }
