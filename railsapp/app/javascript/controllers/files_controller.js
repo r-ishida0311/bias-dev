@@ -6,15 +6,43 @@ export default class extends Controller {
   static targets = ['select', 'preview', 'file_box'];
 
   connect() {
-    console.log('Files controller connected');
+    // console.log('Files controller connected');
   }
   selectFiles() {
-    console.log('file selected');
+    // console.log('file selected');
     const files = this.selectTargets[0].files; // file_fieldで取得した画像ファイル
     for (const file of files) {
-      console.log(file.name);
-      this.uploadImage(file); // 選択した画像ファイルのアップロード
+      // console.log(file.name);
+      this.uploadFile(file); // 選択した画像ファイルのアップロード
     }
     this.selectTarget.value = ''; // 選択ファイルのリセット
+  }
+
+  uploadFile(file) {
+    const csrfToken = document.getElementsByName('csrf-token')[0].content; // CSRFトークンを取得
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': csrfToken,
+      },
+      body: formData,
+    }; /* fetchで画像ファイルをPostコントローラー(upload_imageアクション)に送信 */
+    fetch('/applies/upload_file', options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Upload successful:', data);
+        const fileId = data.id;
+        const fileUrl = data.url;
+        console.log('id', fileId);
+        console.log(data);
+        // Postコントローラーからのレスポンス(blobデータ)
+        // this.previewImage(file, data.id); // 画像プレビューアクションにblobデータのidを受け渡す
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

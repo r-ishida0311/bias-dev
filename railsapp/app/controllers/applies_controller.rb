@@ -75,6 +75,14 @@ class AppliesController < ApplicationController
     end
   end
 
+  def upload_file
+    Rails.logger.info "upload_file action called with params: #{params.inspect}"
+    @file_blob = create_blob(params[:file])
+    render json: @file_blob
+    # Existing code or any new code for file uploads can go here.
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_apply
@@ -87,17 +95,6 @@ class AppliesController < ApplicationController
       @preselected_department = @apply.department # Assuming you have a department association
     end
 
-    # 選択状態の画像をパラメータにマージ（Postモデルとの紐付け）
-    def post_params
-      params.require(:apply).permit(:title).merge(files: uploaded_files)
-    end
-  
-    # アップロード済み画像の検索
-    def uploaded_files
-      params[:apply][:files].drop(1).map{|id| ActiveStorage::Blob.find(id)} if params[:apply][:files]
-    end
-  
-    # blobデータの作成
     def create_blob(file)
       ActiveStorage::Blob.create_and_upload!(
         io: file.open,
@@ -105,6 +102,8 @@ class AppliesController < ApplicationController
         content_type: file.content_type
       )
     end
+
+
 
     # Only allow a list of trusted parameters through.
 def apply_params
