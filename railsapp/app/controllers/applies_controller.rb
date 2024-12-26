@@ -74,17 +74,17 @@ class AppliesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+def upload_file
+  Rails.logger.info "upload_file action called with params: #{params.inspect}"
 
-  def upload_file
-    Rails.logger.info "upload_file action called with params: #{params.inspect}"
+  apply = Apply.find(params[:apply_id])
+  file_blob = create_blob(params[:file])
 
-    apply = Apply.find(params[:apply_id])
+  apply.files.attach(file_blob)
 
-    @file_blob = create_blob(params[:file])
-    render json: @file_blob
-    # Existing code or any new code for file uploads can go here.
-
-  end
+  render json: { id: file_blob.id, url: url_for(file_blob) }
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
