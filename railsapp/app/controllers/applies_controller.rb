@@ -77,6 +77,9 @@ class AppliesController < ApplicationController
 
   def upload_file
     Rails.logger.info "upload_file action called with params: #{params.inspect}"
+
+    apply = Apply.find(params[:apply_id])
+
     @file_blob = create_blob(params[:file])
     render json: @file_blob
     # Existing code or any new code for file uploads can go here.

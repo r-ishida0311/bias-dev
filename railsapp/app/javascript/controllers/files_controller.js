@@ -9,10 +9,11 @@ export default class extends Controller {
     // console.log('Files controller connected');
   }
   selectFiles() {
-    // console.log('file selected');
-    const files = this.selectTargets[0].files; // file_fieldで取得した画像ファイル
+    const applyId = this.selectTarget.dataset.applyId;
+    const files = this.selectTargets[0].files;
+
+    console.log(applyId); // file_fieldで取得した画像ファイル
     for (const file of files) {
-      // console.log(file.name);
       this.uploadFile(file); // 選択した画像ファイルのアップロード
     }
     this.selectTarget.value = ''; // 選択ファイルのリセット
@@ -22,7 +23,7 @@ export default class extends Controller {
     const csrfToken = document.getElementsByName('csrf-token')[0].content; // CSRFトークンを取得
     const formData = new FormData();
     formData.append('file', file);
-
+    formData.append('apply_id', applyId);
     const options = {
       method: 'POST',
       headers: {
