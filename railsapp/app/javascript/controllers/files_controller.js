@@ -46,10 +46,30 @@ export default class extends Controller {
   }
 
   previewFile(fileName, fileUrl) {
-    const reader = new FileReader();
-    console.log(fileName, fileUrl);
-    reader.onload = (event) => {
-      // this.previewTarget.appendChild();
-    };
+    const fileBox = document.createElement('div');
+    fileBox.classList.add('file-box', 'inline-flex', 'mx-1', 'mb-5');
+    fileBox.setAttribute('data-controller', 'files');
+    fileBox.setAttribute('data-files-target', 'file_box');
+
+    const fileLink = document.createElement('a');
+    fileLink.href = fileUrl;
+    fileLink.target = '_blank';
+    fileLink.textContent = fileName;
+
+    const deleteLink = document.createElement('a');
+    deleteLink.classList.add('link', 'cursor-pointer');
+    deleteLink.setAttribute('data-action', 'click->files#deleteFile');
+    deleteLink.textContent = '削除';
+
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = 'apply[files][]';
+    hiddenField.value = fileUrl;
+
+    fileBox.appendChild(fileLink);
+    fileBox.appendChild(deleteLink);
+    fileBox.appendChild(hiddenField);
+
+    this.previewTarget.appendChild(fileBox);
   }
 }
