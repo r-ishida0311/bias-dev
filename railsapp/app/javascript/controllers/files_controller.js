@@ -72,4 +72,22 @@ export default class extends Controller {
 
     this.previewTarget.appendChild(fileBox);
   }
+
+  deleteFile(event) {
+    const fileBox = event.target.closest("[data-files-target='file_box']");
+    const blobId = fileBox.querySelector("input[type='hidden']").value;
+    const applyId = this.selectTarget.dataset.applyId;
+
+    fetch(`/applies/${applyId}/attachments/${blobId}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')
+          .content,
+      },
+    }).then((response) => {
+      if (response.ok) {
+        fileBox.remove();
+      }
+    });
+  }
 }

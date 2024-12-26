@@ -85,6 +85,14 @@ def upload_file
   render json: { id: file_blob.id, url: url_for(file_blob), file_name: file_blob.filename.to_s }
 end
 
+def destroy_attachment
+  @apply = Apply.find(params[:apply_id])
+  @blob = ActiveStorage::Blob.find(params[:blob_id])
+  @attachment = ActiveStorage::Attachment.find_by(record_type: 'Apply', record_id: @apply.id, blob_id: @blob.id)
+  @attachment.purge
+  head :no_content
+end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_apply
