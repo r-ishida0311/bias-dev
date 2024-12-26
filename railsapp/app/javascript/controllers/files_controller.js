@@ -12,7 +12,6 @@ export default class extends Controller {
     const applyId = this.selectTarget.dataset.applyId;
     const files = this.selectTargets[0].files;
 
-    // console.log(applyId); // file_fieldで取得した画像ファイル
     for (const file of files) {
       this.uploadFile(file, applyId); // 選択した画像ファイルのアップロード
     }
@@ -20,8 +19,6 @@ export default class extends Controller {
   }
 
   uploadFile(file, applyId) {
-    console.log('file', file);
-    console.log(applyId);
     const csrfToken = document.getElementsByName('csrf-token')[0].content; // CSRFトークンを取得
     const formData = new FormData();
     formData.append('file', file);
@@ -37,14 +34,22 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
         console.log('Upload successful:', data);
-        const fileId = data.id;
+        const fileName = data.file_name;
         const fileUrl = data.url;
-
+        console.log(fileName, fileUrl);
         // Postコントローラーからのレスポンス(blobデータ)
-        // this.previewImage(file, data.id); // 画像プレビューアクションにblobデータのidを受け渡す
+        this.previewFile(fileName, fileUrl); // 画像プレビューアクションにblobデータのidを受け渡す
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  previewFile(fileName, fileUrl) {
+    const reader = new FileReader();
+    console.log(fileName, fileUrl);
+    reader.onload = (event) => {
+      // this.previewTarget.appendChild();
+    };
   }
 }
