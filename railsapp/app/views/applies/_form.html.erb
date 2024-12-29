@@ -85,16 +85,17 @@
           <h5 class="mb-0">添付ファイル</h5>
         </div>
         <div class="card-body">
-          <dt class="col-sm-8" data-controller="files">
+          <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id } %>
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
-              <div class="file-box inline-flex mx-1 mb-5" data-files-target="file_box">
-                <%= link_to file.filename, url_for(file), target: :_blank %>
-                <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
-                <%= form.hidden_field :files, name: "apply[files][]", style: "display: none", value: "#{file.blob.id}" %>
+
+              <div class="d-flex mb-16" data-files-target="file_box" style="align-items: center;">
+                <div style="flex: 1;"> <%= link_to file.filename, url_for(file), target: :_blank, class: "d-inline-block text-truncate", style: "max-width: 600px;" %> </div>
+                <button type="button" class="btn btn-sm btn-danger ms-auto" data-action="click->files#deleteFile">削除</button>
+                <%= form.hidden_field :files, name: "apply[files][]", value: file.blob.id, class: "d-none" %>
               </div>
               <% end %>
               <% end %>

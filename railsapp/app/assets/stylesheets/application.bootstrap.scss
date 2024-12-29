@@ -34,3 +34,8 @@ turbo-frame::before {
   background-color: #0d6efd; /* Bootstrap's primary color */
   color: white;
 }
+
+.float-right {
+  float: right;
+  margin-left: auto; /* optional, for better spacing */
+}
