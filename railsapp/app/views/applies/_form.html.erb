@@ -88,18 +88,19 @@
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id } %>
-            <div data-files-target="preview">
-              <% if @apply.files.attached? %>
-              <% @apply.files.each do |file| %>
 
-              <div class="d-flex mb-16" data-files-target="file_box" style="align-items: center;">
-                <div style="flex: 1;"> <%= link_to file.filename, url_for(file), target: :_blank, class: "d-inline-block text-truncate", style: "max-width: 600px;" %> </div>
-                <button type="button" class="btn btn-sm btn-danger ms-auto" data-action="click->files#deleteFile">削除</button>
-                <%= form.hidden_field :files, name: "apply[files][]", value: file.blob.id, class: "d-none" %>
-              </div>
-              <% end %>
-              <% end %>
+            <%= turbo_frame_tag "files" do %>
+            <% if @apply.files.attached? %>
+            <% @apply.files.each do |file| %>
+            <div class="d-flex mb-16" data-files-target="file_box" style="align-items: center;">
+              <div style="flex: 1;"> <%= link_to file.filename, url_for(file), target: :_blank, class: "d-inline-block text-truncate", style: "max-width: 600px;" %> </div>
+              <button type="button" class="btn btn-sm btn-danger ms-auto" data-action="click->files#deleteFile">削除</button>
+              <%= form.hidden_field :files, name: "apply[files][]", value: file.blob.id, class: "d-none" %>
             </div>
+            <% end %>
+            <% end %>
+            <% end %>
+
             <% else %>
             <p>ファイルの添付は新規申請後、編集画面で可能になります。</p>
             <% end %>

@@ -30,19 +30,7 @@ export default class extends Controller {
       },
       body: formData,
     }; /* fetchで画像ファイルをPostコントローラー(upload_imageアクション)に送信 */
-    fetch('/applies/upload_file', options)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Upload successful:', data);
-        const fileName = data.file_name;
-        const fileUrl = data.url;
-        console.log(fileName, fileUrl);
-        // Postコントローラーからのレスポンス(blobデータ)
-        this.previewFile(fileName, fileUrl); // 画像プレビューアクションにblobデータのidを受け渡す
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    fetch('/applies/upload_file', options);
   }
 
   previewFile(fileName, fileUrl, blobId) {

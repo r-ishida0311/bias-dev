@@ -74,16 +74,13 @@ class AppliesController < ApplicationController
       format.json { head :no_content }
     end
   end
-def upload_file
-  Rails.logger.info "upload_file action called with params: #{params.inspect}"
 
-  apply = Apply.find(params[:apply_id])
-  file_blob = create_blob(params[:file])
+  def upload_file
+    apply = Apply.find(params[:apply_id])
+    file_blob = create_blob(params[:file])
+    apply.files.attach(file_blob)
 
-  apply.files.attach(file_blob)
-
-  render json: { id: file_blob.id, url: url_for(file_blob), file_name: file_blob.filename.to_s }
-end
+  end
 
 def destroy_attachment
   Rails.logger.info "destroy attachement"
