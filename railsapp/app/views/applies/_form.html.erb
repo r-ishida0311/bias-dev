@@ -91,7 +91,7 @@
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
-              <div class="file-box inline-flex mx-1 mb-5" data-controller="files" data-files-target="file_box">
+              <div class="file-box inline-flex mx-1 mb-5" data-files-target="file_box">
                 <%= link_to file.filename, url_for(file), target: :_blank %>
                 <a class="link cursor-pointer" data-action="click->files#deleteFile">削除</a>
                 <%= form.hidden_field :files, name: "apply[files][]", style: "display: none", value: "#{file.blob.id}" %>

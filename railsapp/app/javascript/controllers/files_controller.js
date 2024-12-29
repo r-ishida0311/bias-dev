@@ -74,9 +74,12 @@ export default class extends Controller {
   }
 
   deleteFile(event) {
+    console.log('deleteFile');
     const fileBox = event.target.closest("[data-files-target='file_box']");
     const blobId = fileBox.querySelector("input[type='hidden']").value;
     const applyId = this.selectTarget.dataset.applyId;
+    console.log(blobId);
+    console.log(applyId);
 
     fetch(`/applies/${applyId}/attachments/${blobId}`, {
       method: 'DELETE',

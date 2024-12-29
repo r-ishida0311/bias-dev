@@ -86,6 +86,7 @@ def upload_file
 end
 
 def destroy_attachment
+  Rails.logger.info "destroy attachement"
   @apply = Apply.find(params[:apply_id])
   @blob = ActiveStorage::Blob.find(params[:blob_id])
   @attachment = ActiveStorage::Attachment.find_by(record_type: 'Apply', record_id: @apply.id, blob_id: @blob.id)
