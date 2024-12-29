@@ -45,29 +45,33 @@ export default class extends Controller {
       });
   }
 
-  previewFile(fileName, fileUrl) {
+  previewFile(fileName, fileUrl, blobId) {
+    // Added blobId parameter
     const fileBox = document.createElement('div');
-    fileBox.classList.add('file-box', 'inline-flex', 'mx-1', 'mb-5');
-    fileBox.setAttribute('data-controller', 'files');
-    fileBox.setAttribute('data-files-target', 'file_box');
+    fileBox.classList.add('d-flex', 'mb-16');
+    fileBox.style.alignItems = 'center';
 
-    const fileLink = document.createElement('a');
-    fileLink.href = fileUrl;
-    fileLink.target = '_blank';
-    fileLink.textContent = fileName;
+    const linkElement = document.createElement('a');
+    linkElement.href = fileUrl;
+    linkElement.target = '_blank';
+    linkElement.classList.add('d-inline-block', 'text-truncate');
+    linkElement.style.maxWidth = '600px';
+    linkElement.textContent = fileName;
 
-    const deleteLink = document.createElement('a');
-    deleteLink.classList.add('link', 'cursor-pointer');
-    deleteLink.setAttribute('data-action', 'click->files#deleteFile');
-    deleteLink.textContent = '削除';
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-auto');
+    deleteButton.dataset.action = 'click->files#deleteFile';
+    deleteButton.textContent = '削除';
+    deleteButton.dataset.blobId = blobId; // Attach blobId to the button
 
     const hiddenField = document.createElement('input');
     hiddenField.type = 'hidden';
     hiddenField.name = 'apply[files][]';
-    hiddenField.value = fileUrl;
+    hiddenField.value = blobId; // Use blobId here
 
-    fileBox.appendChild(fileLink);
-    fileBox.appendChild(deleteLink);
+    fileBox.appendChild(linkElement);
+    fileBox.appendChild(deleteButton);
     fileBox.appendChild(hiddenField);
 
     this.previewTarget.appendChild(fileBox);
