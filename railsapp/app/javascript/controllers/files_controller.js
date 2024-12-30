@@ -36,9 +36,10 @@ export default class extends Controller {
         console.log('Upload successful:', data);
         const fileName = data.file_name;
         const fileUrl = data.url;
-        console.log(fileName, fileUrl);
+        const blobId = data.id;
+        console.log(blobId, fileName, fileUrl);
         // Postコントローラーからのレスポンス(blobデータ)
-        this.previewFile(fileName, fileUrl); // 画像プレビューアクションにblobデータのidを受け渡す
+        this.previewFile(fileName, fileUrl, blobId); // 画像プレビューアクションにblobデータのidを受け渡す
       })
       .catch((error) => {
         console.error(error);
@@ -50,7 +51,7 @@ export default class extends Controller {
     const fileBox = document.createElement('div');
     fileBox.classList.add('d-flex', 'mb-16');
     fileBox.style.alignItems = 'center';
-
+    fileBox.dataset.filesTarget = 'file_box';
     const linkElement = document.createElement('a');
     linkElement.href = fileUrl;
     linkElement.target = '_blank';
@@ -63,7 +64,6 @@ export default class extends Controller {
     deleteButton.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-auto');
     deleteButton.dataset.action = 'click->files#deleteFile';
     deleteButton.textContent = '削除';
-    deleteButton.dataset.blobId = blobId; // Attach blobId to the button
 
     const hiddenField = document.createElement('input');
     hiddenField.type = 'hidden';
@@ -79,9 +79,12 @@ export default class extends Controller {
 
   deleteFile(event) {
     console.log('deleteFile');
+
     const fileBox = event.target.closest("[data-files-target='file_box']");
+    console.log(fileBox);
     const blobId = fileBox.querySelector("input[type='hidden']").value;
     const applyId = this.selectTarget.dataset.applyId;
+
     console.log(blobId);
     console.log(applyId);
 
