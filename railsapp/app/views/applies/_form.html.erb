@@ -89,7 +89,14 @@
         <div class="card-body">
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
-            <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id }, class: "form-control" %>
+
+            <div class="file-upload-wrapper">
+              <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id }, style: "display: none;", id: "apply_files" %>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('apply_files').click()">ファイルを選択</button>
+              <span data-files-target="filenames"></span>
+              <small class="form-text text-muted">複数ファイルを選択できます。ファイル選択時点で登録されます</small>
+
+            </div>
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
