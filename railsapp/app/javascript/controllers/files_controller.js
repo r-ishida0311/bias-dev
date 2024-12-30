@@ -45,7 +45,6 @@ export default class extends Controller {
         console.error(error);
       });
   }
-
   previewFile(fileName, fileUrl, blobId) {
     // Added blobId parameter
     const fileBox = document.createElement('div');
