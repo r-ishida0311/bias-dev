@@ -82,12 +82,14 @@
 
       <div class="card mt-4">
         <div class="card-header">
-          <h5 class="mb-0">添付ファイル</h5>
+          <h5 class="mb-0">
+            <label for="files" class="form-label">添付ファイル
+          </h5>
         </div>
         <div class="card-body">
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
-            <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id } %>
+            <%= form.file_field :files, multiple: true, data: { action: "change->files#selectFiles", files_target: "select", apply_id: @apply.id }, class: "form-control" %>
             <div data-files-target="preview">
               <% if @apply.files.attached? %>
               <% @apply.files.each do |file| %>
