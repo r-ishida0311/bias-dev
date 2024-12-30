@@ -79,7 +79,13 @@ class AppliesController < ApplicationController
     apply = Apply.find(params[:apply_id])
     file_blob = create_blob(params[:file])
     apply.files.attach(file_blob)
-
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("files", partial: "applies/file_list", locals: { apply: apply })
+      end
+      format.html { redirect_to apply_path(apply), notice: "Files uploaded successfully" } #Fallback for non-turbo requests.
+      format.json { render json: { message: "Files uploaded successfully" }, status: :ok } #For API calls
+    end
   end
 
 def destroy_attachment
