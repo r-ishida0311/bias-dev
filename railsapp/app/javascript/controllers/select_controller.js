@@ -17,7 +17,13 @@ export default class extends Controller {
         .then((data) => {
           departmentSelect.innerHTML = ''; //既存のオプションをクリア
 
-          // dataは配列になっているので、そのまま使用する
+          // 空白のオプションを追加
+          const blankOption = document.createElement('option');
+          blankOption.value = '';
+          blankOption.text = '';
+          departmentSelect.appendChild(blankOption);
+
+          // データの各要素に対してオプションを作成
           data.forEach((department) => {
             const option = document.createElement('option');
             option.value = department;
