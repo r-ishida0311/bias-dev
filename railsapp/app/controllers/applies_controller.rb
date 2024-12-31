@@ -20,15 +20,16 @@ class AppliesController < ApplicationController
     @apply = Apply.new(apply_kind: 1) 
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
-    @preselected_department = Department.find_by(dep_name: current_user.login_department)
     @apply.build_division 
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
+    @preselected_department = @departments.find_by(dep_name: current_user.login_department)
   end
 
   # GET /applies/1/edit
   def edit
     @preselected_year = Year.find_by(target_year: 1)&.year
+    @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
   end
 
   # POST /applies or /applies.json
