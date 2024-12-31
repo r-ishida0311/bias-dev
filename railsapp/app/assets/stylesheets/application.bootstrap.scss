@@ -39,3 +39,10 @@ turbo-frame::before {
   float: right;
   margin-left: auto; /* optional, for better spacing */
 }
+
+.truncate-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%; /* Adjust as needed to control the truncation point */
+}

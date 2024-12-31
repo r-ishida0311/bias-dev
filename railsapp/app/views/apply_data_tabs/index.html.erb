@@ -1,12 +1,6 @@
-<h1>申請一覧（～2025）</h1>
+<h3>申請一覧（～2025）</h3>
 
-<%# ransackを利用した検索フォームでは、form_withの代わりにsearch_form_forを使う %>
 <%= search_form_for @search, data: {turbo_frame: "apply_index"} do |f| %>
-
-<%# `カラム名_cont`とすることで、カラムに対してLIKEを使った曖昧一致検索ができる %>
-<%# `カラム名_eq`とすることで、カラムに対して完全一致検索ができる %>
-
-<!-- railsapp/app/views/apply_data_tabs/index.html.erb (10-22) -->
 <div data-controller="select">
   <%= f.label :year_eq, "対象年度" %>
   <%= f.select :year_eq, @years, { include_blank: true }, { data: { action: "change->select#yearEqChange" } } %>
@@ -29,47 +23,33 @@
   <%= f.submit %>
   <%= link_to "クリア", apply_data_tabs_path %>
 </div>
-<%# 検索結果と検索フォームをクリアする %>
-
 <% end %>
 
 <%= turbo_frame_tag "apply_index" do %>
 <table>
   <thead>
     <tr>
-      <th>対象年度</th>
-      <th>申請種別</th>
-      <%
-=begin%>
-      <th>申請番号</th>
-      <%
-=end%>
-      <th>整理番号</th>
-
-      <th>品名</th>
-      <th>予定価格（千円）</th>
-      <th>申請部署</th>
-      <th>申請者氏名</th>
-      <th>添付ファイルステータス</th>
-      <%
-=begin%>
-      <th>原局確認ステータス</th>
-      <%
-=end%>
-      <th>申請ステータス</th>
-      <th>技術計画推進ステータス</th>
-      <%
-=begin%>
-      <th>最終更新日</th>
-      <%
-=end%>
-      <th></th>
+      <th class="px-3">対象年度</th>
+      <th class="px-3">申請種別</th>
+      <th class="px-3">申請番号</th>
+      <th class="px-3">整理番号</th>
+      <th class="px-25">品名</th>
+      <th class="px-3">予定価格（千円）</th>
+      <th class="px-20">申請部署</th>
+      <th class="px-4">申請者氏名</th>
+      <th class="px-4">添付ファイルステータス</th>
+      <th class="px-3">申請ステータス</th>
+      <th class="px-3">技術計画推進ステータス</th>
+      <th class="px-3"></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @apply_data_tabs.each do |apply_data_tab| %>
+    <% @apply_data_tabs.each_with_index do |apply_data_tab, index| %>
+    <% if index > 0 %>
+    <tr class="border-top border-gray-300">
+      <% else %>
     <tr>
+      <% end %>
       <%= render partial: 'apply_data_tab', locals: { apply_data_tab: apply_data_tab } %>
     </tr>
     <% end %>

@@ -1,34 +1,23 @@
-<td><%= apply_data_tab.year %></td>
-<td><%= apply_data_tab.apply_kind == 1 ? '一般' : (apply_data_tab.apply_kind == 2 ? '放送' : '不明') %></td>
-<%
-=begin%>
-<td><%= apply_data_tab.apply_data_id %></td>
-<%
-=end%>
-<td><%= apply_data_tab.reference_no %></td>
-
-<td><%= apply_data_tab.item_name %></td>
-<td><%= apply_data_tab.estimated_cost %></td>
+<td class="text-center"><%= apply_data_tab.year %></td>
+<td class="text-center"><%= apply_data_tab.apply_kind == 1 ? '一般' : (apply_data_tab.apply_kind == 2 ? '放送' : '不明') %></td>
+<td class="text-center"><%= apply_data_tab.apply_data_id %></td>
+<td class="text-center"><%= apply_data_tab.reference_no %></td>
+<td><%= apply_data_tab.item_name.truncate(20) %></td>
+<td class="text-center"><%= apply_data_tab.estimated_cost %></td>
 <td><%= apply_data_tab.apply_emp_dep %></td>
-<td><%= apply_data_tab.apply_emp_name %>, <%= apply_data_tab.apply_emp_no %></td>
-<td><%= translate_append_file_status(apply_data_tab.append_file_status) %></td>
-
+<td class="text-center"><%= apply_data_tab.apply_emp_name %>, <%= apply_data_tab.apply_emp_no %></td>
+<td class="text-center"><%= translate_append_file_status(apply_data_tab.append_file_status) %></td>
 <%
 =begin%>
-<td><%= format_boss_check_statuses(apply_data_tab) %></td>
+<td class="text-center"><%= format_boss_check_statuses(apply_data_tab) %></td>
 <%
 =end%>
 
-
-
-<td><%= translate_apply_status(apply_data_tab.apply_status) %></td>
-
-<td><%= translate_tech_status(apply_data_tab.tech_status) %></td>
-
+<td class="text-center"><%= translate_apply_status(apply_data_tab.apply_status) %></td>
+<td class="text-center"><%= translate_tech_status(apply_data_tab.tech_status) %></td>
 <%
 =begin%>
-<td><%= apply_data_tab.update_date %></td>
+<td class="text-center"><%= apply_data_tab.update_date %></td>
 <%
 =end%>
-
-<td><%= link_to "詳細", apply_data_tab, data: { turbo: false }  %></td>
+<td class="text-center"><%= button_to "詳細", apply_data_tab, method: :get, data: { turbo: false }, class: "btn btn-primary" %></td>

@@ -6,7 +6,7 @@ class AppliesController < ApplicationController
     @applies = Apply.includes(:department).all 
     @search = Apply.ransack(params[:q])
     @applies = @search.result.page(params[:page])
-
+    @year = Year.all
   end
 
   # GET /applies/1 or /applies/1.json
