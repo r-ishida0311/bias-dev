@@ -23,6 +23,7 @@ class AppliesController < ApplicationController
     @preselected_department = Department.find_by(dep_name: current_user.login_department)
     @apply.build_division 
     @preselected_year = Year.find_by(target_year: 1)&.year
+    @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
   end
 
   # GET /applies/1/edit

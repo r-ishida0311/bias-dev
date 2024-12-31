@@ -132,8 +132,9 @@
             </div>
             <div class="col-md-4">
               <%= form.label :部署, style: "display: block;" %>
-              <%= form.collection_select :department_id, Department.all, :id, :dep_name, {prompt: "Select Department", selected: @preselected_department&.id}, {class: "form-control"} %>
+              <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
             </div>
+
           </div> <!-- End of row -->
 
 
