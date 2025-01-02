@@ -10,7 +10,11 @@
 <%= search_form_for @search do |f| %>
 
 <%= f.label :year_eq, "申請年度" %>
-<%= f.select :year_eq, [2025,2026] %>
+<%= f.select :year_eq, @years, {include_blank: true} %>
+
+<%= f.label :year_eq, "部署" %>
+<%= f.select :year_eq, @years, {include_blank: true} %>
+
 
 <%= f.label :apply_kind_eq, "申請種別" %>
 <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
