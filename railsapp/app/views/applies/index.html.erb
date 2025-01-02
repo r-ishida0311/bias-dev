@@ -12,8 +12,8 @@
 <%= f.label :year_eq, "申請年度" %>
 <%= f.select :year_eq, @years, {include_blank: true} %>
 
-<%= f.label :year_eq, "部署" %>
-<%= f.select :year_eq, @years, {include_blank: true} %>
+<%= f.label :department_dep_name_cont, "部署" %>
+<%= f.search_field :department_dep_name_cont %>
 
 
 <%= f.label :apply_kind_eq, "申請種別" %>

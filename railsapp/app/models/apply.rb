@@ -22,8 +22,16 @@ class Apply < ApplicationRecord
     "equipment_name", 
     "item_name", 
     "specific_contents", 
-    "year"]
+    "year", 
+    "dep_name"
+    ]
   end
+  
+  def self.ransackable_associations(auth_object = nil)
+    ["department"]
+  end
+
+
   private
 
   def clear_reference_no_if_apply_kind_not_2
