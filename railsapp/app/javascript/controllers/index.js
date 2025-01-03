@@ -21,3 +21,6 @@ application.register("search", SearchController)
 
 import SelectController from "./select_controller"
 application.register("select", SelectController)
+
+import SelectdepController from "./selectdep_controller"
+application.register("selectdep", SelectdepController)

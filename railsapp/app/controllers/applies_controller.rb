@@ -76,6 +76,23 @@ class AppliesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+def departments_by_year
+  year = params[:year]
+  year_record = Year.find_by(year: year) # Find the Year record by its 'year' attribute
+
+  if year_record
+    departments_by_year = year_record.departments.pluck(:dep_name) # Efficiently get dep_names from associated departments
+    sorted_departments = departments_by_year.sort
+    render json: sorted_departments
+  else
+    render json: { error: "Year not found" }, status: 404
+  end
+end
+
+
+
+
 def upload_file
   Rails.logger.info "upload_file action called with params: #{params.inspect}"
 

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post "applies/upload_file", to: "applies#upload_file"
 # config/routes.rb
   delete '/applies/:apply_id/attachments/:blob_id', to: 'applies#destroy_attachment', as: 'destroy_attachment'
+  
+  get '/applies/:apply_id/departments_by_year', to: 'applies#departments_by_year'
 
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
