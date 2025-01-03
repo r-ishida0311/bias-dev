@@ -1,13 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>申請一覧</h1>
+<h3>申請一覧</h3>
 <%= link_to "新規申請", new_apply_path %>
 
 
 
 
 
-<%= search_form_for @search do |f| %>
+<%= search_form_for @search, data: {turbo_frame: "apply_index_new"} do |f| %>
 
 <div data-controller="selectdep">
   <%= f.label :year_eq, "申請年度" %>
@@ -34,34 +34,35 @@
 
   <%# 検索結果と検索フォームをクリアする %>
   <%= link_to "クリア", applies_path %>
-  <% end %>
 </div>
+<% end %>
 
+<%= turbo_frame_tag "apply_index_new" do %>
 <table>
   <thead>
     <tr>
-      <th>対象年度</th>
-      <th>申請種別</th>
-      <th>申請番号</th>
-      <th>整理番号</th>
-      <th>OH</th>
-      <th>品名</th>
-      <th>予定価格（千円）</th>
-      <th>申請部署</th>
-      <th>申請者氏名（社員番号）</th>
-      <th>添付ファイルステータス（数）</th>
-      <th>原局確認ステータス</th>
-      <th>申請ステータス</th>
-      <th>技術計画推進ステータス</th>
-      <th>判定結果</th>
-      <th>最終更新日</th>
-      <th>操作</th>
+      <th class="px-3">対象年度</th>
+      <th class="px-3">申請種別</th>
+      <th class="px-3">申請番号</th>
+      <th class="px-3">整理番号</th>
+      <th class="px-3">OH</th>
+      <th class="px-3">品名</th>
+      <th class="px-3">予定価格（千円）</th>
+      <th class="px-3">申請部署</th>
+      <th class="px-3">申請者氏名（社員番号）</th>
+      <th class="px-3">添付ファイルステータス（数）</th>
+      <th class="px-3">原局確認ステータス</th>
+      <th class="px-3">申請ステータス</th>
+      <th class="px-3">技術計画推進ステータス</th>
+      <th class="px-3">判定結果</th>
+      <th class="px-3">最終更新日</th>
+      <th class="px-3">操作</th>
     </tr>
   </thead>
 
   <tbody>
     <% @applies.each do |apply| %>
-    <tr>
+    <tr class="border-top border-gray-300">
       <%= render partial: 'apply', locals: { apply: apply } %>
     </tr>
     <% end %>
@@ -70,3 +71,4 @@
 <div class="d-flex justify-content-end mt-3">
   <%= paginate @applies %>
 </div>
+<% end %>

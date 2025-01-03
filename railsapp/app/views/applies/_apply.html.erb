@@ -1,19 +1,19 @@
 <tr>
-  <td><%= apply.year %></td>
-  <td><%= apply_kind_label(apply.apply_kind) %></td>
-  <td><%= apply.reference_no %></td>
-  <td><%= apply.id %></td>
+  <td class="text-center"><%= apply.year %></td>
+  <td class="text-center"><%= apply_kind_label(apply.apply_kind) %></td>
+  <td class="text-center"><%= apply.reference_no %></td>
+  <td class="text-center"><%= apply.id %></td>
 
-  <td><%= display_oh(apply.division&.oh) %></td>
-  <td><%= apply.item_name %></td>
-  <td><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
-  <td><%= apply.department.dep_name rescue "N/A" %></td>
-  <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
-  <td></td>
-  <td></td>
-  <td><%= apply_status_label(apply.apply_status) %></td>
-  <td><%= tech_status_label(apply.tech_status) %></td>
-  <td><%= approve_status_label(apply.approve_status) %></td>
-  <td><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
-  <td> <%= link_to '詳細', apply %> <%= link_to '編集', edit_apply_path(apply) %> <%= link_to '削除', apply, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <td class="text-center"><%= display_oh(apply.division&.oh) %></td>
+  <td class="text-center"><%= apply.item_name %></td>
+  <td class="text-center"><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
+  <td class="text-center"><%= apply.department.dep_name rescue "N/A" %></td>
+  <td class="text-center"><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
+  <td class="text-center"></td>
+  <td class="text-center"></td>
+  <td class="text-center"><%= apply_status_label(apply.apply_status) %></td>
+  <td class="text-center"><%= tech_status_label(apply.tech_status) %></td>
+  <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
+  <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+  <td class="text-center"> <%= link_to '詳細', apply %> <%= link_to '編集', edit_apply_path(apply), data: { turbo: false } %> <%= link_to '削除', apply, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 </tr>
