@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     collection { post :import }
   end
   resources :years
+  resources :admin_users
 
   get '/search', to: 'application#search'
 

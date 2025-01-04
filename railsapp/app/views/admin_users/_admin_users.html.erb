@@ -1,0 +1,23 @@
+<div class="row py-2 border-top">
+  <div class="col-2 my-auto">
+    <%= admin_users.emp_no %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= admin_users.emp_name %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_users.tech_flag) %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_users.wg_flag) %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_users.sys_flag) %>
+  </div>
+  <div class="col-2">
+    <div class="d-flex justify-content-end">
+      <%= link_to "編集", edit_admin_user_path(admin_users), class: "btn btn-sm btn-outline-primary me-2" %>
+      <%= button_to "削除", admin_users, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
+    </div>
+  </div>
+</div>

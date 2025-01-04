@@ -1,0 +1,29 @@
+<div class="card shadow mt-3">
+
+  <div class="card-body mx-3">
+    <div class="row py-5">
+      <div class="col-2 mt-auto">
+        社員番号
+      </div>
+      <div class="col-2 mt-auto">
+        氏名
+      </div>
+      <div class="col-2 mt-auto">
+        技術計画推進
+      </div>
+      <div class="col-2 mt-auto">
+        設備計画作業部会
+      </div>
+      <div class="col-2 mt-auto">
+        システム管理者
+      </div>
+      <div class="col-2 d-flex justify-content-end">
+        <%= link_to "登録", new_admin_user_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+
+    <%= render partial: 'admin_users/admin_users', collection: @admin_users %>
+
+
+  </div>
+</div>

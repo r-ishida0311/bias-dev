@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_18_120251) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_04_131738) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -127,6 +127,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_18_120251) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["year_id"], name: "index_add_deps_on_year_id"
+  end
+
+  create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "emp_no"
+    t.string "emp_name"
+    t.integer "tech_flag"
+    t.integer "wg_flag"
+    t.integer "sys_flag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "applies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
