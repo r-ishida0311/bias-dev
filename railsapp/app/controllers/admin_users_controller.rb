@@ -4,13 +4,13 @@ class AdminUsersController < ApplicationController
   end
 
   def new
-    @admin_users = AdminUser.new
+    @admin_user = AdminUser.new
   end
 
   def create
-    @admin_users = AdminUser.new(cat_params)
+    @admin_user = AdminUser.new(cat_params)
 
-    if @admin_users.save
+    if @admin_user.save
       flash.now.notice = "登録しました。"
     else
       render :new, status: :unprocessable_entity
@@ -21,7 +21,7 @@ class AdminUsersController < ApplicationController
   end
 
   def update
-    if @admin_users.update(admin_user_params)
+    if @admin_user.update(admin_user_params)
       flash.now.notice = "更新しました。"
     else
       render :edit, status: :unprocessable_entity
@@ -29,14 +29,14 @@ class AdminUsersController < ApplicationController
   end
 
   def destroy
-        @admin_users.destroy
+        @admin_user.destroy
     flash.now.notice = "ねこを削除しました。"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_user
-      @admin_user_params = AdminUser.find(params[:id])
+      @admin_user = AdminUser.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

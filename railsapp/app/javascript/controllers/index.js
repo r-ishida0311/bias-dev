@@ -27,3 +27,6 @@ application.register("select", SelectController)
 
 import SelectdepController from "./selectdep_controller"
 application.register("selectdep", SelectdepController)
+
+import ToastController from "./toast_controller"
+application.register("toast", ToastController)
