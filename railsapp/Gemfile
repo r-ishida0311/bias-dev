@@ -78,3 +78,4 @@ gem "ransack"
 gem "net-ldap"
 gem "activeldap"
 gem 'roo'
+gem 'bootstrap_form' 

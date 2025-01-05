@@ -1,0 +1,9 @@
+<%= turbo_frame_tag admin_user do %>
+<%# レイアウトをモーダル用に整える %>
+<%# turbo:submit-end（Turboのsubmit後）イベント発火時に、modal#close（モーダルを閉じる）を実行する %>
+<%= bootstrap_form_with(model: admin_user, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+<%= form.text_field :name %>
+<%= form.text_field :age %>
+<%= form.primary %>
+<% end%>
+<% end %>
