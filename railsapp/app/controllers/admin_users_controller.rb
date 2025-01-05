@@ -1,4 +1,7 @@
 class AdminUsersController < ApplicationController
+  before_action :set_admin_user, only: %i[ show edit update destroy ]
+
+
   def index
     @admin_users = AdminUser.all
   end
@@ -8,10 +11,10 @@ class AdminUsersController < ApplicationController
   end
 
   def create
-    @admin_user = AdminUser.new(cat_params)
+    @admin_user = AdminUser.new(admin_user_params)
 
     if @admin_user.save
-      flash.now.notice = "登録しました。"
+      
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +25,7 @@ class AdminUsersController < ApplicationController
 
   def update
     if @admin_user.update(admin_user_params)
-      flash.now.notice = "更新しました。"
+      
     else
       render :edit, status: :unprocessable_entity
     end
@@ -30,7 +33,7 @@ class AdminUsersController < ApplicationController
 
   def destroy
         @admin_user.destroy
-    flash.now.notice = "ねこを削除しました。"
+   
   end
 
   private

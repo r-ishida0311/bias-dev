@@ -1,0 +1,25 @@
+<%= turbo_frame_tag admin_user do %>
+<div class="row py-2 border-top">
+  <div class="col-2 my-auto">
+    <%= admin_user.emp_no %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= admin_user.emp_name %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_user.tech_flag) %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_user.wg_flag) %>
+  </div>
+  <div class="col-2 my-auto">
+    <%= flag(admin_user.sys_flag) %>
+  </div>
+  <div class="col-2">
+    <div class="d-flex justify-content-end">
+      <%= link_to "編集", edit_admin_user_path(admin_user), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_frame: "modal" } %>
+      <%= button_to "削除", admin_user, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
+    </div>
+  </div>
+</div>
+<% end %>
