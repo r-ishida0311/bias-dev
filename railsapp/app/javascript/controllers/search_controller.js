@@ -36,10 +36,5 @@ export default class extends Controller {
     if (bossNameField) bossNameField.value = result.displayName;
     if (bossEmailField) bossEmailField.value = result.mail;
     if (bossDepartField) bossDepartField.value = result.department;
-
-    console.log(bossNameField.value);
-    console.log(bossEmailField.value);
-    console.log(bossDepartField.value);
-    console.log(this.resultsTarget.innerHTML);
   }
 }

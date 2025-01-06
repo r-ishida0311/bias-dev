@@ -1,13 +1,44 @@
 <%= turbo_frame_tag admin_user do %>
-<%# レイアウトをモーダル用に整える %>
-<%# turbo:submit-end（Turboのsubmit後）イベント発火時に、modal#close（モーダルを閉じる）を実行する %>
-<%= bootstrap_form_with(model: admin_user, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
-<%= form.text_field :emp_no %>
-<%= form.text_field :emp_name %>
-<%= form.select :tech_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
-<%= form.select :wg_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
-<%= form.select :sys_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
+<%= form_with(model: admin_user, data: { action: "turbo:submit-end->modal#close" }, local: true) do |form| %>
+<% if admin_user.errors.any? %>
+<div class="alert alert-danger">
+  <h2><%= pluralize(admin_user.errors.count, "error") %> prohibited this admin_user from being saved:</h2>
+  <ul>
+    <% admin_user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
-<%= form.primary %>
-<% end%>
+<div data-controller="search">
+
+  <div class="form-group">
+    <%= form.label :emp_no, '社員番号' %>
+    <%= form.number_field :emp_no, class: 'form-control', id: "boss-no-field" %>
+    <button data-action="click->search#search" class="btn btn-primary">Search</button>
+  </div>
+  <div data-search-target="results">
+    <div class="form-group">
+      <%= form.label :emp_name, '氏名' %>
+      <%= form.text_field :emp_name, class: 'form-control' , id: "boss_name", readonly: true, placeholder: "原局確認者の社員番号入力で自動記入されます"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= form.label :tech_flag, '技術計画推進' %>
+    <%= form.select :tech_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' }, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :wg_flag, '設備作業部会' %>
+    <%= form.select :wg_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' }, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= form.label :sys_flag, 'システム管理' %>
+    <%= form.select :sys_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' }, class: 'form-control' %>
+  </div>
+
+</div>
+
+<%= form.submit class: 'btn btn-primary' %>
+<% end %>
 <% end %>
