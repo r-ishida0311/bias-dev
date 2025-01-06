@@ -4,9 +4,10 @@
 <%= bootstrap_form_with(model: admin_user, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
 <%= form.text_field :emp_no %>
 <%= form.text_field :emp_name %>
-<%= form.text_field :tech_flag %>
-<%= form.text_field :wg_flag %>
-<%= form.text_field :sys_flag %>
+<%= form.select :tech_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
+<%= form.select :wg_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
+<%= form.select :sys_flag, [['〇', 1], ['✕', 0]], { include_blank: '選択してください' } %>
+
 <%= form.primary %>
 <% end%>
 <% end %>
