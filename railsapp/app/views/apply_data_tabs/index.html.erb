@@ -2,26 +2,36 @@
 
 <%= search_form_for @search, data: {turbo_frame: "apply_index"} do |f| %>
 <div data-controller="select">
-  <%= f.label :year_eq, "対象年度" %>
-  <%= f.select :year_eq, @years, { include_blank: true }, { data: { action: "change->select#yearEqChange" } } %>
-
-  <%= f.label :apply_emp_dep_eq, "部署" %>
-  <%= f.select :apply_emp_dep_eq, [], { include_blank: "年度を選択してください" }, { data: { select_target: "department" } } %>
-
-  <%= f.label :apply_kind_eq, "申請種別" %>
-  <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
-
-  <%= f.label :item_name_cont, "品名" %>
-  <%= f.search_field :item_name_cont %>
-
-  <%= f.label :specific_contents_cont, "具体的内容" %>
-  <%= f.search_field :specific_contents_cont %>
-
-  <%= f.label :apply_emp_name_cont, "申請者" %>
-  <%= f.search_field :apply_emp_name_cont %>
-
-  <%= f.submit %>
-  <%= link_to "クリア", apply_data_tabs_path %>
+  <div class="row g-15">
+    <div class="col-md-1">
+      <%= f.label :year_eq, "対象年度" %>
+      <%= f.select :year_eq, @years, { include_blank: true }, class: 'form-control',  data: { action: "change->select#yearEqChange" } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :apply_emp_dep_eq, "部署" %>
+      <%= f.select :apply_emp_dep_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control', data: { select_target: "department" } %>
+    </div>
+    <div class="col-md-1">
+      <%= f.label :apply_kind_eq, "申請種別" %>
+      <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true }, class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :item_name_cont, "品名" %>
+      <%= f.search_field :item_name_cont, class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :specific_contents_cont, "具体的内容" %>
+      <%= f.search_field :specific_contents_cont, class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :apply_emp_name_cont, "申請者" %>
+      <%= f.search_field :apply_emp_name_cont, class: 'form-control' %>
+    </div>
+    <div class="col-md-2"><label>&nbsp;</label><br>
+      <%= f.submit "検索", class: "btn btn-primary" %>
+      <%= link_to "クリア", apply_data_tabs_path , class: "btn btn-secondary ms-2"%>
+    </div>
+  </div>
 </div>
 <% end %>
 
@@ -55,6 +65,7 @@
     <% end %>
   </tbody>
 </table>
-
-<%= paginate @apply_data_tabs %>
+<div class="d-flex justify-content-end mt-3">
+  <%= paginate @apply_data_tabs %>
+</div>
 <% end %>
