@@ -68,14 +68,14 @@ class AppliesController < ApplicationController
   end
 
   # DELETE /applies/1 or /applies/1.json
-  def destroy
-    @apply.destroy!
+def destroy
+  @apply.destroy
 
-    respond_to do |format|
-      format.html { redirect_to applies_path, status: :see_other, notice: "Apply was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  respond_to do |format|
+    format.html { redirect_to applies_path, notice: "Apply was successfully destroyed." }
+    format.json { head :no_content }
   end
+end
 
 def departments_by_year
   year = params[:year]

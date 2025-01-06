@@ -1,41 +1,45 @@
 <p style="color: green"><%= notice %></p>
 
 <h3>申請一覧</h3>
-<%= link_to "新規申請", new_apply_path %>
-
-
-
-
 
 <%= search_form_for @search, data: {turbo_frame: "apply_index_new"} do |f| %>
 
 <div data-controller="selectdep">
-  <%= f.label :year_eq, "申請年度" %>
-  <%= f.select :year_eq, @years, {include_blank: true}, { data: { action: "change->selectdep#yearEqChange" } } %>
-
-  <%= f.label :department_dep_name_eq, "部署" %>
-  <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, { data: { selectdep_target: "department" } }  %>
-
-
-  <%= f.label :apply_kind_eq, "申請種別" %>
-  <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } %>
-
-  <%= f.label :item_name_cont, "品名" %>
-  <%= f.search_field :item_name_cont %>
-
-
-  <%= f.label :specific_contents_cont, "具体的内容" %>
-  <%= f.search_field :specific_contents_cont %>
-
-  <%= f.label :apply_emp_name_cont, "申請者" %>
-  <%= f.search_field :apply_emp_name_cont %>
-
-  <%= f.submit %>
-
-  <%# 検索結果と検索フォームをクリアする %>
-  <%= link_to "クリア", applies_path %>
+  <div class="row g-15">
+    <div class="col-md-1">
+      <%= f.label :year_eq, "申請年度"  %>
+      <%= f.select :year_eq, @years, { include_blank: true }, class: 'form-control', data: { action: "change->selectdep#yearEqChange" } %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :department_dep_name_eq, "部署" %>
+      <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control',  data: { selectdep_target: "department"  }  %>
+    </div>
+    <div class="col-md-1">
+      <%= f.label :apply_kind_eq, "申請種別" %>
+      <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } , class: 'form-control'%>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :item_name_cont, "品名" %>
+      <%= f.search_field :item_name_cont , class: 'form-control'%>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :specific_contents_cont, "具体的内容" %>
+      <%= f.search_field :specific_contents_cont , class: 'form-control'%>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :apply_emp_name_cont, "申請者" %>
+      <%= f.search_field :apply_emp_name_cont , class: 'form-control'%>
+    </div>
+    <div class="col-md-2">
+      <label>&nbsp;</label><br>
+      <%= f.submit "検索", class: "btn btn-primary" %>
+      <%= link_to "クリア", applies_path, class: "btn btn-secondary ms-2" %>
+      <% end %>
+      <%= link_to "新規申請", new_apply_path, class: "btn btn-primary ms-2"  %>
+    </div>
+  </div>
 </div>
-<% end %>
+
 
 <%= turbo_frame_tag "apply_index_new" do %>
 <table>

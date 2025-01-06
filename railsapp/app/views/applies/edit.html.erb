@@ -4,7 +4,8 @@
 
 <br>
 
-<div>
-
-  <%= link_to "Back to applies", applies_path %>
+<div class="d-flex justify-content-end">
+  <!-- Align buttons to the right -->
+  <%= link_to "戻る", applies_path, class: "btn btn-primary me-2" %>
+  <%= link_to "削除", @apply, data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "btn btn-danger"%>
 </div>
