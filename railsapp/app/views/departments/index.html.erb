@@ -1,29 +1,39 @@
-<h1>部署マスター</h1>
+<h3>部署マスター</h3>
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-md-3">
-      <%= form_with(url: departments_path, method: :get, local: true) do |form| %>
-      <div class="mb-3">
-        <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), class: "form-select" %>
+  <div class="row g-3">
+    <!-- Added row and g-3 for spacing -->
+    <div class="col-md-6">
+      <%= form_with(url: departments_path, method: :get, local: true) do |form| %> <div class="mb-3">
 
-      </div>
-      <div class="mb-3">
-        <%= form.submit "表示", class: "btn btn-primary" %>
+        <div class="row g-15">
+          <div class="col-md-3">
+            <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), {}, {class: 'form-control'} %>
+          </div>
+          <div class="col-md-1">
+            <%= form.submit "表示", class: "btn btn-primary" %>
+          </div>
+        </div>
       </div>
       <% end %>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
       <%= form_with(url: data_upload_path, method: :post) do |f| %>
-      <%= f.hidden_field :year, value: @selected_year %>
-      <div class="mb-3">
-        <%= f.file_field :upload_file, class: "form-control" %>
+      <div class="row g-15">
+        <%= f.hidden_field :year, value: @selected_year %>
+        <div class="col-md-8">
+          <%= f.file_field :upload_file, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+          <%= f.submit "インポートする", class: "btn btn-primary" %>
+        </div>
       </div>
-      <%= f.submit "インポートする", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
+
+
   <div class="row mt-3">
     <div class="col-md-12">
       <% if @departments.any? %>
