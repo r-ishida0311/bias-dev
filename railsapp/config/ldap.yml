@@ -30,7 +30,7 @@ authorizations: &AUTHORIZATIONS
 development:
   host: <%= ENV.fetch("LDAPHOST") %>
   port: 389
-  attribute: sAMAccountName
+  attribute: cn
   base: dc=ad,dc=mbs,dc=co,dc=jp
   admin_user: <%= ENV.fetch("LDAPADMIN") %>
   admin_password: <%= ENV.fetch("LDAPPASS") %>
