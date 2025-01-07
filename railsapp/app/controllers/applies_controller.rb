@@ -12,7 +12,11 @@ class AppliesController < ApplicationController
   # GET /applies/1 or /applies/1.json
   def show
     @apply = Apply.find(params[:id])
-    @readonly = true # Add this line
+    @departments = Department.all # Or your appropriate query
+    @preselected_department = @apply.department 
+   
+
+    render :show
   end
 
   # GET /applies/new
@@ -59,7 +63,7 @@ class AppliesController < ApplicationController
     @preselected_year = Year.find_by(target_year: 1)&.year
     respond_to do |format|
       if @apply.update(apply_params)
-        format.html { redirect_to @apply, notice: "Apply was successfully updated." }
+        format.html { redirect_to applies_path, notice: "Apply was successfully updated." }
         format.json { render :show, status: :ok, location: @apply }
       else
         format.html { render :edit, status: :unprocessable_entity }

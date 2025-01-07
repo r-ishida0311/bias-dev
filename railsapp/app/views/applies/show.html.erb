@@ -1,9 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<h1>詳細画面</h1>
 
-<%= render @apply %>
+<%= render "form", apply: @apply %>
 
-<div>
-  <%= link_to "Back to applies", applies_path %>
+<br>
 
-
+<div class="d-flex justify-content-end">
+  <!-- Align buttons to the right -->
+  <%= link_to "戻る", applies_path, class: "btn btn-primary me-2" %>
 </div>
