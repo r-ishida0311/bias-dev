@@ -52,6 +52,7 @@ class AppliesController < ApplicationController
 
   # PATCH/PUT /applies/1 or /applies/1.json
   def update
+    @apply = Apply.find(params[:id])
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
     @preselected_department = @apply.department
@@ -137,37 +138,42 @@ end
 
     # Only allow a list of trusted parameters through.
 def apply_params
-  params.require(:apply).permit(:apply_emp_no, 
-:apply_emp_name, 
-:apply_kind, 
-:department_id, 
-:reference_no, 
-:item_name, 
-:equipment_name, 
-:manufacturer_name, 
-:supplier_name, 
-:quantity, 
-:estimated_cost, 
-:desired_delivery, 
-:location, 
-:reason, 
-:specific_contents, 
-:old_asset_multi, 
-:old_asset_no, 
-:old_asset_YM, 
-:old_asset_cost, 
-:old_asset_handling,
-:apply_status, 
-:tech_status, 
-:approve_status,
-:wg_comment_status, 
-:wg_comment,
-:wg_reply_comment,
-:year, 
-:sk_approve_cost,
-:sk_comment,
-files: [], 
-boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart], 
-division_attributes: [:id, :new_pur, :replace, :repair, :_destroy])
+  params.require(:apply).permit(
+    :apply_emp_no,
+    :apply_emp_name,
+    :apply_kind,
+    :department_id,
+    :reference_no,
+    :item_name,
+    :equipment_name,
+    :manufacturer_name,
+    :supplier_name,
+    :quantity,
+    :estimated_cost,
+    :desired_delivery,
+    :location,
+    :reason,
+    :specific_contents,
+    :old_asset_multi,
+    :old_asset_no,
+    :old_asset_YM,
+    :old_asset_cost,
+    :old_asset_handling,
+    :apply_status,
+    :tech_status,
+    :approve_status,
+    :wg_comment_status,
+    :wg_comment,
+    :wg_reply_comment,
+    :year,
+    :sk_approve_cost,
+    :sk_comment,
+    files: [],
+    boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
+    division_attributes: [:id, :new_pur, :replace, :repair, :_destroy]
+  ).tap do |permitted|
+    permitted.delete(:files) if params[:files].blank? # Delete files key entirely if blank
+  end
 end
+
 end
