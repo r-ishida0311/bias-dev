@@ -1,0 +1,86 @@
+<div class="container-fluid my-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">申請番号: <%= apply.id %></h5>
+        </div>
+        <div class="card-body">
+          <dl class="row mb-0">
+            <dt class="col-sm-4">申請ステータス</dt>
+            <dd class="col-sm-8"><%= apply_status_label(apply.apply_status) %></dd>
+            <dt class="col-sm-4">判定結果</dt>
+            <dd class="col-sm-8"><%= approve_status_label(apply.approve_status) %></dd>
+            <dt class="col-sm-4">承認金額（千円）</dt>
+            <dd class="col-sm-8"><%= apply.sk_approve_cost %></dd>
+
+            <dt class="col-sm-4">原局確認者</dt>
+            <dd class="col-sm-8">
+              <%= apply.boss1&.boss_name %>
+              (<%= boss_status_label(apply.boss1&.boss_status) %>)
+            </dd>
+            <dt class="col-sm-4">技術計画推進部確認</dt>
+            <dd class="col-sm-8"><%= apply.tech_check_name %>(<%= tech_status_label(apply.tech_status) %>)</dd>
+
+            <dt class="col-sm-4">設備計画作業部会コメント</dt>
+            <dd class="col-sm-8"><%= apply.sk_comment %></dd>
+            <dt class="col-sm-4">技術計画推進コメント</dt>
+            <dd class="col-sm-8"><%= apply.wg_comment %>(<%= tech_status_label(apply.wg_comment_status) %>)</dd>
+            <dt class="col-sm-4">回答コメント</dt>
+            <dd class="col-sm-8"><%= apply.wg_reply_comment %></dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">添付ファイル</h5>
+        </div>
+        <div class="card-body">
+          <dt class="col-sm-16">
+            <% if apply.files.attached? %>
+            <% apply.files.each do |file| %>
+            <div class="d-flex mb-16" style="align-items: center;">
+              <div style="flex: 1;"> <%= link_to file.filename, url_for(file), target: :_blank, class: "d-inline-block text-truncate", style: "max-width: 600px;" %> </div>
+            </div>
+            <% end %>
+            <% else %>
+            <p>添付ファイルはありません。</p>
+            <% end %>
+          </dt>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <%# ... (The rest of the code is similarly modified to remove form helpers) ... %>
+      社員番号: <%= apply.apply_emp_no %>
+      申請者氏名: <%= apply.apply_emp_name %>
+      部署: <%= apply.department&.dep_name %>
+      対象年度: <%= apply.year %>
+      区分: <%= apply.division.attributes.values.map{|v| v ? (v.to_s == 'true' ? v : 'false') : ''}.join(',') %>
+      申請種別: <%= apply.apply_kind == 1 ? '一般設備' : '放送設備' %>
+      整理番号: <%= apply.reference_no %>
+      品名: <%= apply.item_name %>
+      型式: <%= apply.equipment_name %>
+      製造者名: <%= apply.manufacturer_name %>
+      取扱業者: <%= apply.supplier_name %>
+      数量: <%= apply.quantity %>
+      予定価格（千円）: <%= apply.estimated_cost %>
+      希望納期: <%= apply.desired_delivery&.strftime("%Y-%m") %>
+      設置場所: <%= apply.location %>
+      申請理由: <%= apply.reason %>
+      具体的内容: <%= apply.specific_contents %>
+      旧品資産フラグ: <%= apply.old_asset_multi ? 'true' : 'false' %>
+      旧品資産番号: <%= apply.old_asset_no %>
+      旧品取得年月: <%= apply.old_asset_YM&.strftime("%Y-%m") %>
+      旧品予定価格（千円）: <%= apply.old_asset_cost %>
+      旧品処理方法: <%= apply.old_asset_handling %>
+      原局確認者社員番号: <%= apply.boss1&.boss_no %>
+      原局確認者名: <%= apply.boss1&.boss_name %>
+      原局確認者メールアドレス: <%= apply.boss1&.boss_email %>
+      原局: <%= apply.boss1&.boss_depart %>
+
+    </div>
+  </div>
+</div>
