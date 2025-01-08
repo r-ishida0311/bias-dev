@@ -16,6 +16,10 @@
   <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
   <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
   <td class="text-center"> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-primary ms-2" %>
+
+    <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
     <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-primary ms-2" %>
+
+    <% end %>
 
 </tr>
