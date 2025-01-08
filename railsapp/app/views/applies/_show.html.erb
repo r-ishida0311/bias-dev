@@ -53,34 +53,149 @@
     </div>
 
     <div class="col-md-8">
-      <%# ... (The rest of the code is similarly modified to remove form helpers) ... %>
-      社員番号: <%= apply.apply_emp_no %>
-      申請者氏名: <%= apply.apply_emp_name %>
-      部署: <%= apply.department&.dep_name %>
-      対象年度: <%= apply.year %>
-      区分: <%= apply.division.attributes.values.map{|v| v ? (v.to_s == 'true' ? v : 'false') : ''}.join(',') %>
-      申請種別: <%= apply.apply_kind == 1 ? '一般設備' : '放送設備' %>
-      整理番号: <%= apply.reference_no %>
-      品名: <%= apply.item_name %>
-      型式: <%= apply.equipment_name %>
-      製造者名: <%= apply.manufacturer_name %>
-      取扱業者: <%= apply.supplier_name %>
-      数量: <%= apply.quantity %>
-      予定価格（千円）: <%= apply.estimated_cost %>
-      希望納期: <%= apply.desired_delivery&.strftime("%Y-%m") %>
-      設置場所: <%= apply.location %>
-      申請理由: <%= apply.reason %>
-      具体的内容: <%= apply.specific_contents %>
-      旧品資産フラグ: <%= apply.old_asset_multi ? 'true' : 'false' %>
-      旧品資産番号: <%= apply.old_asset_no %>
-      旧品取得年月: <%= apply.old_asset_YM&.strftime("%Y-%m") %>
-      旧品予定価格（千円）: <%= apply.old_asset_cost %>
-      旧品処理方法: <%= apply.old_asset_handling %>
-      原局確認者社員番号: <%= apply.boss1&.boss_no %>
-      原局確認者名: <%= apply.boss1&.boss_name %>
-      原局確認者メールアドレス: <%= apply.boss1&.boss_email %>
-      原局: <%= apply.boss1&.boss_depart %>
 
+
+
+      <div class="row">
+        <div class="col-md-15">
+          <div class="row">
+            <div class="col-md-1">
+              社員番号: <%= apply.apply_emp_no %>
+            </div>
+            <div class="col-md-1">
+              申請者氏名: <%= apply.apply_emp_name %>
+            </div>
+            <div class="col-md-4">
+              部署: <%= apply.department&.dep_name %>
+            </div>
+
+          </div> <!-- End of row -->
+
+
+
+          <div class="row" data-controller="apply">
+            <div class="col-md-1">
+              対象年度: <%= apply.year %>
+            </div>
+            <div class="col-md-3">
+              区分: <%= apply.division.attributes.values.map{|v| v ? (v.to_s == 'true' ? v : 'false') : ''}.join(',') %>
+
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                申請種別: <%= apply.apply_kind == 1 ? '一般設備' : '放送設備' %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div data-apply-target="refNo" class="form-group ">
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row, col-md-11">
+
+          品名: <%= apply.item_name %>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group">
+              型式: <%= apply.equipment_name %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              製造者名: <%= apply.manufacturer_name %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              取扱業者: <%= apply.supplier_name %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              数量: <%= apply.quantity %>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              予定価格（千円）: <%= apply.estimated_cost %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+
+              希望納期: <%= apply.desired_delivery&.strftime("%Y-%m") %>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+
+              設置場所: <%= apply.location %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row, col-md-11">
+          申請理由: <%= apply.reason %>
+        </div>
+
+        <div class="row, col-md-11">
+          具体的内容: <%= apply.specific_contents %>
+        </div>
+
+
+
+        <div data-controller="check">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group form-check"> 旧品資産フラグ: <%= apply.old_asset_multi ? 'true' : 'false' %>
+              </div>
+            </div>
+
+            <div data-check-target="oldAssetFields" style="display: none;">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    旧品資産番号: <%= apply.old_asset_no %>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+
+                    旧品取得年月: <%= apply.old_asset_YM&.strftime("%Y-%m") %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+
+                    旧品予定価格（千円）: <%= apply.old_asset_cost %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row, col-md-11">
+                旧品処理方法: <%= apply.old_asset_handling %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
     </div>
   </div>
-</div>
