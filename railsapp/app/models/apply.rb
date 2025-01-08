@@ -9,7 +9,11 @@ class Apply < ApplicationRecord
   accepts_nested_attributes_for :boss1
   before_validation :clear_reference_no_if_apply_kind_not_2
   validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
-  validate :validate_old_asset_no
+
+    # その他の関連付けやバリデーションなど
+  
+    validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
+  
   
   # validates :desired_delivery, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
   # validates :old_asset_YM, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
@@ -40,9 +44,10 @@ class Apply < ApplicationRecord
 
   def validate_old_asset_no
     if old_asset_no.present? && old_asset_multi == 1 && !old_asset_no.match(/\A[\d_]+\z/)
-      errors.add(:old_asset_no, "は半角数字と_のみを許可します。")
+      errors.add(:old_asset_no, "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。")
     end
   end
+
 
   def clear_old_asset_fields
     if old_asset_multi == 0

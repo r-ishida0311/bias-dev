@@ -61,6 +61,7 @@ class AppliesController < ApplicationController
     @employee_number = current_user.login_ref_no
     @preselected_department = @apply.department
     @preselected_year = Year.find_by(target_year: 1)&.year
+    @departments = Department.all
     respond_to do |format|
       if @apply.update(apply_params)
         format.html { redirect_to applies_path, notice: "Apply was successfully updated." }
