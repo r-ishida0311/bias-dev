@@ -17,8 +17,8 @@ def search
     begin
       Rails.logger.info "Starting LDAP search for phone number: #{phone_number}"
       # Specify the attributes you want to retrieve.  Adjust these to your LDAP schema.
-      filter = Net::LDAP::Filter.construct("(|(telephoneNumber=#{phone_number})(mobile=#{phone_number}))")
-      attributes = ["displayName", "department", "mail", "telephoneNumber"] #Add telephoneNumber for employeeID
+      filter = Net::LDAP::Filter.construct("(cn=*#{phone_number})")
+      attributes = ["displayName", "department", "mail", "telephoneNumber"] 
       ldap_config = Devise.ldap_config
       ldap = Net::LDAP.new(
         host: ENV.fetch("LDAPHOST"),
