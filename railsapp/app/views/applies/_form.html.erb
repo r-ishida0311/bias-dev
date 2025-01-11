@@ -228,8 +228,7 @@
           <div class="col-md-2">
             <div class="form-group">
               <%= form.label :希望納期, class: "d-block" %>
-              <%= form.date_select :desired_delivery, discard_day: true, include_blank: true, selected: apply.desired_delivery, start_year: Date.today.year, end_year: Date.today.year + 10, class: "form-control" %>
-            </div>
+              <%= form.date_select :desired_delivery, {discard_day: true, start_year: Date.today.year, end_year: Date.today.year + 10, include_blank: true}, {class: "form-control"} %> </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
