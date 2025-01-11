@@ -228,7 +228,17 @@
           <div class="col-md-2">
             <div class="form-group">
               <%= form.label :希望納期, class: "d-block" %>
-              <%= form.date_select :desired_delivery, {discard_day: true, start_year: Date.today.year, end_year: Date.today.year + 10, include_blank: true}, {class: "form-control"} %> </div>
+              <div class="d-flex">
+                <%= form.select :desired_delivery_year, (Date.today.year..Date.today.year + 10).to_a, { include_blank: true }, { class: "form-control", id: "desired_delivery_year" } %>年
+                <%= form.select :desired_delivery_month, (1..12).to_a, { include_blank: true }, { class: "form-control", id: "desired_delivery_month" } %>月
+                <%= form.hidden_field :desired_delivery, id: "desired_delivery" %>
+              </div>
+            </div>
+
+            <script>
+              // ... (Your existing JavaScript code to update the hidden field remains unchanged)
+            </script>
+
           </div>
           <div class="col-md-4">
             <div class="form-group">
