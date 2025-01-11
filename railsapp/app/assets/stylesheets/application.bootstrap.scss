@@ -46,3 +46,18 @@ turbo-frame::before {
   white-space: nowrap;
   max-width: 100%; /* Adjust as needed to control the truncation point */
 }
+
+.year-alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+}
+
+.year-alert .fw-bold {
+  font-size: x-large;
+}
+
+.year-alert p {
+  margin: 0;
+}

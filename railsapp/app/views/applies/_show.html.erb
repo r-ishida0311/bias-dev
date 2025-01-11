@@ -175,37 +175,33 @@
 
 
         <div class="row">
-          <div class="col-md-4">
-            <div class="form-group form-check">
-              <div>旧品資産フラグ: <%= apply.old_asset_multi ? 'true' : 'false' %>
+
+
+
+          <% if apply.old_asset_multi == 1 %>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>旧品資産番号</div><%= apply.old_asset_no %>
               </div>
             </div>
-
-
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <div>旧品資産番号</div><%= apply.old_asset_no %>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-
-                  <div>旧品取得年月</div><%= apply.old_asset_YM&.strftime("%Y-%m") %>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-
-                  <div>旧品予定価格（千円）</div> <%= apply.old_asset_cost %>
-                </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <div>旧品取得年月</div><%= apply.old_asset_YM&.strftime("%Y-%m") %>
               </div>
             </div>
-
-            <div class="row, col-md-11">
-              <div>旧品処理方法</div> <%= apply.old_asset_handling %>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div>旧品予定価格（千円）</div> <%= apply.old_asset_cost %>
+              </div>
             </div>
           </div>
+
+          <div class="row, col-md-11">
+            <div>旧品処理方法</div> <%= apply.old_asset_handling %>
+          </div>
+          <% end %>
+
 
 
 

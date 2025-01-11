@@ -1,9 +1,10 @@
 <h3>申請対象年度操作画面</h3>
 
 <% if @years.any? %>
-<div class="alert alert-info">
-  <p>現在の申請対象年度は <span class="fw-bold"><%= @years.first.year %>年</span> です。</p>
+<div class="alert alert-info" style="display: flex; justify-content: center; align-items: center; font-size: larger;">
+  <p style="margin: 0;">現在の申請対象年度は <span class="fw-bold" style="font-size: x-large;"><%= @years.first.year %>年</span> です。</p>
 </div>
+
 <% else %>
 <div class="alert alert-warning">
   <p>対象年度が設定されていません。</p>
@@ -11,9 +12,12 @@
 <% end %>
 
 <%= form_with(url: year_path(@years.first), method: :patch, local: true) do |form| %>
-<div class="mb-3">
-  <%= form.label :year, '申請対象年度変更', class: "form-label" %>
-  <%= form.select :year, options_from_collection_for_select(@all_years, :year, :year), { prompt: "年度を選択してください" }, class: "form-select" %>
+
+
+<div class="mb-3 row">
+  <div class="col-auto"> <%= form.label :year, '申請対象年度変更', class: "form-label" %></div>
+  <div class="col-auto"> <%= form.select :year, options_from_collection_for_select(@all_years, :year, :year), { prompt: "年度を選択してください" }, class: "form-select" %></div>
+  <div class="col-auto"> <button type="submit" class="btn btn-primary" onclick="return confirm('対象年度を変更しますか？');">変更</button></div>
 </div>
-<button type="submit" class="btn btn-primary" onclick="return confirm('対象年度を変更しますか？');">変更</button>
+
 <% end %>
