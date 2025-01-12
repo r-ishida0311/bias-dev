@@ -67,7 +67,7 @@
   <tbody>
     <% @applies.each do |apply| %>
     <tr class="border-top border-gray-300">
-      <%= render partial: 'apply', locals: { apply: apply } %>
+      <%= render partial: 'apply', locals: { apply: apply, boss1: apply.boss1 } %>
     </tr>
     <% end %>
   </tbody>

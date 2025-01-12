@@ -1,19 +1,7 @@
-<% if apply.persisted? %>
-<% authorized = current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
-<% boss_authorized = apply.boss1 && current_user.login_ref_no.to_i == apply.boss1.boss_no.to_i %>
-<% if authorized %>
-<h3>編集画面</h3>
-<% else boss_authorized %>
-<h3>原局確認画面</h3>
-<% end %>
-
-<% else %>
-<h3>新規作成画面</h3>
-<% end %>
-
-
+<h3>原局承認画面</h3>
 
 <div class="container-fluid my-5">
+
   <%= form_with(model: apply, local: true) do |form| %>
   <% if apply.errors.any? %>
   <div id="error_explanation">
@@ -25,6 +13,7 @@
     </ul>
   </div>
   <% end %>
+
 
 
 
@@ -80,7 +69,7 @@
                 <%= apply.wg_comment %>
                 <%= form.hidden_field :wg_comment, class: "form-control" %>
               </div>
-              <div class="form-group <%= authorized ? '' : 'disabled-field' %>">
+              <div class="form-group">
                 <%= form.label :回答コメント, style: "display: block;" %>
                 <%= form.text_area :wg_reply_comment, class: "form-control" %>
               </div>
@@ -146,11 +135,10 @@
               <%= form.hidden_field :apply_emp_name, value: @employee_user %> <%= @employee_user %>
             </div>
             <div class="col-md-4">
-              <div class="form-group <%= authorized ? '' : 'disabled-field' %>">
-                <%= form.label :部署, style: "display: block;" %>
-                <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
-              </div>
+              <%= form.label :部署, style: "display: block;" %>
+              <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
             </div>
+
           </div> <!-- End of row -->
 
 
@@ -371,12 +359,8 @@
         <% end %>
 
       </div>
-
-      <style>
-        .disabled-field input,
-        .disabled-field select,
-        .disabled-field textarea {
-          pointer-events: none;
-
-        }
-      </style>
+      <div class="d-flex justify-content-end">
+        <!-- Align buttons to the right -->
+        <%= link_to "戻る", applies_path, class: "btn btn-primary me-2" %>
+        <%= link_to "削除", @apply, data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "btn btn-danger"%>
+      </div>

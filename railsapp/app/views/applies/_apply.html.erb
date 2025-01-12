@@ -19,7 +19,10 @@
 
     <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
     <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-primary ms-2" %>
+    <% end %>
 
+    <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
+    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-primary ms-2" %>
     <% end %>
 
 </tr>

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :applies do
     resources :files, controller: 'apply_files'
+    
   end
   
   post "applies/upload_file", to: "applies#upload_file"
