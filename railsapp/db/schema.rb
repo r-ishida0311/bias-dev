@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_04_131738) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_12_130933) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -130,7 +130,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_04_131738) do
   end
 
   create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "emp_no"
+    t.string "emp_no", limit: 4
     t.string "emp_name"
     t.integer "tech_flag"
     t.integer "wg_flag"
