@@ -15,8 +15,8 @@
 
   <div class="form-group">
     <%= form.label :emp_no, '社員番号' %>
-    <%= form.number_field :emp_no, class: 'form-control', id: "boss-no-field" %>
-    <button data-action="click->search#search" class="btn btn-primary">Search</button>
+    <%= form.number_field :emp_no, class: 'form-control', id: "boss-no-field", data: { search_target: "bossNoField" } %>
+
   </div>
   <div data-search-target="results">
     <div class="form-group">
