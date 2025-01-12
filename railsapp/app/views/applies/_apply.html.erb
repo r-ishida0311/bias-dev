@@ -1,30 +1,27 @@
 <tr>
   <td class="text-center"><%= apply.year %></td>
   <td class="text-center"><%= apply_kind_label(apply.apply_kind) %></td>
-  <td class="text-center"><%= apply.reference_no %></td>
   <td class="text-center"><%= apply.id %></td>
-
+  <td class="text-center"><%= apply.reference_no %></td>
   <td class="text-center"><%= display_oh(apply.division&.oh) %></td>
-  <td class="text-center"><%= apply.item_name %></td>
+  <td><%= apply.item_name %></td>
   <td class="text-center"><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
-  <td class="text-center"><%= apply.department.dep_name rescue "N/A" %></td>
-  <td class="text-center"><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
+  <td><%= apply.department.dep_name rescue "N/A" %></td>
+  <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
   <td class="text-center"></td>
-  <td class="text-center"></td>
+  <td class="text-center"><%=  boss_status_label(apply.boss1.boss_status) %></td>
   <td class="text-center"><%= apply_status_label(apply.apply_status) %></td>
   <td class="text-center"><%= tech_status_label(apply.tech_status) %></td>
   <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
   <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
-  <td class="text-center"> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-dark  ms-2" %>
+  <td> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-dark  ms-2" %>
 
     <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
     <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-light  ms-2" %>
     <% end %>
 
-
-
     <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
-    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info  ms-2" %>
+    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info " %>
     <% end %>
 
 </tr>
