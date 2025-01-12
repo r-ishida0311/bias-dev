@@ -52,12 +52,23 @@
               <%= form.hidden_field :sk_approve_cost, class: "form-control" %></dd>
 
             <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
+
+            <% if authorized %>
             <dt class="col-sm-4"><%= boss1_form.label :原局確認者, style: "display: block;" %></dt>
             <dd class="col-sm-8"> <%= boss1_form.object.boss_name %>
               (<%= boss_status_label(boss1_form.object.boss_status) %>)
               <%= boss1_form.hidden_field :boss_status, value: apply.new_record? ? 0 : boss1_form.object.boss_status %>
             </dd>
-            <% end %>
+            <% else boss_authorized %>
+            <dt class="col-sm-4"><%= boss1_form.label :原局確認者, style: "display: block;" %></dt>
+            <dd class="col-sm-8"> <%= boss1_form.object.boss_name %>
+              <%= boss1_form.select :boss_status, options_for_select([["未確認", 0], ["確認済み", 1]], boss1_form.object.boss_status || 0), { prompt: "ステータスを選択" }, { class: "form-control" }  %>
+              <% end %>
+
+
+              <% end %>
+
+
             <dt class="col-sm-4"><%= form.label :技術計画推進部確認, style: "display: block;" %></dt>
             <dd class="col-sm-8"><%= @apply.tech_check_name %>(<%= tech_status_label(apply.tech_status) %>)
               <%= form.hidden_field :tech_status, value: apply.new_record? ? 0 : apply.tech_status %>
@@ -103,6 +114,7 @@
           </h5>
         </div>
         <div class="card-body">
+
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
 
@@ -374,6 +386,6 @@
         .disabled-field label {
           pointer-events: none;
           cursor: not-allowed;
-          opacity: 0.5;
+
         }
       </style>
