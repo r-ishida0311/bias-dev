@@ -229,9 +229,7 @@
             <div class="form-group">
               <%= form.label :希望納期, class: "d-block" %>
               <div class="d-flex">
-                <%= form.select :desired_delivery_year, (Date.today.year..Date.today.year + 10).to_a, { include_blank: true }, { class: "form-control", id: "desired_delivery_year" } %>年
-                <%= form.select :desired_delivery_month, (1..12).to_a, { include_blank: true }, { class: "form-control", id: "desired_delivery_month" } %>月
-                <%= form.hidden_field :desired_delivery, id: "desired_delivery" %>
+                <%= form.date_select :desired_delivery, {discard_day: true, start_year: Date.today.year, end_year: Date.today.year + 10, include_blank: true}, {class: "form-control"} %>
               </div>
             </div>
 
@@ -279,7 +277,9 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <%= form.label :old_asset_YM, '旧品取得年月', class: "d-block" %>
-                    <%= form.date_select :old_asset_YM, discard_day: true,  selected: apply.old_asset_YM, start_year: Date.today.year - 25, end_year: Date.today.year - 1, include_blank: true, class: "form-control" %>
+                    <div class="d-flex">
+                      <%= form.date_select :old_asset_YM, {discard_day: true, start_year: Date.today.year - 25, end_year: Date.today.year - 1, include_blank: true}, {class: "form-control"} %>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4">
