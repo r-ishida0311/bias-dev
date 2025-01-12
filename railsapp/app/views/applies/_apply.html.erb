@@ -15,14 +15,14 @@
   <td class="text-center"><%= tech_status_label(apply.tech_status) %></td>
   <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
   <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
-  <td class="text-center"> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-primary ms-2" %>
+  <td class="text-center"> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-dark  ms-2" %>
 
     <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
-    <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-primary ms-2" %>
+    <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-light  ms-2" %>
     <% end %>
 
     <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
-    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-primary ms-2" %>
+    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info  ms-2" %>
     <% end %>
 
 </tr>
