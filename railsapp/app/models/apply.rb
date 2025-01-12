@@ -12,8 +12,8 @@ class Apply < ApplicationRecord
   accepts_nested_attributes_for :boss1, allow_destroy: true
   accepts_nested_attributes_for :division, allow_destroy: true
     # その他の関連付けやバリデーションなど
-  
-    validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
+  belongs_to :apply_status
+  validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
   
   
   # validates :desired_delivery, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }

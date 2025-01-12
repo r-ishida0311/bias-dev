@@ -22,6 +22,7 @@ class AppliesController < ApplicationController
   # GET /applies/new
   def new
     @apply = Apply.new(apply_kind: 1) 
+    @apply.build_apply_status
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
     @apply.build_division 
@@ -34,6 +35,7 @@ class AppliesController < ApplicationController
   def edit
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
+    @apply.build_apply_status
   end
 
   # POST /applies or /applies.json
@@ -164,7 +166,6 @@ def apply_params
     :old_asset_YM,
     :old_asset_cost,
     :old_asset_handling,
-    :apply_status,
     :tech_status,
     :approve_status,
     :wg_comment_status,
@@ -173,6 +174,7 @@ def apply_params
     :year,
     :sk_approve_cost,
     :sk_comment,
+    :apply_status_id,
     files: [],
     boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
     division_attributes: [:id, :new_pur, :replace, :repair, :_destroy]
