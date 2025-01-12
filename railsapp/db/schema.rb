@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_12_130933) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_12_131705) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -255,7 +255,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_130933) do
   end
 
   create_table "boss1s", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "boss_no"
+    t.string "boss_no", limit: 4
     t.string "boss_name"
     t.integer "boss_status"
     t.datetime "created_at", null: false
@@ -300,7 +300,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_130933) do
     t.string "username"
     t.string "login_user"
     t.string "login_department"
-    t.integer "login_ref_no"
+    t.string "login_ref_no", limit: 4
     t.text "groups"
     t.index ["login"], name: "index_users_on_login", unique: true
   end
