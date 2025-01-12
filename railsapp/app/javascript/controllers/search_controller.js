@@ -1,7 +1,22 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-  static targets = ['phoneNumber', 'results'];
+  static targets = ['bossNoField', 'results'];
+
+  connect() {
+    this.bossNoFieldTarget.addEventListener(
+      'input',
+      this.handleInput.bind(this)
+    );
+  }
+
+  handleInput(event) {
+    const inputValue = event.target.value;
+    if (/^\d{4}$/.test(inputValue)) {
+      // Check if it's a 4-digit number
+      this.search(event);
+    }
+  }
 
   search(event) {
     event.preventDefault();

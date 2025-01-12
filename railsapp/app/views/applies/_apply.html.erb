@@ -22,8 +22,6 @@
     <% end %>
 
 
-    <%= current_user.login_ref_no%>
-    <%=boss1.boss_no%>
 
     <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
     <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info  ms-2" %>

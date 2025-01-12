@@ -324,9 +324,9 @@
           <div class="col-md-6">
             <div class="input-group">
               <%= boss1_form.label :boss_no, '原局確認者社員番号', class: "input-group-text" %>
-              <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field" %>
-              <button data-action="click->search#search" class="btn btn-primary">Search</button>
+              <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field", data: { search_target: "bossNoField" } %>
             </div>
+
           </div>
 
           <div data-search-target="results" class="row">
