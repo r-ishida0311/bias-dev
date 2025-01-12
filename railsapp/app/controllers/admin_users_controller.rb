@@ -3,7 +3,15 @@ class AdminUsersController < ApplicationController
 
 
   def index
-    @admin_users = AdminUser.all
+    
+    @search = AdminUser.ransack(params[:q])
+
+    # デフォルトのソートをid降順にする
+    @search.sorts = 'id desc' if @search.sorts.empty?
+ 
+    # `@search.result`で検索結果となる@catsを取得する
+    # 検索結果に対してはkaminariのpageメソッドをチェーンできる
+    @admin_users = @search.result.page(params[:page])
   end
 
   def new

@@ -4,5 +4,10 @@ class AdminUser < ApplicationRecord
   validates :wg_flag, inclusion: { in: [0, 1], message: "は0または1でなければなりません。" }
   validates :sys_flag, inclusion: { in: [0, 1], message: "は0または1でなければなりません。" }
   validates :emp_name, presence: {message: "を入力してください。"}
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "emp_name", "emp_no", "id", "id_value", "sys_flag", "tech_flag", "updated_at", "wg_flag"]
+    end
+
 end
 
