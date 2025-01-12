@@ -382,8 +382,12 @@
         </div>
         <% end %>
 
-        <div>
-          <%= form.submit %>
+        <div class="d-flex justify-content-end">
+          <%= form.submit  class: "btn btn-success me-2"%>
+          <%= link_to "戻る", applies_path, class: "btn btn-primary me-2" %>
+          <% if apply.persisted? %>
+          <%= link_to "削除", @apply, data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "btn btn-danger"%>
+          <% end %>
         </div>
 
         <% end %>
