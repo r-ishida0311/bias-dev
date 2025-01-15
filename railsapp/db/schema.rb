@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_12_171012) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_15_054652) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -173,12 +173,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_171012) do
     t.integer "sk_approve_cost"
     t.string "sk_comment"
     t.integer "old_asset_cost"
-    t.integer "boss1_id"
     t.integer "year"
-    t.bigint "apply_status_id", null: false
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
-    t.index ["apply_status_id"], name: "index_applies_on_apply_status_id"
-    t.index ["boss1_id"], name: "fk_rails_2b516931c6"
     t.index ["department_id"], name: "index_applies_on_department_id"
     t.index ["division_id"], name: "fk_rails_0d9501c942"
   end
@@ -243,7 +239,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_171012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "apply_id"
-    t.index ["apply_id"], name: "fk_rails_4a9dbd3610"
+    t.index ["apply_id"], name: "index_apply_statuses_on_apply_id"
   end
 
   create_table "attached_files", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -319,10 +315,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_171012) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "add_deps", "years"
   add_foreign_key "applies", "add_deps"
-  add_foreign_key "applies", "boss1s", on_delete: :nullify
   add_foreign_key "applies", "departments"
   add_foreign_key "applies", "divisions"
-  add_foreign_key "apply_statuses", "applies", on_delete: :cascade
+  add_foreign_key "apply_statuses", "applies"
   add_foreign_key "attached_files", "applies"
   add_foreign_key "departments", "years"
 end

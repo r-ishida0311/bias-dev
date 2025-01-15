@@ -11,8 +11,9 @@ class Apply < ApplicationRecord
   validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
   accepts_nested_attributes_for :boss1, allow_destroy: true
   accepts_nested_attributes_for :division, allow_destroy: true
-    # その他の関連付けやバリデーションなど
-  belongs_to :apply_status
+    
+  has_one :apply_status, dependent: :destroy
+  accepts_nested_attributes_for :apply_status
   validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
   
   

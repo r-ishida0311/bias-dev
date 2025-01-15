@@ -1,3 +1,3 @@
 
-Boss1.destroy_all
-Division.destroy_all
+
+ApplyStatus.destroy_all

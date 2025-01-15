@@ -22,7 +22,7 @@ class AppliesController < ApplicationController
   # GET /applies/new
   def new
     @apply = Apply.new(apply_kind: 1) 
-    @apply.build_apply_status
+    
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
     @apply.build_division 
@@ -35,7 +35,7 @@ class AppliesController < ApplicationController
   def edit
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
-    @apply.build_apply_status
+    
   end
 
   # POST /applies or /applies.json
@@ -58,6 +58,7 @@ class AppliesController < ApplicationController
 
   # PATCH/PUT /applies/1 or /applies/1.json
   def update
+   
     @apply = Apply.find(params[:id])
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
@@ -177,7 +178,8 @@ def apply_params
     :apply_status_id,
     files: [],
     boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
-    division_attributes: [:id, :new_pur, :replace, :repair, :_destroy]
+    division_attributes: [:id, :new_pur, :replace, :repair, :_destroy],
+    apply_status_attributes: [:id, :apply_status, :_destroy]
   ).tap do |permitted|
     permitted.delete(:files) if params[:files].blank? # Delete files key entirely if blank
   end

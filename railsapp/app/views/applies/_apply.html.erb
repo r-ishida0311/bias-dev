@@ -10,7 +10,7 @@
   <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
   <td class="text-center"></td>
   <td class="text-center"><%=  boss_status_label(apply.boss1.boss_status) %></td>
-  <td class="text-center"><%= apply_status_label(apply.apply_status.apply_status) %></td>
+  <td class="text-center"><%= apply_status_label(apply.apply_status&.apply_status || "N/A") %></td>
   <td class="text-center"><%= tech_status_label(apply.tech_status) %></td>
   <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
   <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
