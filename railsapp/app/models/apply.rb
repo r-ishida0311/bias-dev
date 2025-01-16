@@ -8,7 +8,7 @@ class Apply < ApplicationRecord
   has_many_attached :files
   belongs_to :department
   
-  belongs_to :division, dependent: :destroy
+  has_one :division, dependent: :destroy
   accepts_nested_attributes_for :division
 
   has_one :boss1, dependent: :destroy

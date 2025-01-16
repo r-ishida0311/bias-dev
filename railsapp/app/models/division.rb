@@ -3,7 +3,7 @@ class Division < ApplicationRecord
   validates :replace, inclusion: { in: [0, 1], message: "は0または1を指定してください。" }
   validates :repair, inclusion: { in: [0, 1], message: "は0または1を指定してください。" }
   before_save :set_oh_value
-
+  belongs_to :apply
   private
 
   def set_oh_value

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_16_105931) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_16_111829) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -160,7 +160,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_105931) do
     t.string "location"
     t.date "desired_delivery"
     t.string "category"
-    t.bigint "division_id"
     t.string "reason"
     t.string "specific_contents"
     t.string "old_asset_no"
@@ -175,7 +174,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_105931) do
     t.integer "year"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
     t.index ["department_id"], name: "index_applies_on_department_id"
-    t.index ["division_id"], name: "fk_rails_0d9501c942"
   end
 
   create_table "apply_data_tabs_old", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

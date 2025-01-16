@@ -43,6 +43,7 @@ class AppliesController < ApplicationController
     @employee_number = current_user.login_ref_no
     @preselected_department = Department.find_by(dep_name: current_user.login_department)
     @preselected_year = Year.find_by(target_year: 1)&.year
+    @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     respond_to do |format|
       if @apply.save
         format.html { redirect_to applies_path, notice: "Apply was successfully created." }
@@ -180,7 +181,7 @@ def apply_params
     apply_status_attributes: [:id, :apply_status, :_destroy],
     sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy]
   ).tap do |permitted|
-    permitted.delete(:files) if params[:files].blank? # Delete files key entirely if blank
+    permitted.delete(:files) if params[:files].blank? 
   end
 end
 
