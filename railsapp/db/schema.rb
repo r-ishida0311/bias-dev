@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_15_054652) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -281,6 +281,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_15_054652) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sk_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "sk_user"
+    t.string "sk_comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "apply_id"
+    t.index ["apply_id"], name: "index_sk_comments_on_apply_id"
+  end
+
   create_table "tests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -320,4 +329,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_15_054652) do
   add_foreign_key "apply_statuses", "applies"
   add_foreign_key "attached_files", "applies"
   add_foreign_key "departments", "years"
+  add_foreign_key "sk_comments", "applies"
 end

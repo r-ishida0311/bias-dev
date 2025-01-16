@@ -7,6 +7,8 @@
 <h3>編集画面</h3>
 <% elsif boss_authorized %>
 <h3>原局確認画面</h3>
+<% elsif wg_authorized %>
+<h3>設備計画作業部会確認画面</h3>
 <% end %>
 
 <% else %>
@@ -77,9 +79,26 @@
 
 
             <dt class="col-sm-4"><%= form.label :判定結果, style: "display: block;" %></dt>
+
+
+
+
+
+
+
             <dd class="col-sm-8"><%= approve_status_label(apply.approve_status) %>
               <%= form.hidden_field :approve_status, value: apply.new_record? ? 0 : apply.approve_status %>
             </dd>
+
+
+
+
+
+
+
+
+
+
             <dt class="col-sm-4"><%= form.label :sk_approve_cost, '承認金額（千円）', style: "display: block;" %></dt>
 
 
@@ -122,9 +141,16 @@
             <div class="col-md-6">
 
               <div class="form-group">
-                <%= form.label :設備計画作業部会コメント, style: "display: block;" %>
-                <%= apply.sk_comment%>
-                <%= form.hidden_field :sk_comment, class: "form-control" %>
+
+                <%= form.fields_for :sk_comment, apply.sk_comment || apply.build_sk_comment do |sk_comment_form| %>
+                <dt class="col-sm-5">
+                  <%= sk_comment_form.label :sk_comment, '設備作業部会コメント', style: "display: block;" %>
+                </dt>
+                <dd>
+                  <%= sk_comment_form.text_area :sk_comment, class: "form-control" %>
+                </dd>
+                <% end %>
+
               </div>
               <div class="form-group">
                 <%= form.label :技術計画推進コメント %>

@@ -14,12 +14,15 @@ class Apply < ApplicationRecord
     
   has_one :apply_status, dependent: :destroy
   accepts_nested_attributes_for :apply_status
+
+  has_one :sk_comment, dependent: :destroy # or :delete_all if you don't need callbacks
+  accepts_nested_attributes_for :sk_comment
+
   validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
   
-  
-  # validates :desired_delivery, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
-  # validates :old_asset_YM, format: { with: /\A\d{4}-\d{2}\z/, message: "はyyyy-mmの形式で入力してください。" }
-  # validates :old_asset_cost, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "は0以上の整数で入力してください" }
+
+
+
   def self.ransackable_attributes(auth_object = nil)
     ["add_dep_id", 
     "apply_emp_name", 
