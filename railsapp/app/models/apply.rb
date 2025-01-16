@@ -1,16 +1,18 @@
 class Apply < ApplicationRecord
   before_save :clear_old_asset_fields
+  before_validation :clear_reference_no_if_apply_kind_not_2
+
+  validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
+  validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
+
   has_many_attached :files
   belongs_to :department
-  # belongs_to :add_dep
+  
   belongs_to :division, dependent: :destroy
   accepts_nested_attributes_for :division
+
   has_one :boss1, dependent: :destroy
   accepts_nested_attributes_for :boss1
-  before_validation :clear_reference_no_if_apply_kind_not_2
-  validates :apply_kind, inclusion: { in: [1, 2], message: "は(一般設備)または(放送設備)を指定してください。" }
-  accepts_nested_attributes_for :boss1, allow_destroy: true
-  accepts_nested_attributes_for :division, allow_destroy: true
     
   has_one :apply_status, dependent: :destroy
   accepts_nested_attributes_for :apply_status
@@ -18,7 +20,6 @@ class Apply < ApplicationRecord
   has_one :sk_comment, dependent: :destroy # or :delete_all if you don't need callbacks
   accepts_nested_attributes_for :sk_comment
 
-  validates :old_asset_no, format: { with: /\A[\d_]+\z/, message: "旧品資産番号には半角数字とアンダーバー(_)のみ使用できます。" }, if: -> { old_asset_no.present? && old_asset_multi == 1 }
   
 
 
