@@ -397,10 +397,12 @@
         <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
         <div data-controller="search">
           <div class="col-md-6">
-            <div class="form-group <%= authorized ? '' : 'disabled-field' %>">
+            <div class="form-group <%= authorized&& apply.apply_status&.apply_status < 1 ? '' : 'disabled-field' %>">
               <div class="input-group">
                 <%= boss1_form.label :boss_no, '原局確認者社員番号', class: "input-group-text" %>
                 <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field", data: { search_target: "bossNoField" } %>
+                <small class="form-text text-muted <%= apply.apply_status&.apply_status < 1 ? 'd-none' : '' %>">申請ステータスが作業中以外の時は変更できません</small>
+
               </div>
             </div>
 
