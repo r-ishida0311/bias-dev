@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_16_105931) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -171,7 +171,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
     t.integer "wg_comment_status"
     t.string "wg_reply_comment"
     t.integer "sk_approve_cost"
-    t.string "sk_comment"
     t.integer "old_asset_cost"
     t.integer "year"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
@@ -261,7 +260,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
     t.datetime "updated_at", null: false
     t.string "boss_email"
     t.string "boss_depart"
-    t.integer "apply_id"
+    t.bigint "apply_id"
+    t.index ["apply_id"], name: "index_boss1s_on_apply_id"
   end
 
   create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -279,6 +279,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
     t.integer "oh"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "apply_id"
+    t.index ["apply_id"], name: "index_divisions_on_apply_id"
   end
 
   create_table "sk_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -325,9 +327,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_092620) do
   add_foreign_key "add_deps", "years"
   add_foreign_key "applies", "add_deps"
   add_foreign_key "applies", "departments"
-  add_foreign_key "applies", "divisions"
   add_foreign_key "apply_statuses", "applies"
   add_foreign_key "attached_files", "applies"
+  add_foreign_key "boss1s", "applies"
   add_foreign_key "departments", "years"
+  add_foreign_key "divisions", "applies"
   add_foreign_key "sk_comments", "applies"
 end
