@@ -24,4 +24,8 @@
     <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info " %>
     <% end %>
 
+    <% if AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
+    <%= link_to '設備作業部会', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info " %>
+    <% end %>
+
 </tr>

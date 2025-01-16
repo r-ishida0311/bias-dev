@@ -22,6 +22,9 @@ export default class extends Controller {
     event.preventDefault();
     const phoneNumber = this.element.querySelector('#boss-no-field').value;
 
+    document.getElementById('overlay').style.display = 'block';
+    document.body.style.pointerEvents = 'none'; // 全画面操作を無効化
+
     fetch(`/search?phone_number=${phoneNumber}`, {
       headers: { Accept: 'application/json' },
     })
@@ -30,14 +33,22 @@ export default class extends Controller {
         if (data && data.length > 0) {
           this.populateBossFields(data[0]);
         } else {
-          alert('検索結果がありません。'); // Alert if no results
-          return; // Stop further processing
+          alert('検索結果がありません。');
         }
+        // オーバーレイを非表示
+        this.hideOverlay();
       })
       .catch((error) => {
         console.error('Error fetching search results:', error);
-        alert(`エラーが発生しました: ${error.message}`); // Alert on error
+        alert(`エラーが発生しました: ${error.message}`);
+        // オーバーレイを非表示
+        this.hideOverlay();
       });
+  }
+
+  hideOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.pointerEvents = 'auto'; // 画面操作を有効化
   }
 
   populateBossFields(result) {

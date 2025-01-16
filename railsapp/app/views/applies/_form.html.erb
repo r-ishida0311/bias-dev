@@ -1,9 +1,11 @@
 <% if apply.persisted? %>
 <% authorized = current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
 <% boss_authorized = apply.boss1 && current_user.login_ref_no.to_i == apply.boss1.boss_no.to_i %>
+<% wg_authorized = AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
+
 <% if authorized %>
 <h3>編集画面</h3>
-<% else boss_authorized %>
+<% elsif boss_authorized %>
 <h3>原局確認画面</h3>
 <% end %>
 
@@ -12,7 +14,11 @@
 <% authorized = true %>
 <% end %>
 
-
+<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <p>検索中...</p>
+  </div>
+</div>
 
 <div class="container-fluid my-5">
   <%= form_with(model: apply, local: true) do |form| %>
@@ -75,6 +81,8 @@
               <%= form.hidden_field :approve_status, value: apply.new_record? ? 0 : apply.approve_status %>
             </dd>
             <dt class="col-sm-4"><%= form.label :sk_approve_cost, '承認金額（千円）', style: "display: block;" %></dt>
+
+
             <dd class="col-sm-8"><%= apply.sk_approve_cost %>
               <%= form.hidden_field :sk_approve_cost, class: "form-control" %></dd>
 
@@ -82,24 +90,23 @@
             <dt class="col-sm-4"><%= boss1_form.label :原局確認者, style: "display: block;" %></dt>
             <dd class="col-sm-8"> <%= boss1_form.object.boss_name %>
 
-              <% if authorized %>
-              (<%= boss_status_label(boss1_form.object.boss_status) %>)
-              <%= boss1_form.hidden_field :boss_status, value: apply.new_record? ? 0 : boss1_form.object.boss_status %>
-              <% elsif boss_authorized && apply.apply_status.apply_status == 0 %>
-              (<%= boss_status_label(boss1_form.object.boss_status) %>)
-              <%= boss1_form.hidden_field :boss_status, value: apply.new_record? ? 0 : boss1_form.object.boss_status %>
-              ※申請ステータス⁼作業完了のとき編集できます
-              <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
+              <% if boss_authorized && apply.apply_status.apply_status == 0 %>
+              (<%= boss_status_label(0) %>)
+
               <% elsif boss_authorized && apply.apply_status.apply_status == 1 %>
-              <%= boss1_form.select :boss_status, options_for_select([["未確認", 0], ["確認済み", 1]], boss1_form.object.boss_status || 0), { prompt: "ステータスを選択" }, { class: "form-control" }  %>
+              <%= boss1_form.select :boss_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
+              <% elsif boss_authorized && apply.apply_status.apply_status == 2 %>
+              (<%= boss_status_label(2) %>)
+              <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
               <% else %>
-              error
+              (<%= boss_status_label(apply.boss1.boss_status) %>)
+              <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
               <% end %>
-
-
-
-
               <% end %>
 
 
