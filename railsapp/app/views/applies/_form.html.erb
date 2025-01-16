@@ -47,12 +47,16 @@
 
               <% if authorized && @apply.boss1&.boss_status == 0 %>
               <%= apply_status_form.select :apply_status, [["作業中", 0], ["作業完了", 1]], {}, { class: "form-control" } %>
-
+              <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
               <% elsif authorized && @apply.boss1&.boss_status == 1 %>
               <%= apply_status_form.select :apply_status, [["作業完了", 1], ["申請済み", 2]], {}, { class: "form-control" } %>
+              <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% elsif apply.persisted? %>
+              <%= apply_status_label(apply.apply_status.apply_status) %>
+              <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
               <% else %>
               <%= apply_status_label(0) %>
-              <%= apply_status_form.hidden_field :apply_status, value: 0, class: "form-control" %>
+
               <% end %>
 
             </dd>
