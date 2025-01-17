@@ -3,19 +3,24 @@
 <% boss_authorized = apply.boss1 && current_user.login_ref_no.to_i == apply.boss1.boss_no.to_i %>
 <% wg_authorized = AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
 
-<% if authorized %>
-<h3>編集画面</h3>
-<% elsif boss_authorized %>
-<h3>原局確認画面</h3>
-<% elsif wg_authorized %>
-<h3>設備計画作業部会確認画面</h3>
+
 <% end %>
 
-<% elsif apply.new_record? %>
-<h3>新規作成画面</h3>
-<% else %>
-error
+
+<% if params[:link_param1] == "edit" %>
+<h3>編集画面</h3>
 <% end %>
+
+<% if params[:link_param1] == "boss" %>
+<h3>原局承認画面</h3>
+<% end %>
+
+<% if params[:link_param1] == "wg" %>
+<h3>設備作業部会画面</h3>
+<% end %>
+
+
+<%= params[:link_param1] %>
 
 <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
   <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">

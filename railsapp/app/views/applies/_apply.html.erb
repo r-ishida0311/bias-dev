@@ -15,17 +15,24 @@
   <td class="text-center"><%= approve_status_label(apply.approve_status) %></td>
   <td class="text-center"><%= apply.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
   <td> <%= link_to '詳細', apply, data: { turbo: false }, class: "btn btn-dark  ms-2" %>
-
-    <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
-    <%= link_to '編集', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-light  ms-2" %>
-    <% end %>
-
-    <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
-    <%= link_to '原局承認', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info " %>
-    <% end %>
-
-    <% if AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
-    <%= link_to '設備作業部会', edit_apply_path(apply), data: { turbo: false }, class: "btn btn-info " %>
-    <% end %>
-
+    <div>
+      <% if current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
+      <%= link_to '編集', edit_apply_path(apply, link_param1: "edit"), data: { turbo: false }, class: "btn btn-light  ms-2" %>
+      <% end %>
+    </div>
+    <div>
+      <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
+      <%= link_to '原局承認', edit_apply_path(apply, link_param1: "boss"), data: { turbo: false }, class: "btn btn-info " %>
+      <% end %>
+    </div>
+    <div>
+      <% if AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
+      <%= link_to '設備作業部会', edit_apply_path(apply, link_param1: "wg"), data: { turbo: false }, class: "btn btn-success " %>
+      <% end %>
+    </div>
+    <div>
+      <% if AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, tech_flag: 1) %>
+      <%= link_to '技推確認', edit_apply_path(apply, link_param1: "tech"), data: { turbo: false }, class: "btn btn-danger " %>
+      <% end %>
+    </div>
 </tr>
