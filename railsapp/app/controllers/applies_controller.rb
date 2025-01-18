@@ -34,6 +34,28 @@ class AppliesController < ApplicationController
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     
+
+    unless current_user.login_ref_no.to_i == apply.apply_emp_no.to_i && params[:link_param1] == "edit"
+      redirect_to applies_path, alert: "You are not authorized to access this page."
+      return # Important: Stop further execution
+    end
+
+    unless current_user.login_ref_no.to_i == boss1.boss_no.to_i && params[:link_param1] == "boss"
+      redirect_to applies_path, alert: "You are not authorized to access this page."
+      return # Important: Stop further execution
+    end
+
+    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) && params[:link_param1] == "wg"
+      redirect_to applies_path, alert: "You are not authorized to access this page."
+      return # Important: Stop further execution
+    end
+
+    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, tech_flag: 1) && params[:link_param1] == "tech"
+      redirect_to applies_path, alert: "You are not authorized to access this page."
+      return # Important: Stop further execution
+    end
+
+    
   end
 
   # POST /applies or /applies.json
