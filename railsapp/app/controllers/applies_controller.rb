@@ -3,6 +3,8 @@ class AppliesController < ApplicationController
   before_action :set_employee_data, only: [:edit, :update]
   before_action :check_wg_access, only: [:edit], if: :wg_link_param?
   before_action :check_tech_access, only: [:edit], if: :tech_link_param?
+  before_action :check_boss_access, only: [:edit], if: :boss_link_param?
+  before_action :check_edit_access, only: [:edit], if: :edit_link_param?
 
   def index
     @applies = Apply.includes(:department).all 
@@ -33,7 +35,7 @@ class AppliesController < ApplicationController
 
   # GET /applies/1/edit
   def edit
-    @apply = Apply.find(params[:id])
+    @apply = Apply.includes(:boss1).find(params[:id]) 
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     
@@ -59,7 +61,25 @@ class AppliesController < ApplicationController
     params[:link_param1] == 'tech'
   end
 
+  def check_boss_access
+    unless current_user.login_ref_no.to_i == @apply.boss1.boss_no.to_i
+      redirect_to root_path, notice: 'アクセス権限がありません。'
+    end
+  end
 
+  def boss_link_param?
+    params[:link_param1] == 'boss'
+  end
+
+  def check_edit_access
+    unless current_user.login_ref_no.to_i == @apply.apply_emp_no.to_i
+      redirect_to root_path, notice: 'アクセス権限がありません。'
+    end
+  end
+
+  def edit_link_param?
+    params[:link_param1] == 'edit'
+  end
   # POST /applies or /applies.json
   def create
     @apply = Apply.new(apply_params)
