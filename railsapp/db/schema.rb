@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_18_060008) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_18_061210) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -149,9 +149,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_060008) do
     t.string "item_name"
     t.string "apply_emp_no"
     t.string "apply_emp_name"
-    t.integer "tech_status"
-    t.string "tech_check_name"
-    t.integer "approve_status"
     t.string "equipment_name"
     t.string "manufacturer_name"
     t.string "supplier_name"
@@ -166,9 +163,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_060008) do
     t.integer "old_asset_multi"
     t.date "old_asset_YM"
     t.string "old_asset_handling"
-    t.string "wg_comment"
-    t.integer "wg_comment_status"
-    t.string "wg_reply_comment"
     t.integer "sk_approve_cost"
     t.integer "old_asset_cost"
     t.integer "year"
