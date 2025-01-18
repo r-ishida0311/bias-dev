@@ -6,7 +6,7 @@ export default class extends Controller {
   // `connect()`はStimulusのライフサイクルコールバックの1つ
   // コントローラーがHTML要素にアタッチされた時（=HTML要素が画面に表示された時）に実行される
   connect() {
-    // モーダル生成
+    console.log('connect');
     this.modal = new Modal(this.element);
 
     // モーダルを表示する
@@ -16,10 +16,9 @@ export default class extends Controller {
   // アクション定義
   // 保存成功時にモーダルを閉じる
   close(event) {
-    // event.detail.successは、レスポンスが成功ならtrueを返す
-    // バリデーションエラー時はモーダルを閉じたくないので、成功時のみ閉じる
+    console.log('close');
     if (event.detail.success) {
-      // モーダルを閉じる
+      console.log('success');
       this.modal.hide();
     }
   }
