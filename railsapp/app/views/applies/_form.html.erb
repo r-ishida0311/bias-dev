@@ -246,9 +246,6 @@
             <p>添付ファイルはありません。</p>
             <% end %>
             <% end %>
-
-
-
         </div>
       </div>
     </div>
@@ -479,9 +476,11 @@
         <% end %>
 
         <div class="d-flex justify-content-end">
+          <% unless show_page %>
           <%= form.submit  class: "btn btn-success me-2"%>
+          <% end %>
           <%= link_to "戻る", applies_path, class: "btn btn-primary me-2" %>
-          <% if apply.persisted? %>
+          <% if apply.persisted? && edit_page %>
           <%= link_to "削除", @apply, data: { turbo_method: :delete, turbo_confirm: "削除しますか？" }, class: "btn btn-danger"%>
           <% end %>
         </div>
