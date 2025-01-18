@@ -223,7 +223,8 @@ def apply_params
     boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
     division_attributes: [:id, :new_pur, :replace, :repair, :_destroy],
     apply_status_attributes: [:id, :apply_status, :_destroy],
-    sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy]
+    sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy],
+    tech_comment_attributes: [:id, :tech_comment, :tech_user, :_destroy]
   ).tap do |permitted|
     permitted.delete(:files) if params[:files].blank? 
   end

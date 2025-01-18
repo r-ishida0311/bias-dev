@@ -4,7 +4,7 @@
 <% edit_page = params[:link_param1] == "edit" %>
 <% boss_page = params[:link_param1] == "boss" %>
 <% wg_page = params[:link_param1] == "wg" %>
-<% texh_page = params[:link_param1] == "texh" %>
+<% tech_page = params[:link_param1] == "tech" %>
 
 <% if show_page %>
 <h3>詳細画面</h3>
@@ -64,21 +64,23 @@
               <%= apply_status_form.label :apply_status, '申請ステータス', style: "display: block;" %>
             </dt>
             <dd class="col-sm-8">
+              <% if apply.new_record? %>
+              <%= apply_status_label(0) %>
+              <%= apply_status_form.hidden_field :apply_status, value: apply.new_record? ? 0 : apply_status %>
 
-              <% if edit_page && @apply.boss1&.boss_status == 0 %>
+              <% elsif edit_page && @apply.boss1&.boss_status == 0 %>
               <%= apply_status_form.select :apply_status, [["作業中", 0], ["作業完了", 1]], {}, { class: "form-control" } %>
               <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
               <% elsif edit_page && @apply.boss1&.boss_status == 1 %>
               <%= apply_status_form.select :apply_status, [["作業完了", 1], ["申請済み", 2]], {}, { class: "form-control" } %>
               <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-              <% elsif apply.persisted? %>
+
+              <% else %>
               <%= apply_status_label(apply.apply_status.apply_status) %>
               <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-              <% elsif  apply.new_record?%>
-              <%= apply_status_label(0) %>
-              <%= apply_status_form.hidden_field :apply_status, value: apply.new_record? ? 0 : apply_status %>
-              <% else %>
-              error
+
+
               <% end %>
 
             </dd>
@@ -123,22 +125,18 @@
 
 
             <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
-            <dt class="col-sm-4"><%= boss1_form.label :原局確認者, style: "display: block;" %></dt>
-            <dd class="col-sm-8"> <%= boss1_form.object.boss_name %>
-
-              <% if boss_page && apply.apply_status.apply_status == 0 %>
-              (<%= boss_status_label(0) %>)
+            <dt class="col-sm-4"><%= boss1_form.label :原局確認ステータス, style: "display: block;" %></dt>
+            <dd class="col-sm-8">
+              <% if apply.new_record?%>
+              <%= boss_status_label(0) %>
+              <%= boss1_form.hidden_field :boss_status, value: apply.new_record? ? 0 : boss_status %>
 
               <% elsif boss_page && apply.apply_status.apply_status == 1 %>
               <%= boss1_form.select :boss_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
 
-              <% elsif boss_page && apply.apply_status.apply_status == 2 %>
-              (<%= boss_status_label(2) %>)
-              <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-
               <% else %>
-              (<%= boss_status_label(apply.boss1.boss_status) %>)
+              <%= boss_status_label(apply.boss1.boss_status) %>
               <% if apply.boss1.persisted? %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
               <% end %>
@@ -158,35 +156,41 @@
             <div class="col-md-6">
 
               <div class="form-group">
-
                 <%= form.fields_for :sk_comment, apply.sk_comment || apply.build_sk_comment do |sk_comment_form| %>
                 <dt class="col-sm-5">
                   <%= sk_comment_form.label :sk_comment, '設備作業部会コメント', style: "display: block;" %>
                 </dt>
                 <dd>
-
-
-
                   <% if wg_page %>
                   <%= sk_comment_form.text_area :sk_comment, class: "form-control" %>
-
-
                   <% else %>
                   <%= apply.sk_comment.sk_comment %>
                   <% end %>
+                  <% if apply.sk_comment.persisted? %>
+                  <div class="col-sm-8"> <%= sk_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+                  <% end %>
+                </dd>
+                <% end %>
+              </div>
 
 
-
+              <div class="form-group">
+                <%= form.fields_for :tech_comment, apply.tech_comment || apply.build_tech_comment do |tech_comment_form| %>
+                <dt class="col-sm-5">
+                  <%= tech_comment_form.label :tech_comment, '技術計画推進部コメント', style: "display: block;" %>
+                </dt>
+                <dd>
+                  <% if tech_page %>
+                  <%= tech_comment_form.text_area :tech_comment, class: "form-control" %>
+                  <% else %>
+                  <%= apply.tech_comment.tech_comment %>
+                  <% end %>
+                  <% if apply.tech_comment.persisted? %>
+                  <div class="col-sm-8"> <%= tech_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+                  <% end %>
                 </dd>
                 <% end %>
 
-              </div>
-              <div class="form-group">
-                <%= form.label :技術計画推進コメント %>
-                (<%= tech_status_label(apply.wg_comment_status) %>)
-                <%= form.hidden_field :wg_comment_status %>
-                <%= apply.wg_comment %>
-                <%= form.hidden_field :wg_comment, class: "form-control" %>
               </div>
               <div class="form-group <%= edit_page ? '' : 'disabled-field' %>">
                 <%= form.label :回答コメント, style: "display: block;" %>

@@ -17,10 +17,11 @@ class Apply < ApplicationRecord
   has_one :apply_status, dependent: :destroy
   accepts_nested_attributes_for :apply_status
 
-  has_one :sk_comment, dependent: :destroy # or :delete_all if you don't need callbacks
+  has_one :sk_comment, dependent: :destroy 
   accepts_nested_attributes_for :sk_comment
 
-  
+  has_one :tech_comment, dependent: :destroy 
+  accepts_nested_attributes_for :tech_comment
 
 
 
