@@ -225,8 +225,8 @@ def apply_params
     apply_status_attributes: [:id, :apply_status, :_destroy],
     sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy],
     tech_comment_attributes: [:id, :tech_comment, :tech_user, :_destroy],
-    tech_reply_comment_attributes: [:id, :tech_reply_comment,  :_destroy]
-
+    tech_reply_comment_attributes: [:id, :tech_reply_comment,  :_destroy],
+    tech_status_attributes: [:id, :tech_check_name, :tech_status, :_destroy]
   ).tap do |permitted|
     permitted.delete(:files) if params[:files].blank? 
   end

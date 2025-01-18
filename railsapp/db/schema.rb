@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_18_052649) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_18_053444) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -307,6 +307,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_052649) do
     t.index ["apply_id"], name: "index_tech_reply_comments_on_apply_id"
   end
 
+  create_table "tech_statuses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "tech_check_name"
+    t.integer "tech_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "apply_id"
+    t.index ["apply_id"], name: "index_tech_statuses_on_apply_id"
+  end
+
   create_table "tests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -350,4 +359,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_052649) do
   add_foreign_key "sk_comments", "applies"
   add_foreign_key "tech_comments", "applies"
   add_foreign_key "tech_reply_comments", "applies"
+  add_foreign_key "tech_statuses", "applies"
 end

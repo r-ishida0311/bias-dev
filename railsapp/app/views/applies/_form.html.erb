@@ -59,7 +59,6 @@
         <div class="card-body">
           <dl class="row mb-0">
             <%= form.fields_for :apply_status, apply.apply_status || apply.build_apply_status do |apply_status_form| %>
-
             <dt class="col-sm-4">
               <%= apply_status_form.label :apply_status, '申請ステータス', style: "display: block;" %>
             </dt>
@@ -79,14 +78,8 @@
               <% else %>
               <%= apply_status_label(apply.apply_status.apply_status) %>
               <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-
-
               <% end %>
-
             </dd>
-
-
-
             <% end %>
 
 
@@ -144,17 +137,33 @@
               <% end %>
 
 
-            <dt class="col-sm-4"><%= form.label :技術計画推進部確認, style: "display: block;" %></dt>
-            <dd class="col-sm-8"><%= @apply.tech_check_name %>(<%= tech_status_label(apply.tech_status) %>)
-              <%= form.hidden_field :tech_status, value: apply.new_record? ? 0 : apply.tech_status %>
+              <%= form.fields_for :tech_status, apply.tech_status || apply.build_tech_status do |tech_status_form| %>
+            <dt class="col-sm-4">
+              <%= tech_status_form.label :tech_status, '技術計画推進部確認', style: "display: block;" %>
+            </dt>
+            <dd class="col-sm-8">
+              <% if apply.new_record? %>
+              <%= tech_status_label(0) %>
+              <%= tech_status_form.hidden_field :tech_status, value: apply.new_record? ? 0 : tech_status %>
+
+              <% elsif tech_page %>
+              <%= tech_status_form.select :tech_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
+              <div class="col-sm-8"> <%= tech_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+
+              <% else %>
+              <%= tech_status_label(apply.tech_status.tech_status) %>
+              <% if apply.tech_status.persisted? %>
+              <div class="col-sm-8"> <%= tech_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
+              <% end %>
             </dd>
+            <% end %>
 
 
 
 
 
             <div class="col-md-6">
-
               <div class="form-group <%= wg_page ? '' : 'disabled-field' %>">
                 <%= form.fields_for :sk_comment, apply.sk_comment || apply.build_sk_comment do |sk_comment_form| %>
                 <dt class="col-sm-5">
@@ -176,9 +185,7 @@
                   <%= tech_comment_form.label :tech_comment, '技術計画推進部コメント', style: "display: block;" %>
                 </dt>
                 <dd>
-
                   <%= tech_comment_form.text_area :tech_comment, class: "form-control" %>
-
                   <% if apply.tech_comment.persisted? %>
                   <div class="col-sm-8"> <%= tech_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
@@ -189,7 +196,7 @@
               <div class="form-group <%= edit_page ? '' : 'disabled-field' %>">
                 <%= form.fields_for :tech_reply_comment, apply.tech_reply_comment || apply.build_tech_reply_comment do |tech_reply_comment_form| %>
                 <dt class="col-sm-5">
-                  <%= tech_reply_comment_form.label :tech_reply_comment, '技術計画推進部コメント', style: "display: block;" %>
+                  <%= tech_reply_comment_form.label :tech_reply_comment, '回答コメント', style: "display: block;" %>
                 </dt>
                 <dd>
                   <%= tech_reply_comment_form.text_area :tech_reply_comment, class: "form-control" %>
