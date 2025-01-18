@@ -1,7 +1,9 @@
 class AppliesController < ApplicationController
   before_action :set_apply, only: [ :show, :edit, :update, :destroy ]
   before_action :set_employee_data, only: [:edit, :update]
-  # GET /applies or /applies.json
+  before_action :check_wg_access, only: [:edit], if: :wg_link_param?
+  before_action :check_tech_access, only: [:edit], if: :tech_link_param?
+
   def index
     @applies = Apply.includes(:department).all 
     @search = Apply.ransack(params[:q])
@@ -31,32 +33,32 @@ class AppliesController < ApplicationController
 
   # GET /applies/1/edit
   def edit
+    @apply = Apply.find(params[:id])
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     
-
-    unless current_user.login_ref_no.to_i == apply.apply_emp_no.to_i && params[:link_param1] == "edit"
-      redirect_to applies_path, alert: "You are not authorized to access this page."
-      return # Important: Stop further execution
-    end
-
-    unless current_user.login_ref_no.to_i == boss1.boss_no.to_i && params[:link_param1] == "boss"
-      redirect_to applies_path, alert: "You are not authorized to access this page."
-      return # Important: Stop further execution
-    end
-
-    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) && params[:link_param1] == "wg"
-      redirect_to applies_path, alert: "You are not authorized to access this page."
-      return # Important: Stop further execution
-    end
-
-    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, tech_flag: 1) && params[:link_param1] == "tech"
-      redirect_to applies_path, alert: "You are not authorized to access this page."
-      return # Important: Stop further execution
-    end
-
-    
   end
+
+  def check_wg_access
+    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1)
+      redirect_to root_path, notice: 'アクセス権限がありません。'
+    end
+  end
+
+  def wg_link_param?
+    params[:link_param1] == 'wg'
+  end
+
+  def check_tech_access
+    unless AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, tech_flag: 1)
+      redirect_to root_path, notice: 'アクセス権限がありません。'
+    end
+  end
+
+  def tech_link_param?
+    params[:link_param1] == 'tech'
+  end
+
 
   # POST /applies or /applies.json
   def create
