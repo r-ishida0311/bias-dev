@@ -1,26 +1,32 @@
 <% if apply.persisted? %>
-<% authorized = current_user.login_ref_no.to_i == apply.apply_emp_no.to_i %>
-<% boss_authorized = apply.boss1 && current_user.login_ref_no.to_i == apply.boss1.boss_no.to_i %>
-<% wg_authorized = AdminUser.exists?(emp_no: current_user.login_ref_no.to_i, wg_flag: 1) %>
 
+<% show_page = params[:link_param1] == "show" %>
+<% edit_page = params[:link_param1] == "edit" %>
+<% boss_page = params[:link_param1] == "boss" %>
+<% wg_page = params[:link_param1] == "wg" %>
+<% texh_page = params[:link_param1] == "texh" %>
 
-<% end %>
+<% if show_page %>
+<h3>詳細画面</h3>
 
-
-<% if params[:link_param1] == "edit" %>
+<% elsif edit_page %>
 <h3>編集画面</h3>
-<% end %>
 
-<% if params[:link_param1] == "boss" %>
+<% elsif boss_page %>
 <h3>原局承認画面</h3>
+
+<% elsif wg_page %>
+<h3>設備作業部会確認画面</h3>
+
+<% elsif tech_page %>
+<h3>技術計画推進部確認画面</h3>
 <% end %>
 
-<% if params[:link_param1] == "wg" %>
-<h3>設備作業部会画面</h3>
+<% else %>
+<h3>新規作成画面</h3>
 <% end %>
 
 
-<%= params[:link_param1] %>
 
 <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
   <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -59,10 +65,10 @@
             </dt>
             <dd class="col-sm-8">
 
-              <% if authorized && @apply.boss1&.boss_status == 0 %>
+              <% if edit_page && @apply.boss1&.boss_status == 0 %>
               <%= apply_status_form.select :apply_status, [["作業中", 0], ["作業完了", 1]], {}, { class: "form-control" } %>
               <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-              <% elsif authorized && @apply.boss1&.boss_status == 1 %>
+              <% elsif edit_page && @apply.boss1&.boss_status == 1 %>
               <%= apply_status_form.select :apply_status, [["作業完了", 1], ["申請済み", 2]], {}, { class: "form-control" } %>
               <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
               <% elsif apply.persisted? %>
@@ -113,19 +119,21 @@
             <dd class="col-sm-8"><%= apply.sk_approve_cost %>
               <%= form.hidden_field :sk_approve_cost, class: "form-control" %></dd>
 
+
+
+
             <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
             <dt class="col-sm-4"><%= boss1_form.label :原局確認者, style: "display: block;" %></dt>
             <dd class="col-sm-8"> <%= boss1_form.object.boss_name %>
 
-
-              <% if boss_authorized && apply.apply_status.apply_status == 0 %>
+              <% if boss_page && apply.apply_status.apply_status == 0 %>
               (<%= boss_status_label(0) %>)
 
-              <% elsif boss_authorized && apply.apply_status.apply_status == 1 %>
+              <% elsif boss_page && apply.apply_status.apply_status == 1 %>
               <%= boss1_form.select :boss_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
 
-              <% elsif boss_authorized && apply.apply_status.apply_status == 2 %>
+              <% elsif boss_page && apply.apply_status.apply_status == 2 %>
               (<%= boss_status_label(2) %>)
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
 
@@ -159,7 +167,7 @@
 
 
 
-                  <% if wg_authorized %>
+                  <% if wg_page %>
                   <%= sk_comment_form.text_area :sk_comment, class: "form-control" %>
 
 
@@ -180,7 +188,7 @@
                 <%= apply.wg_comment %>
                 <%= form.hidden_field :wg_comment, class: "form-control" %>
               </div>
-              <div class="form-group <%= authorized ? '' : 'disabled-field' %>">
+              <div class="form-group <%= edit_page ? '' : 'disabled-field' %>">
                 <%= form.label :回答コメント, style: "display: block;" %>
                 <%= form.text_area :wg_reply_comment, class: "form-control" %>
               </div>
@@ -202,7 +210,7 @@
           </h5>
         </div>
         <div class="card-body">
-          <% if authorized %>
+          <% if edit_page %>
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <div class="file-upload-wrapper">
@@ -259,7 +267,7 @@
               <%= form.hidden_field :apply_emp_name, value: @employee_user %> <%= @employee_user %>
             </div>
             <div class="col-md-4">
-              <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+              <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                 <%= form.label :部署, style: "display: block;" %>
                 <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
               </div>
@@ -277,7 +285,7 @@
               <%= form.label :区分 %>
               <%= form.fields_for :division, apply.division || apply.build_division do |division_form| %>
               <div class="col-md-8">
-                <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+                <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                   <%= division_form.check_box :new_pur %>
                   <%= division_form.label :new_pur, "新規" %>
 
@@ -292,7 +300,7 @@
             </div>
 
             <div class="col-md-2">
-              <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+              <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                 <%= form.label :申請種別, class: "d-block" %>
                 <div class="form-check form-check-inline">
                   <%= form.radio_button :apply_kind, 1, class: "form-check-input", data: { action: "change->apply#applyKindChanged" } %>
@@ -315,7 +323,7 @@
         </div>
 
         <div class="row, col-md-11">
-          <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+          <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
             <%= form.label :品名, style: "display: block;" %>
             <%= form.text_field :item_name, class: "form-control" %>
           </div>
@@ -325,25 +333,25 @@
 
         <div class="row">
           <div class="col-md-2">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :型式, class: "d-block" %>
               <%= form.text_field :equipment_name, class: "form-control" %>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :製造者名, class: "d-block" %>
               <%= form.text_field :manufacturer_name, class: "form-control" %>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :取扱業者, class: "d-block" %>
               <%= form.text_field :supplier_name, class: "form-control" %>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :数量, class: "d-block" %>
               <%= form.text_field :quantity, class: "form-control" %>
             </div>
@@ -353,13 +361,13 @@
 
         <div class="row">
           <div class="col-md-4">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :estimated_cost, '予定価格（千円）', class: "d-block" %>
               <%= form.number_field :estimated_cost, class: "form-control" %>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :希望納期, class: "d-block" %>
               <div class="d-flex">
                 <%= form.date_select :desired_delivery, {discard_day: true, start_year: Date.today.year, end_year: Date.today.year + 10, include_blank: true}, {class: "form-control"} %>
@@ -372,7 +380,7 @@
 
           </div>
           <div class="col-md-4">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <%= form.label :設置場所, class: "d-block" %>
               <%= form.text_field :location, class: "form-control" %>
             </div>
@@ -380,14 +388,14 @@
         </div>
 
         <div class="row, col-md-11">
-          <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+          <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
             <%= form.label :申請理由, style: "display: block;" %>
             <%= form.text_field :reason, class: "form-control" %>
           </div>
         </div>
 
         <div class="row, col-md-11">
-          <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+          <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
             <%= form.label :具体的内容, style: "display: block;" %>
             <%= form.text_area :specific_contents, class: "form-control" %>
           </div>
@@ -398,7 +406,7 @@
         <div data-controller="check">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">旧品資産フラグ
+              <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">旧品資産フラグ
                 <%= form.check_box :old_asset_multi, data: { action: "change->check#updateOldAssetFields" } %>
               </div>
             </div>
@@ -406,13 +414,13 @@
             <div data-check-target="oldAssetFields" style="display: none;">
               <div class="row">
                 <div class="col-md-4">
-                  <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+                  <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                     <%= form.label :old_asset_no, '旧品資産番号', class: "d-block" %>
                     <%= form.text_field :old_asset_no, class: "form-control" %>
                   </div>
                 </div>
                 <div class="col-md-2">
-                  <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+                  <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                     <%= form.label :old_asset_YM, '旧品取得年月', class: "d-block" %>
                     <div class="d-flex">
                       <%= form.date_select :old_asset_YM, {discard_day: true, start_year: Date.today.year - 25, end_year: Date.today.year - 1, include_blank: true}, {class: "form-control"} %>
@@ -420,7 +428,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+                  <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                     <%= form.label :old_asset_cost, '旧品予定価格（千円）', class: "d-block" %>
                     <%= form.number_field :old_asset_cost, class: "form-control" %>
                   </div>
@@ -428,7 +436,7 @@
               </div>
 
               <div class="row, col-md-11">
-                <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+                <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                   <%= form.label :旧品処理方法, style: "display: block;" %>
                   <%= form.text_field :old_asset_handling, class: "form-control" %>
                 </div>
@@ -444,7 +452,7 @@
         <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
         <div data-controller="search">
           <div class="col-md-6">
-            <div class="form-group <%= authorized || apply.new_record? ? '' : 'disabled-field' %>">
+            <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
               <div class="input-group">
                 <%= boss1_form.label :boss_no, '原局確認者社員番号', class: "input-group-text" %>
                 <%= boss1_form.number_field :boss_no, class: "form-control", id: "boss-no-field", data: { search_target: "bossNoField" } %>
