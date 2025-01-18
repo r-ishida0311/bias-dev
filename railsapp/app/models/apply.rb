@@ -29,6 +29,9 @@ class Apply < ApplicationRecord
   has_one :tech_status, dependent: :destroy 
   accepts_nested_attributes_for :tech_status
 
+  has_one :approve_status, dependent: :destroy 
+  accepts_nested_attributes_for :approve_status
+
   def self.ransackable_attributes(auth_object = nil)
     ["add_dep_id", 
     "apply_emp_name", 

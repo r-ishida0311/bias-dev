@@ -87,20 +87,30 @@
 
 
 
-            <dt class="col-sm-4"><%= form.label :判定結果, style: "display: block;" %></dt>
 
 
 
+            <%= form.fields_for :approve_status, apply.approve_status || apply.build_approve_status do |approve_status_form| %>
+            <dt class="col-sm-4">
+              <%= approve_status_form.label :approve_status, '判定結果', style: "display: block;" %>
+            </dt>
+            <dd class="col-sm-8">
+              <% if apply.new_record? %>
+              <%= approve_status_label(0) %>
+              <%= approve_status_form.hidden_field :approve_status, value: apply.new_record? ? 0 : approve_status %>
 
+              <% elsif wg_page %>
+              <%= approve_status_form.select :approve_status, [["未確認", 0], ["A案件", 1], ["B案件", 2], ["否認", 9]], {}, { class: "form-control" }  %>
+              <div class="col-sm-8"> <%= approve_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
 
-
-
-            <dd class="col-sm-8"><%= approve_status_label(apply.approve_status) %>
-              <%= form.hidden_field :approve_status, value: apply.new_record? ? 0 : apply.approve_status %>
+              <% else %>
+              <%= approve_status_label(apply.approve_status.approve_status) %>
+              <% if apply.approve_status.persisted? %>
+              <div class="col-sm-8"> <%= approve_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
+              <% end %>
             </dd>
-
-
-
+            <% end %>
 
 
 
@@ -109,13 +119,8 @@
 
 
             <dt class="col-sm-4"><%= form.label :sk_approve_cost, '承認金額（千円）', style: "display: block;" %></dt>
-
-
-            <dd class="col-sm-8"><%= apply.sk_approve_cost %>
-              <%= form.hidden_field :sk_approve_cost, class: "form-control" %></dd>
-
-
-
+            <dd class="col-sm-8 <%= wg_page ? '' : 'disabled-field' %>">
+              <%= form.number_field :sk_approve_cost, class: "form-control" %></dd>
 
             <%= form.fields_for :boss1, @apply.boss1 || @apply.build_boss1 do |boss1_form| %>
             <dt class="col-sm-4"><%= boss1_form.label :原局確認ステータス, style: "display: block;" %></dt>
