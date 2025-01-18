@@ -155,17 +155,13 @@
 
             <div class="col-md-6">
 
-              <div class="form-group">
+              <div class="form-group <%= wg_page ? '' : 'disabled-field' %>">
                 <%= form.fields_for :sk_comment, apply.sk_comment || apply.build_sk_comment do |sk_comment_form| %>
                 <dt class="col-sm-5">
                   <%= sk_comment_form.label :sk_comment, '設備作業部会コメント', style: "display: block;" %>
                 </dt>
                 <dd>
-                  <% if wg_page %>
                   <%= sk_comment_form.text_area :sk_comment, class: "form-control" %>
-                  <% else %>
-                  <%= apply.sk_comment.sk_comment %>
-                  <% end %>
                   <% if apply.sk_comment.persisted? %>
                   <div class="col-sm-8"> <%= sk_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
@@ -174,27 +170,34 @@
               </div>
 
 
-              <div class="form-group">
+              <div class="form-group <%= tech_page ? '' : 'disabled-field' %>">
                 <%= form.fields_for :tech_comment, apply.tech_comment || apply.build_tech_comment do |tech_comment_form| %>
                 <dt class="col-sm-5">
                   <%= tech_comment_form.label :tech_comment, '技術計画推進部コメント', style: "display: block;" %>
                 </dt>
                 <dd>
-                  <% if tech_page %>
+
                   <%= tech_comment_form.text_area :tech_comment, class: "form-control" %>
-                  <% else %>
-                  <%= apply.tech_comment.tech_comment %>
-                  <% end %>
+
                   <% if apply.tech_comment.persisted? %>
                   <div class="col-sm-8"> <%= tech_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
                 </dd>
                 <% end %>
-
               </div>
+
               <div class="form-group <%= edit_page ? '' : 'disabled-field' %>">
-                <%= form.label :回答コメント, style: "display: block;" %>
-                <%= form.text_area :wg_reply_comment, class: "form-control" %>
+                <%= form.fields_for :tech_reply_comment, apply.tech_reply_comment || apply.build_tech_reply_comment do |tech_reply_comment_form| %>
+                <dt class="col-sm-5">
+                  <%= tech_reply_comment_form.label :tech_reply_comment, '技術計画推進部コメント', style: "display: block;" %>
+                </dt>
+                <dd>
+                  <%= tech_reply_comment_form.text_area :tech_reply_comment, class: "form-control" %>
+                  <% if apply.tech_reply_comment.persisted? %>
+                  <div class="col-sm-8"> <%= tech_reply_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+                  <% end %>
+                </dd>
+                <% end %>
               </div>
 
 

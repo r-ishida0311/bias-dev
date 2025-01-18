@@ -23,7 +23,8 @@ class Apply < ApplicationRecord
   has_one :tech_comment, dependent: :destroy 
   accepts_nested_attributes_for :tech_comment
 
-
+  has_one :tech_reply_comment, dependent: :destroy 
+  accepts_nested_attributes_for :tech_comment
 
   def self.ransackable_attributes(auth_object = nil)
     ["add_dep_id", 

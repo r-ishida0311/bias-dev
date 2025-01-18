@@ -224,7 +224,9 @@ def apply_params
     division_attributes: [:id, :new_pur, :replace, :repair, :_destroy],
     apply_status_attributes: [:id, :apply_status, :_destroy],
     sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy],
-    tech_comment_attributes: [:id, :tech_comment, :tech_user, :_destroy]
+    tech_comment_attributes: [:id, :tech_comment, :tech_user, :_destroy],
+    tech_reply_comment_attributes: [:id, :tech_reply_comment,  :_destroy]
+
   ).tap do |permitted|
     permitted.delete(:files) if params[:files].blank? 
   end
