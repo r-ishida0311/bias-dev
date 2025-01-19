@@ -69,15 +69,22 @@
 
               <% elsif edit_page && @apply.boss1&.boss_status == 0 %>
               <%= apply_status_form.select :apply_status, [["作業中", 0], ["作業完了", 1]], {}, { class: "form-control" } %>
+              <% if @apply.apply_status.updated_at != @apply.apply_status.created_at %>
               <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
 
               <% elsif edit_page && @apply.boss1&.boss_status == 1 %>
               <%= apply_status_form.select :apply_status, [["作業完了", 1], ["申請済み", 2]], {}, { class: "form-control" } %>
-              <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% if @apply.apply_status.updated_at != @apply.apply_status.created_at %>
+              <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
 
               <% else %>
               <%= apply_status_label(apply.apply_status.apply_status) %>
-              <div class="col-sm-8"><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% if @apply.apply_status.updated_at != @apply.apply_status.created_at %>
+              <div class="col-sm-8" an><%= @apply.apply_status.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
+
               <% end %>
             </dd>
             <% end %>
@@ -101,12 +108,16 @@
 
               <% elsif wg_page %>
               <%= approve_status_form.select :approve_status, [["未確認", 0], ["A案件", 1], ["B案件", 2], ["否認", 9]], {}, { class: "form-control" }  %>
+              <% if @apply.approve_status.updated_at != @apply.approve_status.created_at %>
               <div class="col-sm-8"> <%= approve_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
 
               <% else %>
               <%= approve_status_label(apply.approve_status.approve_status) %>
               <% if apply.approve_status.persisted? %>
+              <% if @apply.approve_status.updated_at != @apply.approve_status.created_at %>
               <div class="col-sm-8"> <%= approve_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
               <% end %>
               <% end %>
             </dd>
@@ -131,12 +142,19 @@
 
               <% elsif boss_page && apply.apply_status.apply_status == 1 %>
               <%= boss1_form.select :boss_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
+
+              <% if @apply.boss1.updated_at != @apply.boss1.created_at %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
+
+
 
               <% else %>
               <%= boss_status_label(apply.boss1.boss_status) %>
               <% if apply.boss1.persisted? %>
+              <% if @apply.boss1.updated_at != @apply.boss1.created_at %>
               <div class="col-sm-8"> <%= boss1_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
               <% end %>
               <% end %>
               <% end %>
@@ -153,13 +171,18 @@
 
               <% elsif tech_page %>
               <%= tech_status_form.select :tech_status, [["未確認", 0], ["確認済み", 1]], {}, { class: "form-control" }  %>
+
+              <% if @apply.tech_status.updated_at != @apply.tech_status.created_at %>
               <div class="col-sm-8"> <%= tech_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
+              <% end %>
+
 
               <% else %>
               <%= tech_status_label(apply.tech_status.tech_status) %>
               <% if apply.tech_status.persisted? %>
+              <% if @apply.tech_status.updated_at != @apply.tech_status.created_at %>
               <div class="col-sm-8"> <%= tech_status_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
-              <% end %>
+              <% end %> <% end %>
               <% end %>
             </dd>
             <% end %>
@@ -176,7 +199,8 @@
                 </dt>
                 <dd>
                   <%= sk_comment_form.text_area :sk_comment, class: "form-control" %>
-                  <% if apply.sk_comment.persisted? %>
+
+                  <% if apply.sk_comment.persisted? && apply.sk_comment.updated_at != apply.sk_comment.created_at %>
                   <div class="col-sm-8"> <%= sk_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
                 </dd>
@@ -191,7 +215,7 @@
                 </dt>
                 <dd>
                   <%= tech_comment_form.text_area :tech_comment, class: "form-control" %>
-                  <% if apply.tech_comment.persisted? %>
+                  <% if apply.tech_comment.persisted? && apply.tech_comment.updated_at != apply.tech_comment.created_at %>
                   <div class="col-sm-8"> <%= tech_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
                 </dd>
@@ -205,7 +229,8 @@
                 </dt>
                 <dd>
                   <%= tech_reply_comment_form.text_area :tech_reply_comment, class: "form-control" %>
-                  <% if apply.tech_reply_comment.persisted? %>
+                  <% if apply.tech_reply_comment.persisted? && apply.tech_reply_comment.updated_at != apply.tech_reply_comment.created_at %>
+
                   <div class="col-sm-8"> <%= tech_reply_comment_form.object.updated_at.in_time_zone('Tokyo').strftime('%Y年%m月%d日 %H時%M分%S秒') %></div>
                   <% end %>
                 </dd>
