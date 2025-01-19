@@ -90,6 +90,7 @@ class AppliesController < ApplicationController
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     respond_to do |format|
       if @apply.save
+        BossMailer.with(infomail: @admin_user).send_mail.deliver_later 
         format.html { redirect_to applies_path, notice: "Apply was successfully created." }
         format.json { render :show, status: :created, location: @apply }
       else
