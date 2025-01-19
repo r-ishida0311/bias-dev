@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "bias@mbs.co.jp"
+  default from: "bias-dev@mbs.co.jp"
   layout "mailer"
 end
