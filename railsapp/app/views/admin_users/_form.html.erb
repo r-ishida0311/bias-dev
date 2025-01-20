@@ -29,6 +29,10 @@
       <%= form.label :emp_name, '氏名' %>
       <%= form.text_field :emp_name, class: 'form-control' , id: "boss_name", readonly: true, placeholder: "社員番号入力で自動記入されます"%>
     </div>
+    <div class="form-group">
+      <%= form.label :emp_admin_email, 'メールアドレス' %>
+      <%= form.text_field :emp_admin_email, class: 'form-control' , id: "boss_email", readonly: true, placeholder: "社員番号入力で自動記入されます"%>
+    </div>
   </div>
   <div class="form-group">
     <%= form.label :tech_flag, '技術計画推進' %>

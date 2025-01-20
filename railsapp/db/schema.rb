@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_18_061210) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_20_063016) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -137,6 +137,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_061210) do
     t.integer "sys_flag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "emp_admin_email"
   end
 
   create_table "applies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -166,6 +167,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_18_061210) do
     t.integer "sk_approve_cost"
     t.integer "old_asset_cost"
     t.integer "year"
+    t.string "emp_email"
     t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
     t.index ["department_id"], name: "index_applies_on_department_id"
   end

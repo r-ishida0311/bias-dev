@@ -6,7 +6,7 @@ class BossMailer < ApplicationMailer
       to:   'r-ishida@mbs.co.jp',
       subject: 'biasTESTmail - 新しい申請があります' #件名も分かりやすく変更
     ) do |format|
-      format.html { render 'apply_notification' } #テンプレートを指定する
+      format.text { render 'apply_notification' } #テンプレートを指定する
     end
   end
 end

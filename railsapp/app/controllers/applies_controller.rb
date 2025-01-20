@@ -111,6 +111,7 @@ class AppliesController < ApplicationController
     @departments = Department.all
     respond_to do |format|
       if @apply.update(apply_params)
+        StatusMailer.send_update_notification(@apply).deliver_now
         format.html { redirect_to applies_path, notice: "Apply was successfully updated." }
         format.json { render :show, status: :ok, location: @apply }
       else
@@ -220,6 +221,7 @@ def apply_params
     :sk_approve_cost,
     :sk_comment,
     :apply_status_id,
+    :emp_email,
     files: [],
     boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
     division_attributes: [:id, :new_pur, :replace, :repair, :_destroy],
