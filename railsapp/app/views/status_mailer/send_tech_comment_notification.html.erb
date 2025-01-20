@@ -1,0 +1,10 @@
+<p>申請番号: <%= @apply.id %></p>
+<p>品名: <%= @apply.item_name %></p>
+
+<% if action_name == 'send_tech_comment_notification' %>
+<p>技術計画推進部のコメントが更新されました。</p>
+<p>新しいコメント: <%= @apply.tech_comment.tech_comment %></p>
+<% elsif action_name == 'send_tech_reply_comment_notification' %>
+<p>回答コメントが更新されました。</p>
+<p>新しいコメント: <%= @apply.tech_reply_comment.tech_reply_comment %></p>
+<% end %>

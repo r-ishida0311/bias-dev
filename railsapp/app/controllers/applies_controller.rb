@@ -92,7 +92,6 @@ class AppliesController < ApplicationController
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     respond_to do |format|
       if @apply.save
-        BossMailer.with(infomail: @admin_user).send_mail.deliver_later 
         format.html { redirect_to applies_path, notice: "Apply was successfully created." }
         format.json { render :show, status: :created, location: @apply }
       else
@@ -109,9 +108,17 @@ class AppliesController < ApplicationController
 
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.all
+
+    previous_tech_comment = @apply.tech_comment.tech_comment
+    previous_tech_reply_comment = @apply.tech_reply_comment.tech_reply_comment
+
     respond_to do |format|
       if @apply.update(apply_params)
-        StatusMailer.send_update_notification(@apply).deliver_now
+        if @apply.tech_comment.tech_comment != previous_tech_comment
+          StatusMailer.send_tech_comment_notification(@apply).deliver_now
+        elsif @apply.tech_reply_comment.tech_reply_comment != previous_tech_reply_comment
+            StatusMailer.send_tech_reply_comment_notification(@apply).deliver_now
+        end
         format.html { redirect_to applies_path, notice: "Apply was successfully updated." }
         format.json { render :show, status: :ok, location: @apply }
       else

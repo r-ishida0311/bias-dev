@@ -1,0 +1,11 @@
+<p>申請番号: <%= @apply.id %></p>
+<p>品名: <%= @apply.item_name %></p>
+
+<% if action_name == 'send_apply_status' %>
+<p>申請ステータスが「作業完了」となりました</p>
+<% elsif action_name == 'send_boss1_status' %>
+<p>原局確認ステータスが「確認済み」となりました</p>
+<% elsif action_name == 'send_tech_status' %>
+<p>技術計画推進部確認ステータスが「確認済み」となりました</p>
+
+<% end %>
