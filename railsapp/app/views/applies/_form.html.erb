@@ -307,12 +307,17 @@
               <%= form.label :申請者氏名, style: "display: block;" %>
               <%= form.hidden_field :apply_emp_name, value: @employee_user %> <%= @employee_user %>
             </div>
+            <div class="col-md-2">
+              <%= form.label :申請者メールアドレス, style: "display: block;" %>
+              <%= form.hidden_field :emp_email, value: @employee_email %> <%= @employee_email %>
+            </div>
             <div class="col-md-4">
               <div class="form-group <%= edit_page || apply.new_record? ? '' : 'disabled-field' %>">
                 <%= form.label :部署, style: "display: block;" %>
                 <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
               </div>
             </div>
+
           </div> <!-- End of row -->
 
 

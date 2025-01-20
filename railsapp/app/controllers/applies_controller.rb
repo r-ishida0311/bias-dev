@@ -28,6 +28,7 @@ class AppliesController < ApplicationController
     @apply = Apply.new(apply_kind: 1) 
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
+    @employee_email = current_user.login_email
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     @preselected_department = @departments.find_by(dep_name: current_user.login_department)
@@ -85,6 +86,7 @@ class AppliesController < ApplicationController
     @apply = Apply.new(apply_params)
     @employee_user = current_user.login_user
     @employee_number = current_user.login_ref_no
+    @employee_email = current_user.login_email
     @preselected_department = Department.find_by(dep_name: current_user.login_department)
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
@@ -104,9 +106,7 @@ class AppliesController < ApplicationController
   def update
    
     @apply = Apply.find(params[:id])
-    @employee_user = current_user.login_user
-    @employee_number = current_user.login_ref_no
-    @preselected_department = @apply.department
+
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.all
     respond_to do |format|
@@ -176,6 +176,7 @@ end
     def set_employee_data #Add this method
       @employee_number = @apply.apply_emp_no # Or fetch it appropriately from your model
       @employee_user = @apply.apply_emp_name # Or fetch it appropriately from your model
+      @employee_email = @apply.emp_email
       @preselected_department = @apply.department # Assuming you have a department association
     end
 
