@@ -254,7 +254,7 @@
           </h5>
         </div>
         <div class="card-body">
-          <% if edit_page %>
+          <% if edit_page && apply.apply_status.apply_status == 0  %>
           <dt class="col-sm-16" data-controller="files">
             <% if apply.persisted? %> <%# Check if the apply record already exists %>
             <div class="file-upload-wrapper">
