@@ -10,29 +10,37 @@ class DepartmentsController < ApplicationController
     end
   end
 
-  def create
-    if params[:upload_file].present? && params[:year].present?
-      upload_file = params[:upload_file].tempfile
-      selected_year_id = Year.find_by(year: params[:year])&.id
+def create
+  if params[:upload_file].present? && params[:year].present?
+    upload_file = params[:upload_file].tempfile
+    selected_year_id = Year.find_by(year: params[:year])&.id
 
-      if selected_year_id.nil?
-        flash[:alert] = "Invalid year selected." # Handle the case where the year is not found
-        redirect_to departments_path and return
-      end
-
-      Department.where(year_id: selected_year_id).destroy_all
-      CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
-        departments = Department.new(convert_csv_to_hash(row).merge(year_id: selected_year_id))
-        if !departments.save
-            flash[:alert] = "Error saving department: #{departments.errors.full_messages.join(', ')}" #Add error handling
-        end
-      end
-      redirect_to departments_path, notice: "Departments imported successfully!"
-    else
-      flash[:alert] = "Please select a year and upload a file."
-      redirect_to departments_path
+    if selected_year_id.nil?
+      flash[:alert] = "Invalid year selected."
+      redirect_to departments_path and return
     end
+
+    # Delete associated applies before destroying departments
+    Apply.where(department_id: Department.where(year_id: selected_year_id).pluck(:id)).destroy_all
+
+    Department.where(year_id: selected_year_id).destroy_all
+    CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
+      department = Department.new(dep_name: row['部署名'], year_id: selected_year_id)
+      if department.save
+        role = department.create_role(role: row['担当'])
+        if !role.save
+          flash[:alert] = "Error saving role: #{role.errors.full_messages.join(', ')}"
+        end
+      else
+        flash[:alert] = "Error saving department: #{department.errors.full_messages.join(', ')}"
+      end
+    end
+    redirect_to departments_path, notice: "Departments and roles imported successfully!"
+  else
+    flash[:alert] = "Please select a year and upload a file."
+    redirect_to departments_path
   end
+end
 
   def export_csv
     @selected_year = params[:year]
