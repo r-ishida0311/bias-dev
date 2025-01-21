@@ -26,7 +26,8 @@
           <%= f.file_field :upload_file, class: "form-control" %>
         </div>
         <div class="col-md-1">
-          <%= f.submit "インポートする", class: "btn btn-primary" %>
+          <%= f.submit "インポートする", data: { turbo_confirm: "#{@selected_year}年度に紐づく申請は削除されますが実行しますか？?" }, class: "btn btn-primary" %>
+
         </div>
       </div>
       <% end %>
