@@ -317,7 +317,14 @@
                 <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control" } %>
               </div>
             </div>
-
+            <div class="col-md-4"> <%# New div for Role selection %>
+              <div class="form-group <%= (edit_page && apply.apply_status.apply_status == 0) || apply.new_record?  ? '' : 'disabled-field' %>">
+                <%= form.label :担当, style: "display: block;" %>
+                <select id="apply_role_id" name="apply[role_id]" class="form-control">
+                  <option value="">Select Role</option> <%# Placeholder option %>
+                </select>
+              </div>
+            </div>
           </div> <!-- End of row -->
 
 
