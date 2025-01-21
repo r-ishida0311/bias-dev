@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_21_110841) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -121,14 +121,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "add_deps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "year_id", null: false
-    t.string "add_dep"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["year_id"], name: "index_add_deps_on_year_id"
-  end
-
   create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "emp_no", limit: 4
     t.string "emp_name"
@@ -144,7 +136,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "department_id", null: false
-    t.bigint "add_dep_id"
     t.string "reference_no"
     t.integer "apply_kind"
     t.string "item_name"
@@ -168,7 +159,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
     t.integer "old_asset_cost"
     t.integer "year"
     t.string "emp_email"
-    t.index ["add_dep_id"], name: "index_applies_on_add_dep_id"
     t.index ["department_id"], name: "index_applies_on_department_id"
   end
 
@@ -285,6 +275,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
     t.index ["apply_id"], name: "index_divisions_on_apply_id"
   end
 
+  create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "department_id"
+    t.index ["department_id"], name: "index_roles_on_department_id"
+  end
+
   create_table "sk_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "sk_user"
     t.string "sk_comment"
@@ -292,6 +290,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
     t.datetime "updated_at", null: false
     t.bigint "apply_id"
     t.index ["apply_id"], name: "index_sk_comments_on_apply_id"
+  end
+
+  create_table "table_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tech_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -353,8 +357,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "add_deps", "years"
-  add_foreign_key "applies", "add_deps"
   add_foreign_key "applies", "departments"
   add_foreign_key "apply_statuses", "applies"
   add_foreign_key "approve_statuses", "applies"
@@ -362,6 +364,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_20_064520) do
   add_foreign_key "boss1s", "applies"
   add_foreign_key "departments", "years"
   add_foreign_key "divisions", "applies"
+  add_foreign_key "roles", "departments"
   add_foreign_key "sk_comments", "applies"
   add_foreign_key "tech_comments", "applies"
   add_foreign_key "tech_reply_comments", "applies"
