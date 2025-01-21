@@ -20,19 +20,26 @@ def create
       redirect_to departments_path and return
     end
 
-    # Delete associated applies before destroying departments
     Apply.where(department_id: Department.where(year_id: selected_year_id).pluck(:id)).destroy_all
-
     Department.where(year_id: selected_year_id).destroy_all
+
     CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
       department = Department.new(dep_name: row['部署名'], year_id: selected_year_id)
+  
       if department.save
-        role = department.create_role(role: row['担当'])
-        if !role.save
+        role_attributes = {}
+        (1..10).each do |i|
+          role_attributes["role#{i}"] = row["担当#{i}"] 
+        end
+        role = department.roles.create(role_attributes) # Create a single Role with all attributes
+  
+        unless role.save
           flash[:alert] = "Error saving role: #{role.errors.full_messages.join(', ')}"
+          redirect_to departments_path and return
         end
       else
         flash[:alert] = "Error saving department: #{department.errors.full_messages.join(', ')}"
+        redirect_to departments_path and return  # Stop processing if a department save fails.
       end
     end
     redirect_to departments_path, notice: "Departments and roles imported successfully!"
@@ -41,6 +48,7 @@ def create
     redirect_to departments_path
   end
 end
+
 
   def export_csv
     @selected_year = params[:year]

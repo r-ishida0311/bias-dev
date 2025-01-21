@@ -1,3 +1,3 @@
 
 
-ApplyStatus.destroy_all
+Role.destroy_all
