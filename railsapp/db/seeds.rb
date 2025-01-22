@@ -1,3 +1,3 @@
 
 
-Role.destroy_all
+Department.destroy_all

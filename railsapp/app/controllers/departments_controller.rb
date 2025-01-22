@@ -28,24 +28,12 @@ def create
     Department.where(year_id: selected_year_id).destroy_all
 
     CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
-      department = Department.new(dep_name: row['部署名'], year_id: selected_year_id)
-  
-      if department.save
-        role_attributes = {}
-        (1..10).each do |i|
-          role_attributes["role#{i}"] = row["担当#{i}"] 
-        end
-        role = department.roles.create(role_attributes) # Create a single Role with all attributes
-  
-        unless role.save
-          flash[:alert] = "Error saving role: #{role.errors.full_messages.join(', ')}"
-          redirect_to departments_path and return
-        end
-      else
-        flash[:alert] = "Error saving department: #{department.errors.full_messages.join(', ')}"
-        redirect_to departments_path and return  # Stop processing if a department save fails.
+      department = Department.new(dep_name: row['部署名'], role1: row['担当1'], year_id: selected_year_id)
+      if !department.save
+        flash[:alert] = "Error saving department: #{departments.errors.full_messages.join(', ')}" #Add error handling
       end
-    end
+
+  end
     redirect_to departments_path, notice: "Departments and roles imported successfully!"
   else
     flash[:alert] = "Please select a year and upload a file."
