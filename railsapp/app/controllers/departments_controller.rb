@@ -13,7 +13,6 @@ class DepartmentsController < ApplicationController
 
 
 
-  
 def create
   if params[:upload_file].present? && params[:year].present?
     upload_file = params[:upload_file].tempfile
@@ -24,22 +23,39 @@ def create
       redirect_to departments_path and return
     end
 
+    # Delete existing data for the selected year
     Apply.where(department_id: Department.where(year_id: selected_year_id).pluck(:id)).destroy_all
     Department.where(year_id: selected_year_id).destroy_all
+    Role.where(department_id: Department.where(year_id: selected_year_id).pluck(:id)).destroy_all
+
 
     CSV.foreach(upload_file.path, headers: true, encoding: 'cp932') do |row|
-      department = Department.new(dep_name: row['部署名'], role1: row['担当1'], year_id: selected_year_id)
-      if !department.save
-        flash[:alert] = "Error saving department: #{departments.errors.full_messages.join(', ')}" #Add error handling
+      # Create the department
+      department = Department.new(dep_name: row['部署名'], year_id: selected_year_id)
+      unless department.save
+        flash[:alert] = "Error saving department: #{department.errors.full_messages.join(', ')}"
+        redirect_to departments_path and return # Stop processing if department save fails
       end
 
-  end
+      # Create roles for the department
+      (1..10).each do |i| # Assuming up to 10 role columns ("担当1" to "担当10")
+        role_column = "担当#{i}"
+        if row[role_column].present? # Check if the role column has a value
+          role = Role.new(role: row[role_column], department_id: department.id)
+          unless role.save
+            flash[:alert] = "Error saving role: #{role.errors.full_messages.join(', ')}"
+            redirect_to departments_path and return # Stop processing if role save fails
+          end
+        end
+      end
+    end
     redirect_to departments_path, notice: "Departments and roles imported successfully!"
   else
     flash[:alert] = "Please select a year and upload a file."
     redirect_to departments_path
   end
 end
+
 
 
   def export_csv

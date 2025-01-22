@@ -45,7 +45,9 @@
             <% @departments.each do |department| %>
             <div class="list-group-item">
               <h6 class="mb-1"><%= department.dep_name %></h6>
-
+              <% department.roles.each do |role| %>
+              <p class="mb-1"><%= role.role %></p>
+              <% end %>
             </div>
             <% end %>
           </div>
