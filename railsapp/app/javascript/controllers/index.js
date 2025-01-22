@@ -10,9 +10,6 @@ application.register("apply", ApplyController)
 import CheckController from "./check_controller"
 application.register("check", CheckController)
 
-import DepartmentController from "./department_controller"
-application.register("department", DepartmentController)
-
 import FilesController from "./files_controller"
 application.register("files", FilesController)
 
@@ -21,6 +18,9 @@ application.register("hello", HelloController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import RoleController from "./role_controller"
+application.register("role", RoleController)
 
 import SearchController from "./search_controller"
 application.register("search", SearchController)

@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
+  get '/departments/:id/roles', to: 'departments#roles'
+  
+
   resources :bosses
 
   resources :apply_data_tabs

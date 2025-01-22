@@ -10,7 +10,10 @@ class DepartmentsController < ApplicationController
     end
   end
 
-
+  def roles
+    department = Department.find(params[:id])
+    render json: department.roles
+  end
 
 
 def create

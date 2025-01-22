@@ -32,6 +32,7 @@ class AppliesController < ApplicationController
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     @preselected_department = @departments.find_by(dep_name: current_user.login_department)
+   
   end
 
   # GET /applies/1/edit
@@ -185,6 +186,7 @@ end
       @employee_user = @apply.apply_emp_name # Or fetch it appropriately from your model
       @employee_email = @apply.emp_email
       @preselected_department = @apply.department # Assuming you have a department association
+      @preselected_role = @apply.role
     end
 
     def create_blob(file)
