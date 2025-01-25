@@ -12,18 +12,6 @@ export default class extends Controller {
     this.updateRoles();
   }
 
-  updateHiddenRoleId(rolesData) {
-    if (this.rolesSelectTarget.value) {
-      const selectedRole = rolesData.find(
-        (role) => role.id === parseInt(this.rolesSelectTarget.value, 10)
-      );
-      const hiddenField = document.querySelector(
-        'input[name="apply[role_id]"]'
-      );
-      hiddenField.value = selectedRole ? selectedRole.id : '';
-    }
-  }
-
   updateRoles() {
     const departmentId = this.departmentTarget.value;
     const selectedRoleId = parseInt(this.data.get('selectedId')); // Get the role_id from data attribute
