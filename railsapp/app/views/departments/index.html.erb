@@ -12,12 +12,14 @@
             <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), {}, {class: 'form-control'} %>
           </div>
           <div class="col-md-1">
-            <%= form.submit "表示", class: "btn btn-primary" %>
+            <%= form.submit "選択", class: "btn btn-primary" %>
           </div>
         </div>
       </div>
       <% end %>
     </div>
+
+    <p><%= @selected_year %>：<strong>選択した年度に対して部署をインポートできます</strong> </p>
     <div class="col-md-6">
       <%= form_with(url: data_upload_path, method: :post) do |f| %>
       <div class="row g-15">
@@ -27,7 +29,6 @@
         </div>
         <div class="col-md-1">
           <%= f.submit "インポートする", data: { turbo_confirm: "#{@selected_year}年度に紐づく申請は削除されますが実行しますか？?" }, class: "btn btn-primary" %>
-
         </div>
       </div>
       <% end %>

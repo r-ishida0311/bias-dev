@@ -10,18 +10,19 @@
       <%= f.label :year_eq, "申請年度"  %>
       <%= f.select :year_eq, @years, { include_blank: true }, class: 'form-control', data: { action: "change->selectdep#yearEqChange" } %>
     </div>
-    <div class="col-md-2">
-      <%= f.label :department_dep_name_eq, "部署" %>
-      <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control',  data: { selectdep_target: "department", action: "change->selectdep#depEqChange" }  %>
-    </div>
-    <div class="col-md-1">
-      <%= f.label :role_role_eq, "担当" %>
-      <%= f.select :role_role_eq, [], { include_blank: "部署を選択してください" }, class: 'form-control',  data: { selectdep_target: "role"  }  %>
-    </div>
     <div class="col-md-1">
       <%= f.label :apply_kind_eq, "申請種別" %>
       <%= f.select :apply_kind_eq, [['一般', 1], ['放送', 2]], { include_blank: true } , class: 'form-control'%>
     </div>
+    <div class="col-md-2">
+      <%= f.label :department_dep_name_eq, "部署" %>
+      <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control',  data: { selectdep_target: "department", action: "change->selectdep#depEqChange" }  %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :role_role_eq, "担当" %>
+      <%= f.select :role_role_eq, [], { include_blank: "部署を選択してください" }, class: 'form-control',  data: { selectdep_target: "role"  }  %>
+    </div>
+
     <div class="col-md-2">
       <%= f.label :item_name_cont, "品名" %>
       <%= f.search_field :item_name_cont , class: 'form-control'%>
@@ -55,13 +56,13 @@
       <th class="px-3">整理番号</th>
       <th class="px-3">OH</th>
       <th class="px-3">品名</th>
-      <th class="px-3">予定価格（千円）</th>
+      <th class="px-3">予定価格<br>（千円）</th>
       <th class="px-3">申請部署</th>
       <th class="px-3">担当</th>
-      <th class="px-3">申請者氏名（社員番号）</th>
-      <th class="px-3">原局確認ステータス</th>
-      <th class="px-3">申請ステータス</th>
-      <th class="px-3">技術計画推進ステータス</th>
+      <th class="px-3">申請者氏名<br>（社員番号）</th>
+      <th class="px-3">原局確認<br>ステータス</th>
+      <th class="px-3">申請<br>ステータス</th>
+      <th class="px-3">技術計画推進<br>ステータス</th>
       <th class="px-3">判定結果</th>
       <th class="px-3">最終更新日</th>
       <th class="px-3">操作</th>

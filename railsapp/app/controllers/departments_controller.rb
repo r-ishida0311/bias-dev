@@ -40,10 +40,9 @@ def create
         redirect_to departments_path and return # Stop processing if department save fails
       end
 
-      # Create roles for the department
-      (1..10).each do |i| # Assuming up to 10 role columns ("担当1" to "担当10")
-        role_column = "担当#{i}"
-        if row[role_column].present? # Check if the role column has a value
+      role_columns = row.headers.select { |header| header.start_with?('担当') }
+      role_columns.each do |role_column|
+        if row[role_column].present?
           role = Role.new(role: row[role_column], department_id: department.id)
           unless role.save
             flash[:alert] = "Error saving role: #{role.errors.full_messages.join(', ')}"
@@ -60,25 +59,39 @@ def create
 end
 
 
+# app/controllers/departments_controller.rb
+def export_csv
+  @selected_year = params[:year]
+  if @selected_year.present?
+    @departments = Department.where(year_id: Year.find_by(year: @selected_year)&.id).all
+    if @departments.any?
+      response.headers['Content-Type'] = 'text/csv; charset=shift_jis'
+      response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year}年度部署一覧.csv"
+      
+      # ヘッダーを動的に生成
+      max_roles = @departments.map { |department| department.roles.count }.max
+      header = ['部署名'] + (1..max_roles).map { |i| "担当#{i}" }
+      
+      csv_data = CSV.generate(headers: true, force_quotes: true) do |csv|
+        csv << header
 
-  def export_csv
-    @selected_year = params[:year]
-    if @selected_year.present?
-      @departments = Department.where(year_id: Year.find_by(year: @selected_year)&.id).all
-      if @departments.any?
-        response.headers['Content-Type'] = 'text/csv; charset=shift_jis'
-        response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year}年度部署一覧.csv"
-        self.response_body = generate_csv(@departments) # ストリーミングレスポンス
-      else
-        flash[:alert] = "選択された年度の部署データはありません。"
-        redirect_to departments_path
+        @departments.each do |department|
+          roles = department.roles.map(&:role)
+          row = [department.dep_name] + roles
+          csv << row
+        end
       end
+
+      self.response_body = csv_data.encode(Encoding::SJIS, invalid: :replace, undef: :replace)
     else
-      flash[:alert] = "年度を選択してください。"
+      flash[:alert] = "選択された年度の部署データはありません。"
       redirect_to departments_path
     end
+  else
+    flash[:alert] = "年度を選択してください。"
+    redirect_to departments_path
   end
-
+end
 
   private
 

@@ -1,3 +1,4 @@
 
 
-Department.destroy_all
+
+Year.create(year: 2035)

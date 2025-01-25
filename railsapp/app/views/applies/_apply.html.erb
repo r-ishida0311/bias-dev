@@ -4,11 +4,11 @@
   <td class="text-center"><%= apply.id %></td>
   <td class="text-center"><%= apply.reference_no %></td>
   <td class="text-center"><%= display_oh(apply.division&.oh) %></td>
-  <td><%= apply.item_name %></td>
+  <td class="text-center"><%= apply.item_name %></td>
   <td class="text-center"><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
   <td><%= apply.department.dep_name rescue "N/A" %></td>
-  <td><%= apply.role.role rescue "N/A" %></td>
-  <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
+  <td class="text-center"><%= apply.role.role rescue "N/A" %></td>
+  <td class="text-center"><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
 
   <td class="text-center"><%=  boss_status_label(apply.boss1.boss_status) %></td>
   <td class="text-center"><%= apply_status_label(apply.apply_status&.apply_status || "N/A") %></td>
