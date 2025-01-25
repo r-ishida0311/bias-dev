@@ -49,8 +49,12 @@
               <% department.roles.each do |role| %>
               <p class="mb-1"><%= role.role %></p>
               <% end %>
+              <div class="d-flex justify-content-end mt-3">
+                <%= link_to "編集", edit_department_path(department), class: "btn btn-sm btn-primary" %>
+              </div>
             </div>
             <% end %>
+
           </div>
 
           <%= link_to "CSVで出力", export_csv_departments_path(@selected_year), class: "btn btn-success mt-2" %> <%# Add the export link %>

@@ -1,0 +1,36 @@
+<h1>Editing Department</h1>
+
+<%= form_with(model: @department, local: true) do |form| %>
+<% if @department.errors.any? %>
+<div style="color: red">
+  <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
+  <ul>
+    <% @department.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div>
+  <%= form.label :dep_name, "Department Name:" %>
+  <%= form.text_field :dep_name %>
+</div>
+
+<h2>Roles</h2>
+<div id="roles">
+  <% @department.roles.each_with_index do |role, index| %>
+  <div class="role-item">
+    <%= form.label "role_#{index}_role", "Role #{index + 1}:" %>
+    <%= form.text_field "roles[#{index}][role]", value: role.role, id: "role_#{index}_role" %>
+    <%= form.hidden_field "roles[#{index}][id]", value: role.id %>
+  </div>
+  <% end %>
+</div>
+
+<div>
+  <%= form.submit %>
+</div>
+<% end %>
+
+<%= link_to 'Back', departments_path %>

@@ -10,6 +10,21 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def edit
+    @department = Department.find(params[:id])
+  end
+
+  def update
+    @department = Department.find(params[:id])
+    if @department.update(department_params)
+      redirect_to departments_path, notice: "Department was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+
+
   def roles
     department = Department.find(params[:id])
     render json: department.roles
@@ -107,5 +122,10 @@ end
       end
     end
   end
+
+  def department_params
+    params.require(:department).permit(:dep_name, roles_attributes: [:id, :role, :_destroy])
+  end
+
 
 end
