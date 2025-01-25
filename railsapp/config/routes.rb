@@ -26,10 +26,15 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   resources :tests
+
   resources :departments do
     collection { post :import }
+    post :create #Add this line
+    get :export_csv #Modify to handle get request
   end
+
   resources :years
+
   resources :admin_users
 
   get '/search', to: 'application#search'

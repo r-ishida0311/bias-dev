@@ -63,6 +63,8 @@
       <% else %>
       <p class="alert alert-info">選択された年度の部署データはありません。</p>
       <% end %>
+      <%= link_to "新規作成", new_department_path, class: "btn btn-success mt-2", remote: true %> <%# Add the new button %>
     </div>
   </div>
+</div>
 </div>

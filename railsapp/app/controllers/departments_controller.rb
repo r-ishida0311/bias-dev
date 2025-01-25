@@ -10,6 +10,13 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def new
+    @department = Department.new
+    @department.roles.build # pre-build a role to handle at least one role.
+    render layout: false  #Optional: Use this for a modal or a partial
+  end
+
+
   def edit
     @department = Department.find(params[:id])
   end

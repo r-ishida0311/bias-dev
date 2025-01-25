@@ -1,0 +1,33 @@
+<h1>New Department</h1>
+
+<%= form_with(model: @department, local: true) do |form| %>
+<% if @department.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
+  <ul>
+    <% @department.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="field">
+  <%= form.label :dep_name, "Department Name:" %>
+  <%= form.text_field :dep_name %>
+</div>
+
+<div class="field">
+  <% @department.roles.each do |role| %>
+  <%= form.fields_for :roles, role do |role_form| %>
+  <%= role_form.label :role, "Role:" %>
+  <%= role_form.text_field :role %>
+  <% end %>
+  <% end %>
+</div>
+<div class="actions">
+  <%= form.submit %>
+</div>
+<% end %>
+
+<%= link_to 'Back', departments_path %>
