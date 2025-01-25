@@ -7,6 +7,8 @@ class Apply < ApplicationRecord
 
   has_many_attached :files
   belongs_to :department
+
+  belongs_to :role, optional: true
   
   has_one :division, dependent: :destroy
   accepts_nested_attributes_for :division
@@ -39,12 +41,12 @@ class Apply < ApplicationRecord
     "equipment_name", 
     "item_name", 
     "specific_contents", 
-    "year", 
+    "year"
     ]
   end
   
   def self.ransackable_associations(auth_object = nil)
-    ["department"]
+    ["department", "role"]
   end
 
 

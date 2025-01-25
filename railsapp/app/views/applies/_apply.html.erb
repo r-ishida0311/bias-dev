@@ -7,6 +7,7 @@
   <td><%= apply.item_name %></td>
   <td class="text-center"><%= number_with_delimiter(apply.estimated_cost, delimiter: ",") %></td>
   <td><%= apply.department.dep_name rescue "N/A" %></td>
+  <td><%= apply.role.role rescue "N/A" %></td>
   <td><%= apply.apply_emp_name %> (<%= apply.apply_emp_no %>)</td>
 
   <td class="text-center"><%=  boss_status_label(apply.boss1.boss_status) %></td>

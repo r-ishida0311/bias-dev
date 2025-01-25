@@ -5,10 +5,9 @@ class Department < ApplicationRecord
   accepts_nested_attributes_for :roles
 
   def self.ransackable_attributes(auth_object = nil)
-    ["dep_name", "roles"]
+    ["dep_name"]
   end
-  def self.ransackable_associations(auth_object = nil)
-    ["roles"] #  Add this line
-  end
+
+
 
 end
