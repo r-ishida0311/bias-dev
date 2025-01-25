@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   
   get '/applies/:apply_id/departments_by_year', to: 'applies#departments_by_year'
 
+  get '/applies/:apply_id/role_by_dep', to: 'applies#role_by_dep'
+
   get '/apply_data_tabs/all_departments_by_year', to: 'apply_data_tabs#all_departments_by_year'
 
   get '/departments/:id/roles', to: 'departments#roles'

@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 // Connects to data-controller="selectdep"
 export default class extends Controller {
-  static targets = ['department'];
+  static targets = ['department', 'role'];
 
   yearEqChange(event) {
     const year = event.target.value;
@@ -34,6 +34,49 @@ export default class extends Controller {
         })
         .catch((error) => {
           console.error('Error fetching departments:', error);
+        });
+    }
+  }
+
+  depEqChange(event) {
+    const dep = event.target.value;
+    const roleSelect = this.roleTarget;
+    console.log(dep);
+
+    if (dep === '') {
+      roleSelect.innerHTML = '<option value="">部署を選択してください</option>';
+    } else {
+      fetch(`/applies/${this.data.get('apply-id')}/role_by_dep?dep=${dep}`) // Include apply_id
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Received data:', data);
+          roleSelect.innerHTML = ''; // Clear existing options
+
+          if (data.length === 0) {
+            // Handle the case where no roles are found
+            const noRolesOption = document.createElement('option');
+            noRolesOption.value = '';
+            noRolesOption.text = '担当はありません';
+            noRolesOption.disabled = true; // Prevent selection
+            noRolesOption.selected = true; // Make it the default option
+            roleSelect.appendChild(noRolesOption);
+          } else {
+            // Add a blank option as a placeholder if roles exist
+            const blankOption = document.createElement('option');
+            blankOption.value = '';
+            blankOption.text = '担当を選択してください';
+            roleSelect.appendChild(blankOption);
+
+            data.forEach((role) => {
+              const option = document.createElement('option');
+              option.value = role;
+              option.text = role;
+              roleSelect.appendChild(option);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching roles:', error);
         });
     }
   }

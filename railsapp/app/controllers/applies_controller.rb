@@ -152,6 +152,17 @@ def departments_by_year
   end
 end
 
+def role_by_dep
+  dep_name = params[:dep] # Get the department name from the params
+  department = Department.find_by(dep_name: dep_name)
+
+  if department
+    roles = department.roles.pluck(:role) # Extract the 'role' attribute from each associated Role
+    render json: roles # Respond with the roles as JSON
+  else
+    render json: { error: "Department not found" }, status: 404
+  end
+end
 
 
 

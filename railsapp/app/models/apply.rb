@@ -33,15 +33,13 @@ class Apply < ApplicationRecord
   accepts_nested_attributes_for :approve_status
 
   def self.ransackable_attributes(auth_object = nil)
-    ["add_dep_id", 
+    [
     "apply_emp_name", 
     "apply_kind", 
-    "department_id", 
     "equipment_name", 
     "item_name", 
     "specific_contents", 
     "year", 
-    "dep_name"
     ]
   end
   

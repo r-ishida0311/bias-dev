@@ -12,7 +12,11 @@
     </div>
     <div class="col-md-2">
       <%= f.label :department_dep_name_eq, "部署" %>
-      <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control',  data: { selectdep_target: "department"  }  %>
+      <%= f.select :department_dep_name_eq, [], { include_blank: "年度を選択してください" }, class: 'form-control',  data: { selectdep_target: "department", action: "change->selectdep#depEqChange" }  %>
+    </div>
+    <div class="col-md-2">
+      <%= f.label :department_roles_role_eq, "担当" %>
+      <%= f.select :department_roles_role_eq, [], { include_blank: "部署を選択してください" }, class: 'form-control',  data: { selectdep_target: "role"  }  %>
     </div>
     <div class="col-md-1">
       <%= f.label :apply_kind_eq, "申請種別" %>
