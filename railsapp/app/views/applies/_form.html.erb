@@ -314,16 +314,16 @@
             <div class="col-md-4">
               <div class="form-group <%= (edit_page && apply.apply_status.apply_status == 0) || apply.new_record?  ? '' : 'disabled-field' %>">
 
-
-                <div data-controller="role">
+                <div data-controller="role" data-role-selected-id="<%= @apply.role_id %>">
                   <%= form.label :department_id, '部署', style: "display: block;" %>
                   <%= form.collection_select :department_id, @departments, :id, :dep_name, { prompt: "Select Department", selected: @preselected_department&.id }, { class: "form-control", data: { role_target: "department", action: "change->role#departmentValueChanged" } }  %>
                   <%= form.hidden_field :role_id %>
                   <%= form.label :role_id, '担当', style: "display: block;" %>
                   <select id="role_id" name="apply[role_id]" data-role-target="rolesSelect" class="form-control">
-                    <option value="">Select Role</option>
+                    <option value=""></option>
                   </select>
                 </div>
+
 
               </div>
             </div>

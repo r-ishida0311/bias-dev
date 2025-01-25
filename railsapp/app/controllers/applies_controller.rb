@@ -40,7 +40,7 @@ class AppliesController < ApplicationController
     @apply = Apply.includes(:boss1).find(params[:id]) 
     @preselected_year = Year.find_by(target_year: 1)&.year
     @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
-    
+    @roles = Role.where(department_id: @apply.department_id)
   end
 
   def check_wg_access
@@ -106,9 +106,9 @@ class AppliesController < ApplicationController
   def update
    
     @apply = Apply.find(params[:id])
-
+    @departments = Department.where(year_id: Year.find_by(year: @preselected_year)&.id).all
     @preselected_year = Year.find_by(target_year: 1)&.year
-    @departments = Department.all
+
 
     previous_tech_comment = @apply.tech_comment.tech_comment
     previous_tech_reply_comment = @apply.tech_reply_comment.tech_reply_comment
@@ -186,7 +186,7 @@ end
       @employee_user = @apply.apply_emp_name # Or fetch it appropriately from your model
       @employee_email = @apply.emp_email
       @preselected_department = @apply.department # Assuming you have a department association
-      @preselected_role = @apply.role
+      @preselected_role = @apply.role_id
     end
 
     def create_blob(file)
@@ -206,6 +206,7 @@ def apply_params
     :apply_emp_name,
     :apply_kind,
     :department_id,
+    :role_id,
     :reference_no,
     :item_name,
     :equipment_name,

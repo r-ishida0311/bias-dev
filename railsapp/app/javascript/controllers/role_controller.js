@@ -10,29 +10,26 @@ export default class extends Controller {
 
   updateRoles() {
     const departmentId = this.departmentTarget.value;
-    console.log(departmentId);
-    if (departmentId) {
-      fetch(`/departments/${departmentId}/roles`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.rolesSelectTarget.innerHTML = ''; // Clear existing options
-          this.rolesSelectTarget.insertAdjacentHTML(
-            'beforeend',
-            '<option value="">Select Role</option>'
-          ); //Add empty option
-          data.forEach((role) => {
-            const option = document.createElement('option');
-            option.value = role.id;
-            option.text = role.role;
-            this.rolesSelectTarget.appendChild(option);
-          });
-          //Added this to set the initial hidden role_id based on the data from the server
-          this.updateHiddenRoleId(data);
+    const selectedRoleId = parseInt(this.data.get('selectedId')); // Get the role_id from data attribute
+
+    fetch(`/departments/${departmentId}/roles`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.rolesSelectTarget.innerHTML = ''; // Clear existing options
+        this.rolesSelectTarget.insertAdjacentHTML(
+          'beforeend',
+          '<option value=""></option>'
+        ); //Add empty option
+        data.forEach((role) => {
+          const option = document.createElement('option');
+          option.value = role.id;
+          option.text = role.role;
+          if (role.id === selectedRoleId) {
+            option.selected = true; // Set the option as selected if it matches the role_id from data attribute
+          }
+          this.rolesSelectTarget.appendChild(option);
         });
-    } else {
-      this.rolesSelectTarget.innerHTML =
-        '<option value="">Select Role</option>';
-    }
+      });
   }
 
   updateHiddenRoleId(rolesData) {
