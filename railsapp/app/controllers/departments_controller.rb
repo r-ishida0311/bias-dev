@@ -20,6 +20,7 @@ class DepartmentsController < ApplicationController
 
   def edit
     @department = Department.find(params[:id])
+    @department.roles.build if @department.roles.empty? 
   end
 
   def update

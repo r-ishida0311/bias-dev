@@ -19,13 +19,13 @@
 
 <h2>Roles</h2>
 <div id="roles">
-  <% @department.roles.each_with_index do |role, index| %>
-  <div class="role-item">
-    <%= form.label "role_#{index}_role", "Role #{index + 1}:" %>
-    <%= form.text_field "roles[#{index}][role]", value: role.role, id: "role_#{index}_role" %>
-    <%= form.hidden_field "roles[#{index}][id]", value: role.id %>
-  </div>
+  <%= form.fields_for :roles do |role_form| %>
+  <%= role_form.label :role, "Role:" %>
+  <%= role_form.text_field :role %>
+  <%= role_form.hidden_field :id %>
+
   <% end %>
+
 </div>
 
 <div>
