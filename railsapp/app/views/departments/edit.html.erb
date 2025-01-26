@@ -1,5 +1,4 @@
-<h1>Editing Department</h1>
-
+<%= turbo_frame_tag @department do %>
 <%= form_with(model: @department, local: true) do |form| %>
 <% if @department.errors.any? %>
 <div style="color: red">
@@ -32,3 +31,4 @@
 <% end %>
 
 <%= link_to 'Back', departments_path %>
+<% end %>

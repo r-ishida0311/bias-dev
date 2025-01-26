@@ -2,36 +2,40 @@
 
 <div class="container">
 
-  <div class="row g-3">
-    <!-- Added row and g-3 for spacing -->
-    <div class="col-md-6">
-      <%= form_with(url: departments_path, method: :get, local: true) do |form| %> <div class="mb-3">
-
-        <div class="row g-15">
-          <div class="col-md-3">
-            <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), {}, {class: 'form-control'} %>
-          </div>
-          <div class="col-md-1">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <%= form_with(url: departments_path, method: :get, local: true, class: "form-inline") do |form| %>
+        <div class="input-group">
+          <%= form.select :year, options_for_select(@years.map { |y| [y.year, y.year] }, @selected_year), {}, {class: 'form-select'} %>
+          <div class="input-group-append">
             <%= form.submit "選択", class: "btn btn-primary" %>
           </div>
         </div>
+        <% end %>
       </div>
-      <% end %>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="alert alert-info">
+          <h5 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i><%= @selected_year %>年度に対して部署をインポートできます</h5>
+          既に申請がある年度に対して部署変更を行うと、申請内容に影響が出ます
+        </div>
+      </div>
     </div>
 
-    <p><%= @selected_year %>：<strong>選択した年度に対して部署をインポートできます</strong> </p>
-    <div class="col-md-6">
-      <%= form_with(url: data_upload_path, method: :post) do |f| %>
-      <div class="row g-15">
+    <div class="row">
+      <div class="col-md-6">
+        <%= form_with(url: data_upload_path, method: :post, class: "form-inline") do |f| %>
         <%= f.hidden_field :year, value: @selected_year %>
-        <div class="col-md-8">
+        <div class="input-group">
           <%= f.file_field :upload_file, class: "form-control" %>
+          <div class="input-group-append">
+            <%= f.submit "インポートする", data: { turbo_confirm: "#{@selected_year}年度に紐づく申請は削除されますが実行しますか？?" }, class: "btn btn-primary" %>
+          </div>
         </div>
-        <div class="col-md-1">
-          <%= f.submit "インポートする", data: { turbo_confirm: "#{@selected_year}年度に紐づく申請は削除されますが実行しますか？?" }, class: "btn btn-primary" %>
-        </div>
+        <% end %>
       </div>
-      <% end %>
     </div>
   </div>
 
@@ -44,17 +48,18 @@
           <h5 class="card-title">部署一覧</h5>
           <div class="list-group">
             <% @departments.each do |department| %>
+            <%= turbo_frame_tag department do %>
             <div class="list-group-item">
               <h6 class="mb-1"><%= department.dep_name %></h6>
               <% department.roles.each do |role| %>
               <p class="mb-1"><%= role.role %></p>
               <% end %>
               <div class="d-flex justify-content-end mt-3">
-                <%= link_to "編集", edit_department_path(department), class: "btn btn-sm btn-primary" %>
+                <%= link_to "編集", edit_department_path(department), class: "btn btn-sm btn-primary", data: { turbo_frame: @department } %>
               </div>
             </div>
             <% end %>
-
+            <% end %>
           </div>
           <div class="d-flex justify-content-end mt-3">
 
