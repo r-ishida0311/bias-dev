@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :tests
 
   resources :departments do
+    resources :roles
     collection { post :import }
     post :create #Add this line
     get :export_csv #Modify to handle get request

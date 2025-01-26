@@ -23,11 +23,9 @@
   <%= role_form.label :role, "Role:" %>
   <%= role_form.text_field :role %>
   <%= role_form.hidden_field :id %>
-
   <% end %>
-
 </div>
-
+<%= link_to 'New Role', new_department_role_path(@department) %>
 <div>
   <%= form.submit %>
 </div>
