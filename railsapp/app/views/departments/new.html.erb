@@ -1,6 +1,9 @@
 <h1>New Department</h1>
 
 <%= form_with(model: @department, local: true) do |form| %>
+
+<%= form.hidden_field :year_id, value: @year_id %>
+
 <% if @department.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
@@ -11,6 +14,8 @@
   </ul>
 </div>
 <% end %>
+
+
 
 <div class="field">
   <%= form.label :dep_name, "Department Name:" %>

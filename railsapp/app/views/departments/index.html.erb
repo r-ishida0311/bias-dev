@@ -56,15 +56,16 @@
             <% end %>
 
           </div>
+          <div class="d-flex justify-content-end mt-3">
 
-          <%= link_to "CSVで出力", export_csv_departments_path(@selected_year), class: "btn btn-success mt-2" %> <%# Add the export link %>
+            <%= link_to "部署追加", new_department_path(year_id: @selected_year), class: "btn btn-primary mt-2", remote: true %>
+            <%= link_to "CSVで出力", export_csv_departments_path(@selected_year), class: "btn btn-success mt-2" %> <%# Add the export link %>
+          </div>
         </div>
+        <% else %>
+        <p class="alert alert-info">選択された年度の部署データはありません。</p>
+        <% end %>
       </div>
-      <% else %>
-      <p class="alert alert-info">選択された年度の部署データはありません。</p>
-      <% end %>
-      <%= link_to "新規作成", new_department_path, class: "btn btn-success mt-2", remote: true %> <%# Add the new button %>
     </div>
   </div>
-</div>
 </div>

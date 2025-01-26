@@ -11,7 +11,8 @@ class DepartmentsController < ApplicationController
   end
 
   def new
-    @department = Department.new
+    @year_id = params[:year_id] # Retrieve year_id from params
+    @department = Department.new(year_id: @year_id) #
     @department.roles.build # pre-build a role to handle at least one role.
     render layout: false  #Optional: Use this for a modal or a partial
   end
@@ -38,7 +39,8 @@ class DepartmentsController < ApplicationController
   end
 
 
-def create
+  def create
+
   if params[:upload_file].present? && params[:year].present?
     upload_file = params[:upload_file].tempfile
     selected_year_id = Year.find_by(year: params[:year])&.id
@@ -75,8 +77,19 @@ def create
     end
     redirect_to departments_path, notice: "Departments and roles imported successfully!"
   else
-    flash[:alert] = "Please select a year and upload a file."
-    redirect_to departments_path
+    year = Year.find_by(year: params[:department][:year_id])
+    if year.nil?
+      flash[:alert] = "Invalid year selected."
+      redirect_to departments_path and return
+    end
+  
+    @department = Department.new(department_params.merge(year_id: year.id))
+
+    if @department.save
+      redirect_to departments_path, notice: "Department was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 end
 
@@ -131,7 +144,7 @@ end
   end
 
   def department_params
-    params.require(:department).permit(:dep_name, roles_attributes: [:id, :role, :_destroy])
+    params.require(:department).permit(:dep_name, :year_id,  roles_attributes: [:id, :role, :_destroy])
   end
 
 
