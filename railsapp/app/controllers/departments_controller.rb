@@ -26,7 +26,7 @@ class DepartmentsController < ApplicationController
   def update
     @department = Department.find(params[:id])
     if @department.update(department_params)
-      redirect_to departments_path, notice: "Department was successfully updated."
+
     else
       render :edit, status: :unprocessable_entity
     end

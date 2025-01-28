@@ -1,0 +1,12 @@
+<%= turbo_frame_tag department do %>
+  <div class="list-group-item">
+    <h6 class="mb-1"><%= department.dep_name %></h6>
+    <% department.roles.each do |role| %>
+    <p class="mb-1"><%= role.role %></p>
+    <% end %>
+    <div class="d-flex justify-content-end mt-3">
+      <%= link_to "編集", edit_department_path(department), class: "btn btn-sm btn-primary", data: { turbo_frame: @department } %>
+      <%= button_to "削除", department, method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
+    </div>
+  </div>
+  <% end %>
