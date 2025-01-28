@@ -15,6 +15,9 @@ class Apply < ApplicationRecord
 
   has_one :boss1, dependent: :destroy
   accepts_nested_attributes_for :boss1
+
+  has_one :proxy_emp, dependent: :destroy
+  accepts_nested_attributes_for :proxy_emp
     
   has_one :apply_status, dependent: :destroy
   accepts_nested_attributes_for :apply_status

@@ -32,7 +32,12 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def destroy
+    @department = Department.find(params[:id])
+    @department.destroy
 
+
+  end
 
   def roles
     department = Department.find(params[:id])

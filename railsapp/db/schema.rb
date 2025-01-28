@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_22_055344) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_27_113316) do
   create_table "ApplyDataTab", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "apply_data_id", default: 0, null: false
     t.integer "year"
@@ -277,6 +277,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_055344) do
     t.index ["apply_id"], name: "index_divisions_on_apply_id"
   end
 
+  create_table "proxy_emps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "proxy_emp_no"
+    t.string "proxy_emp_name"
+    t.string "proxy_emp_op"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "apply_id"
+    t.index ["apply_id"], name: "index_proxy_emps_on_apply_id"
+  end
+
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "role"
     t.datetime "created_at", null: false
@@ -367,6 +377,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_22_055344) do
   add_foreign_key "boss1s", "applies"
   add_foreign_key "departments", "years"
   add_foreign_key "divisions", "applies"
+  add_foreign_key "proxy_emps", "applies"
   add_foreign_key "roles", "departments"
   add_foreign_key "sk_comments", "applies"
   add_foreign_key "tech_comments", "applies"

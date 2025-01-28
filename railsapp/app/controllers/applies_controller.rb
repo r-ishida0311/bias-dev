@@ -5,6 +5,7 @@ class AppliesController < ApplicationController
   before_action :check_tech_access, only: [:edit], if: :tech_link_param?
   before_action :check_boss_access, only: [:edit], if: :boss_link_param?
   before_action :check_edit_access, only: [:edit], if: :edit_link_param?
+  before_action :check_proxy_access, only: [:edit], if: :proxy_link_param?
 
   def index
     @applies = Apply.includes(:department).all 
@@ -82,7 +83,20 @@ class AppliesController < ApplicationController
   def edit_link_param?
     params[:link_param1] == 'edit'
   end
-  # POST /applies or /applies.json
+
+  def check_proxy_access
+    unless current_user.login_ref_no.to_i  == @apply.proxy_emp&.proxy_emp_no.to_i
+      redirect_to root_path, notice: 'アクセス権限がありません。'
+    end
+  end
+
+  def proxy_link_param?
+    params[:link_param1] == 'proxy'
+  end 
+
+
+
+
   def create
     @apply = Apply.new(apply_params)
     @employee_user = current_user.login_user
@@ -246,6 +260,7 @@ def apply_params
     :emp_email,
     files: [],
     boss1_attributes: [:id, :boss_no, :boss_name, :boss_status, :boss_email, :boss_depart],
+    proxy_emp_attributes: [:id, :proxy_emp_no, :proxy_emp_name, :proxy_emp_op],
     division_attributes: [:id, :new_pur, :replace, :repair, :_destroy],
     apply_status_attributes: [:id, :apply_status, :_destroy],
     sk_comment_attributes: [:id, :sk_comment, :sk_user, :_destroy],

@@ -27,6 +27,11 @@
       <% end %>
     </div>
     <div>
+      <% if current_user.login_ref_no.to_i == apply.proxy_emp&.proxy_emp_no.to_i %>
+      <%= link_to '代理編集', edit_apply_path(apply, link_param1: "proxy"), data: { turbo: false }, class: "btn btn-light ms-2" %>
+      <% end %>
+    </div>
+    <div>
       <% if current_user.login_ref_no.to_i == boss1.boss_no.to_i %>
       <%= link_to '原局承認', edit_apply_path(apply, link_param1: "boss"), data: { turbo: false }, class: "btn btn-info ms-2" %>
       <% end %>

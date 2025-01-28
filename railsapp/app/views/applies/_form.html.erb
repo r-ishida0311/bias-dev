@@ -5,6 +5,7 @@
 <% boss_page = params[:link_param1] == "boss" %>
 <% wg_page = params[:link_param1] == "wg" %>
 <% tech_page = params[:link_param1] == "tech" %>
+<% proxy_page = params[:link_param1] == "proxy" %>
 
 <% if show_page %>
 <h3>詳細画面</h3>
@@ -20,6 +21,9 @@
 
 <% elsif tech_page %>
 <h3>技術計画推進部確認画面</h3>
+
+<% elsif proxy_page %>
+<h3>代理編集画面</h3>
 <% end %>
 
 <% else %>
@@ -536,6 +540,30 @@
         </div>
       </div>
       <% end %>
+
+      <%= form.fields_for :proxy_emp, @apply.proxy_emp || @apply.build_proxy_emp do |proxy_emp_form| %>
+      <div data-controller="search">
+        <div class="col-md-6">
+          <div class="form-group <%= (edit_page && apply.apply_status.apply_status == 0) || apply.new_record?  ? '' : 'disabled-field' %>">
+
+            <div class="input-group">
+              <%= proxy_emp_form.label :proxy_emp_no, '共同編集者社員番号', class: "input-group-text" %>
+              <%= proxy_emp_form.number_field :proxy_emp_no, class: "form-control", id: "boss-no-field", data: { search_target: "bossNoField" } %>
+            </div>
+          </div>
+
+        </div>
+
+        <div data-search-target="results" class="row">
+          <div class="col-md-2">
+            <%= proxy_emp_form.label :proxy_emp_name, '共同編集者名', class: "form-label" %>
+            <%= proxy_emp_form.text_field :proxy_emp_name, class: "form-control", id: "boss_name", readonly: true, placeholder: "社員番号入力で自動記入されます" %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+
 
       <div class="d-flex justify-content-end">
         <% unless show_page %>
