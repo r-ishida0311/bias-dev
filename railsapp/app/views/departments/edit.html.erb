@@ -24,11 +24,17 @@
   <%= role_form.hidden_field :id %>
   <% end %>
 </div>
+
+<%= turbo_frame_tag "role" do %>
+
 <%= link_to 'New Role', new_department_role_path(@department) %>
+<% end %>
+
 <div>
   <%= form.submit %>
 </div>
 <% end %>
 
-<%= link_to 'Back', departments_path %>
+<%= link_to '戻る', department_path(@department) %>
+
 <% end %>

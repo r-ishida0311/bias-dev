@@ -1,6 +1,8 @@
+<%= turbo_frame_tag "role" do %>
 <%= form_with(model: [@department, @role]) do |form| %>
 <%= form.label :role %>
 <%= form.text_field :role %>
 
 <%= form.submit %>
+<% end %>
 <% end %>

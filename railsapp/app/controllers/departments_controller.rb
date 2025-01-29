@@ -10,6 +10,11 @@ class DepartmentsController < ApplicationController
     end
   end
 
+def show
+  @department = Department.find(params[:id])
+end
+
+
   def new
     @year_id = params[:year_id] # Retrieve year_id from params
     @department = Department.new(year_id: @year_id) #
