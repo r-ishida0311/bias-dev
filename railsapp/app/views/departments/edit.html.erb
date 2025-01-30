@@ -1,40 +1,42 @@
 <%= turbo_frame_tag @department do %>
-<%= form_with(model: @department, local: true) do |form| %>
-<% if @department.errors.any? %>
-<div style="color: red">
-  <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
-  <ul>
-    <% @department.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
+<div class="list-group-item">
+  <%= form_with(model: @department, local: true) do |form| %>
+  <% if @department.errors.any? %>
+  <div style="color: red">
+    <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
+    <ul>
+      <% @department.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :dep_name, "部署名:", class: "form-label" %>
+    <%= form.text_field :dep_name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">担当</div>
+  <%= form.fields_for :roles do |role_form| %>
+  <% if role_form.object.persisted? %>
+  <div class="mb-1">
+    <%= role_form.text_field :role, class: "form-control" %>
+    <%= role_form.hidden_field :id %>
+  </div>
+  <% end %>
+  <% end %>
+
+  <%= turbo_frame_tag 'new_role_frame' do %>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link_to '追加', new_department_role_path(@department), data: { turbo_frame: 'new_role_frame' }, class: "btn btn-sm btn-secondary me-2" %>
+
+    <%= form.submit "更新", class: "btn btn-sm btn-primary me-2" %>
+  </div>
+  <% end %>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link_to '戻る', department_path(@department), class: "btn btn-sm btn-outline-secondary me-2" %>
+  </div>
+  <% end %>
 </div>
-<% end %>
-
-<div>
-  <%= form.label :dep_name, "Department Name:" %>
-  <%= form.text_field :dep_name %>
-</div>
-
-<h2>Roles</h2>
-
-
-
-<%= form.fields_for :roles do |role_form| %>
-<%= role_form.label :role, "Role:" %>
-<%= role_form.text_field :role %>
-<%= role_form.hidden_field :id %>
-<% end %>
-<%= turbo_frame_tag 'new_role_frame'  do %>
-<%= link_to 'New Role', new_department_role_path(@department), data: { turbo_frame: 'new_role_frame' } %>
-<% end %>
-
-
-<div>
-  <%= form.submit %>
-</div>
-<% end %>
-
-<%= link_to '戻る', department_path(@department) %>
-
 <% end %>
