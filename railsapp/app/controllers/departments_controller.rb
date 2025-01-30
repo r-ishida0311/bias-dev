@@ -31,7 +31,7 @@ end
   def update
     @department = Department.find(params[:id])
     if @department.update(department_params)
-
+      @department.roles.where(role: [nil, ""]).destroy_all
     else
       render :edit, status: :unprocessable_entity
     end
