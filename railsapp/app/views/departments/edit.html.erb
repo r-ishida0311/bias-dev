@@ -18,20 +18,17 @@
 
 <h2>Roles</h2>
 
-<turbo-frame id="new_role_frame"> </turbo-frame>
-<%= turbo_frame_tag "new_role_frame" do %>
+
+
 <%= form.fields_for :roles do |role_form| %>
 <%= role_form.label :role, "Role:" %>
 <%= role_form.text_field :role %>
 <%= role_form.hidden_field :id %>
 <% end %>
-
-
-
-
+<%= turbo_frame_tag 'new_role_frame'  do %>
 <%= link_to 'New Role', new_department_role_path(@department), data: { turbo_frame: 'new_role_frame' } %>
-
 <% end %>
+
 
 <div>
   <%= form.submit %>

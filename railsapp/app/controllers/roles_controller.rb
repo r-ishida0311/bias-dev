@@ -9,7 +9,11 @@ class RolesController < ApplicationController
     @role = @department.roles.build(role_params)
 
     if @role.save
-      redirect_to edit_department_path(@department), notice: "Role was successfully created."
+      # redirect_to edit_department_path(@department), notice: "Role was successfully created."
+      render turbo_stream: turbo_stream.replace(
+        "department_#{@department.id}",
+        partial: "departments/department", locals: { department: @department }
+      )
     else
       render :new, status: :unprocessable_entity
     end

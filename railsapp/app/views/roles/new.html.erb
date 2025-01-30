@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "new_role_frame" do %>
-<%= form_with(model: [@department, @role]) do |form| %>
+<%= form_with(model: [@department, @role], data: { turbo_frame: "department_#{@department.id}" }) do |form| %>
 <%= form.label :role %>
 <%= form.text_field :role %>
 
